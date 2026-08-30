@@ -331,19 +331,25 @@ const BlockPuzzleGame = ({ user, onLeave }) => {
 
         {/* Overlays */}
         {gameState === 'MENU' && (
-          <div className="puzzle-overlay">
+          <div className="puzzle-overlay" onClick={(e) => e.stopPropagation()}>
             <h1 className="puzzle-title">NEON BLOCK JEWEL 10x10</h1>
             <p style={{ color: '#ccc', maxWidth: '420px', lineHeight: 1.5 }}>
               Drag or tap jewel shapes onto the 10x10 matrix. Fill entire horizontal rows or vertical columns to blast laser lines!
             </p>
-            <button className="puzzle-btn-play" onClick={startGame}>
+            <button
+              className="puzzle-btn-play"
+              onClick={(e) => {
+                e.stopPropagation();
+                startGame();
+              }}
+            >
               PLAY PUZZLE 🧱
             </button>
           </div>
         )}
 
         {gameState === 'GAMEOVER' && (
-          <div className="puzzle-overlay">
+          <div className="puzzle-overlay" onClick={(e) => e.stopPropagation()}>
             <h1 className="puzzle-title" style={{ color: '#ff1744' }}>NO MORE MOVES!</h1>
             <p style={{ fontSize: '1.2rem', color: '#fff' }}>
               Final Score: <strong style={{ color: '#00f3ff' }}>{score}</strong>
@@ -353,7 +359,13 @@ const BlockPuzzleGame = ({ user, onLeave }) => {
                 🏆 NEW RECORD!
               </div>
             )}
-            <button className="puzzle-btn-play" onClick={startGame}>
+            <button
+              className="puzzle-btn-play"
+              onClick={(e) => {
+                e.stopPropagation();
+                startGame();
+              }}
+            >
               PLAY AGAIN 🔄
             </button>
           </div>

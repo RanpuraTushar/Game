@@ -516,19 +516,25 @@ const FruitSlicerGame = ({ user, onLeave }) => {
 
           {/* Menus */}
           {gameState === 'MENU' && (
-            <div className="slicer-overlay">
+            <div className="slicer-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="slicer-title">FRUIT BLADE SLICER</h1>
               <p style={{ color: '#ccc', maxWidth: '420px', lineHeight: 1.6 }}>
                 Swipe your blade across flying fruits to slice them. Create massive combos and avoid deadly explosive bombs!
               </p>
-              <button className="slicer-btn-play" onClick={startGame}>
+              <button
+                className="slicer-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startGame();
+                }}
+              >
                 START SLICING 🍉
               </button>
             </div>
           )}
 
           {gameState === 'GAMEOVER' && (
-            <div className="slicer-overlay">
+            <div className="slicer-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="slicer-title" style={{ color: '#ff1744' }}>GAME OVER</h1>
               <p style={{ fontSize: '1.2rem', color: '#fff' }}>
                 Final Score: <strong style={{ color: '#ff9100' }}>{score}</strong>
@@ -538,7 +544,13 @@ const FruitSlicerGame = ({ user, onLeave }) => {
                   🏆 NEW HIGH SCORE!
                 </div>
               )}
-              <button className="slicer-btn-play" onClick={startGame}>
+              <button
+                className="slicer-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startGame();
+                }}
+              >
                 SLICE AGAIN 🔄
               </button>
             </div>

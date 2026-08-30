@@ -543,7 +543,7 @@ const CyberRacerGame = ({ user, onLeave }) => {
 
           {/* Menu / Game Over Overlay */}
           {gameState === 'MENU' && (
-            <div className="racer-overlay">
+            <div className="racer-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="overlay-title">CYBER HIGHWAY RACER</h1>
               <p className="overlay-subtitle">
                 Dodge neon synthwave traffic at breakneck speeds. Collect energy coins and trigger Nitro Boost to shatter records!
@@ -553,14 +553,20 @@ const CyberRacerGame = ({ user, onLeave }) => {
                 <span>⚡ <strong>W / ↑</strong> : Gas</span>
                 <span>🔥 <strong>SHIFT / SPACE</strong> : Nitro</span>
               </div>
-              <button className="racer-btn-play" onClick={startGame}>
+              <button
+                className="racer-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startGame();
+                }}
+              >
                 START RACE 🏁
               </button>
             </div>
           )}
 
           {gameState === 'GAMEOVER' && (
-            <div className="racer-overlay">
+            <div className="racer-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="overlay-title" style={{ color: '#ff007f' }}>CRASHED! 💥</h1>
               <p className="overlay-subtitle">
                 Final Score: <strong style={{ color: '#00f3ff' }}>{score}</strong> | Distance: {distance}m
@@ -570,11 +576,18 @@ const CyberRacerGame = ({ user, onLeave }) => {
                   🏆 NEW HIGH SCORE!
                 </div>
               )}
-              <button className="racer-btn-play" onClick={startGame}>
+              <button
+                className="racer-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startGame();
+                }}
+              >
                 RACE AGAIN 🔄
               </button>
             </div>
           )}
+
         </div>
 
         {/* Mobile / Touch Screen Controls */}

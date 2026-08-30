@@ -439,7 +439,7 @@ const AirHockeyGame = ({ user, onLeave }) => {
 
           {/* Menu / Game Over Overlays */}
           {gameState === 'MENU' && (
-            <div className="hockey-overlay">
+            <div className="hockey-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="hockey-title">GLOW AIR HOCKEY</h1>
               <p style={{ color: '#aaa', maxWidth: '400px' }}>
                 High-speed neon air hockey! Defend your goal and smash the puck past your opponent. First to 7 wins.
@@ -448,49 +448,62 @@ const AirHockeyGame = ({ user, onLeave }) => {
               <div className="mode-selector">
                 <button
                   className={`mode-btn ${difficulty === 'EASY' ? 'active' : ''}`}
-                  onClick={() => setDifficulty('EASY')}
+                  onClick={(e) => { e.stopPropagation(); setDifficulty('EASY'); }}
                 >
                   Rookie AI
                 </button>
                 <button
                   className={`mode-btn ${difficulty === 'MEDIUM' ? 'active' : ''}`}
-                  onClick={() => setDifficulty('MEDIUM')}
+                  onClick={(e) => { e.stopPropagation(); setDifficulty('MEDIUM'); }}
                 >
                   Pro AI
                 </button>
                 <button
                   className={`mode-btn ${difficulty === 'HARD' ? 'active' : ''}`}
-                  onClick={() => setDifficulty('HARD')}
+                  onClick={(e) => { e.stopPropagation(); setDifficulty('HARD'); }}
                 >
                   Master AI
                 </button>
                 <button
                   className={`mode-btn ${difficulty === '2PLAYER' ? 'active' : ''}`}
-                  onClick={() => setDifficulty('2PLAYER')}
+                  onClick={(e) => { e.stopPropagation(); setDifficulty('2PLAYER'); }}
                 >
                   2-Player (Arrows)
                 </button>
               </div>
 
-              <button className="play-hockey-btn" onClick={startMatch}>
+              <button
+                className="play-hockey-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startMatch();
+                }}
+              >
                 FACE OFF 🏓
               </button>
             </div>
           )}
 
           {gameState === 'GAMEOVER' && (
-            <div className="hockey-overlay">
+            <div className="hockey-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="hockey-title">
                 {winner === 'PLAYER 1' ? '🏆 VICTORY!' : '💥 DEFEAT!'}
               </h1>
               <p style={{ fontSize: '1.2rem', color: '#fff' }}>
                 Winner: <strong style={{ color: winner === 'PLAYER 1' ? '#00f3ff' : '#ff007f' }}>{winner}</strong>
               </p>
-              <button className="play-hockey-btn" onClick={startMatch}>
+              <button
+                className="play-hockey-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startMatch();
+                }}
+              >
                 PLAY AGAIN 🔄
               </button>
             </div>
           )}
+
         </div>
       </div>
     </div>

@@ -94,7 +94,8 @@ const KnifeHitGame = ({ user, onLeave }) => {
     setGameState('PLAYING');
   };
 
-  const throwKnife = () => {
+  const throwKnife = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
     const s = stateRef.current;
     if (gameState !== 'PLAYING' || s.flyingKnife || s.failedKnife || s.knivesLeft <= 0 || s.gameOver) return;
 
@@ -103,6 +104,7 @@ const KnifeHitGame = ({ user, onLeave }) => {
     s.knivesLeft -= 1;
     setKnivesLeft(s.knivesLeft);
   };
+
 
   // Keyboard Space / Click Throw
   useEffect(() => {
@@ -427,7 +429,12 @@ const KnifeHitGame = ({ user, onLeave }) => {
         </div>
 
         {/* Canvas Area */}
-        <div className="knife-canvas-box" onClick={throwKnife}>
+        <div
+          className="knife-canvas-box"
+          onClick={(e) => {
+            if (gameState === 'PLAYING') throwKnife(e);
+          }}
+        >
           <canvas
             ref={canvasRef}
             width={CANVAS_WIDTH}
@@ -450,41 +457,60 @@ const KnifeHitGame = ({ user, onLeave }) => {
 
           {/* Overlays */}
           {gameState === 'MENU' && (
-            <div className="knife-overlay">
+            <div className="knife-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="knife-title">KNIFE HIT MASTER</h1>
               <p style={{ color: '#ccc', maxWidth: '400px' }}>
                 Tap screen or press SPACE to launch knives into the rotating wheel. Do NOT hit existing knives!
               </p>
-              <button className="knife-btn-play" onClick={() => startStage(0)}>
+              <button
+                className="knife-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startStage(0);
+                }}
+              >
                 START THROWING 🎯
               </button>
             </div>
           )}
 
           {gameState === 'GAMEOVER' && (
-            <div className="knife-overlay">
+            <div className="knife-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="knife-title" style={{ color: '#ff0055' }}>KNIFE DEFLECTED! 💥</h1>
               <p style={{ fontSize: '1.2rem', color: '#fff' }}>
                 Final Score: <strong style={{ color: '#ffd600' }}>{score}</strong>
               </p>
-              <button className="knife-btn-play" onClick={() => startStage(0)}>
+              <button
+                className="knife-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startStage(0);
+                }}
+              >
                 TRY AGAIN 🔄
               </button>
             </div>
           )}
 
           {gameState === 'VICTORY' && (
-            <div className="knife-overlay">
+            <div className="knife-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="knife-title" style={{ color: '#00f3ff' }}>👑 ALL STAGES CLEARED!</h1>
               <p style={{ fontSize: '1.2rem', color: '#fff' }}>
                 You are the Ultimate Knife Hit Grandmaster! Score: {score}
               </p>
-              <button className="knife-btn-play" onClick={() => startStage(0)}>
+              <button
+                className="knife-btn-play"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  startStage(0);
+                }}
+              >
                 PLAY AGAIN 🔄
               </button>
             </div>
           )}
         </div>
+
       </div>
     </div>
   );
