@@ -48,10 +48,13 @@ const CyberRacerGame = ({ user, onLeave }) => {
   }, []);
 
   const startGame = () => {
-    SoundEffects.init();
-    SoundEffects.playMove();
+    try {
+      SoundEffects.init();
+      SoundEffects.playMove();
+    } catch (e) {}
 
     stateRef.current = {
+
       playerX: 0,
       playerSpeed: 60,
       maxSpeed: 280,

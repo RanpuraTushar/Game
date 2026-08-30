@@ -51,10 +51,13 @@ const KnifeHitGame = ({ user, onLeave }) => {
   }, []);
 
   const startStage = (stageIdx, preserveScore = false) => {
-    SoundEffects.init();
-    SoundEffects.playMove();
+    try {
+      SoundEffects.init();
+      SoundEffects.playMove();
+    } catch (e) {}
 
     const stageConfig = STAGES[Math.min(stageIdx, STAGES.length - 1)];
+
     const s = stateRef.current;
 
     s.stageIdx = stageIdx;

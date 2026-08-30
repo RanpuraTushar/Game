@@ -122,6 +122,23 @@ class SoundFX {
     this.playTokenStep();
   }
 
+  playMove() {
+    this.playTokenStep();
+  }
+
+  playHit() {
+    this.playCapture();
+  }
+
+  playShoot() {
+    this.playClick();
+  }
+
+  playScore() {
+    this.playSafe();
+  }
+
+
   playLadderClimb() {
     if (this.muted) return;
     this.init();

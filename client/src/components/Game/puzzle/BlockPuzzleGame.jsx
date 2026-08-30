@@ -59,10 +59,13 @@ const BlockPuzzleGame = ({ user, onLeave }) => {
   }, []);
 
   const startGame = () => {
-    SoundEffects.init();
-    SoundEffects.playMove();
+    try {
+      SoundEffects.init();
+      SoundEffects.playMove();
+    } catch (e) {}
 
     const emptyGrid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+
     setGrid(emptyGrid);
     setScore(0);
     setComboCount(0);

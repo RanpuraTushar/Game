@@ -45,10 +45,13 @@ const FruitSlicerGame = ({ user, onLeave }) => {
   }, []);
 
   const startGame = () => {
-    SoundEffects.init();
-    SoundEffects.playMove();
+    try {
+      SoundEffects.init();
+      SoundEffects.playMove();
+    } catch (e) {}
 
     stateRef.current = {
+
       fruits: [],
       halves: [],
       particles: [],

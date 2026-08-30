@@ -32,8 +32,10 @@ const AirHockeyGame = ({ user, onLeave }) => {
   });
 
   const startMatch = () => {
-    SoundEffects.init();
-    SoundEffects.playMove();
+    try {
+      SoundEffects.init();
+      SoundEffects.playMove();
+    } catch (e) {}
 
     stateRef.current.playerScore = 0;
     stateRef.current.aiScore = 0;
@@ -44,6 +46,7 @@ const AirHockeyGame = ({ user, onLeave }) => {
     resetPuck(true);
     setGameState('PLAYING');
   };
+
 
   const resetPuck = (towardsPlayer = true) => {
     const s = stateRef.current;
