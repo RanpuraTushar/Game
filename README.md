@@ -42,3 +42,5 @@ Client runs on `http://localhost:3000`
 - **Frontend:** React, HTML5, CSS (Glassmorphism + Neon), Phaser 3
 - **Backend:** Node.js, Express, Socket.IO (Authoritative Server)
 - **Database:** MySQL
+
+## Platform Status: Active & Ready
