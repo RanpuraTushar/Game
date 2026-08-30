@@ -36,7 +36,9 @@ import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
 // Connect to local backend
 const socket = io(`http://${window.location.hostname}:3001`);
 
-const MULTIPLAYER_GAMES = ['CHESS', 'LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4', 'PONG', 'AIR_HOCKEY'];
+// Only games that strictly require online room matchmaking go to Lobby; others launch directly with built-in AI
+const MULTIPLAYER_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
+
 
 
 function App() {

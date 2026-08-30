@@ -12,16 +12,29 @@ const Lobby = ({ socket, user, selectedGame, onBack, onGameStart }) => {
   const handleCreateRoom = () => {
     setError('');
     setIsConnecting(true);
+
+    if (!socket.connected) {
+      setIsConnecting(false);
+      setError('Backend server not connected. Please run `npm run dev` in the server folder.');
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsConnecting(false);
+      setError('Connection timed out. Please check if the backend server is running on port 3001.');
+    }, 4000);
+
     socket.emit('createRoom', {
       user,
       gameType: selectedGame,
       maxPlayers: supportsMultiplayerCount ? playerCount : 2
     }, (response) => {
+      clearTimeout(timer);
       setIsConnecting(false);
-      if (response.success) {
+      if (response && response.success) {
         onGameStart(response.room);
       } else {
-        setError(response.message || 'Failed to create room.');
+        setError(response?.message || 'Failed to create room.');
       }
     });
   };
@@ -29,16 +42,29 @@ const Lobby = ({ socket, user, selectedGame, onBack, onGameStart }) => {
   const handleSinglePlayer = () => {
     setError('');
     setIsConnecting(true);
+
+    if (!socket.connected) {
+      setIsConnecting(false);
+      setError('Backend server not connected. Please run `npm run dev` in the server folder.');
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsConnecting(false);
+      setError('Connection timed out. Please check if the backend server is running on port 3001.');
+    }, 4000);
+
     socket.emit('createSinglePlayerRoom', {
       user,
       gameType: selectedGame,
       maxPlayers: supportsMultiplayerCount ? playerCount : 2
     }, (response) => {
+      clearTimeout(timer);
       setIsConnecting(false);
-      if (response.success) {
+      if (response && response.success) {
         onGameStart(response.room);
       } else {
-        setError(response.message || 'Failed to start single player mode.');
+        setError(response?.message || 'Failed to start single player mode.');
       }
     });
   };
@@ -49,15 +75,29 @@ const Lobby = ({ socket, user, selectedGame, onBack, onGameStart }) => {
     
     setError('');
     setIsConnecting(true);
-    socket.emit('joinRoom', { roomId: roomCode.trim(), user }, (response) => {
+
+    if (!socket.connected) {
       setIsConnecting(false);
-      if (response.success) {
+      setError('Backend server not connected. Please run `npm run dev` in the server folder.');
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsConnecting(false);
+      setError('Connection timed out. Please check if the backend server is running on port 3001.');
+    }, 4000);
+
+    socket.emit('joinRoom', { roomId: roomCode.trim(), user }, (response) => {
+      clearTimeout(timer);
+      setIsConnecting(false);
+      if (response && response.success) {
         onGameStart(response.room);
       } else {
-        setError(response.message || 'Failed to join room. Check the code.');
+        setError(response?.message || 'Failed to join room. Check the code.');
       }
     });
   };
+
 
   return (
     <div className="lobby-container glass-panel" style={{ maxWidth: '440px', margin: '0 auto', padding: '35px 30px' }}>
