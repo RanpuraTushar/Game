@@ -1,0 +1,191 @@
+/* ZombieClickerGame.css */
+.zombie-container {
+  max-width: 540px;
+  margin: 15px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.zombie-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.zombie-coins-box {
+  display: flex;
+  gap: 16px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+}
+
+.zombie-kills {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+}
+
+.zombie-battle-arena {
+  width: 100%;
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 61, 0, 0.15);
+}
+
+.zombie-info-tag {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  color: #ff3d00;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.zombie-hp-bar {
+  width: 100%;
+  max-width: 380px;
+  height: 20px;
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #475569;
+  margin-bottom: 25px;
+}
+
+.zombie-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff3d00, #ff9100);
+  transition: width 0.1s ease-out;
+}
+
+.hp-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.zombie-avatar {
+  font-size: 6rem;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform 0.08s ease-out;
+}
+
+.zombie-avatar:hover {
+  transform: scale(1.08);
+}
+
+.zombie-avatar.hit {
+  transform: scale(0.92) rotate(-5deg);
+  filter: brightness(1.4) drop-shadow(0 0 15px #ff3d00);
+}
+
+.floating-dmg {
+  position: absolute;
+  top: -20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffd600;
+  text-shadow: 0 0 8px #ff3d00;
+  pointer-events: none;
+  animation: floatUpFade 0.7s forwards ease-out;
+}
+
+@keyframes floatUpFade {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-50px); opacity: 0; }
+}
+
+.zombie-store-panel {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.store-header {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  color: #00f3ff;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.store-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: border-color 0.15s;
+}
+
+.store-card:hover {
+  border-color: #00f3ff;
+}
+
+.store-card-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.store-icon {
+  font-size: 1.8rem;
+}
+
+.store-card-info strong {
+  display: block;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.store-card-info small {
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+.buy-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #ff9100, #ff3d00);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.buy-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(255, 61, 0, 0.5);
+}
+
+.buy-btn:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+}

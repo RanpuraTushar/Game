@@ -1,0 +1,241 @@
+/* TicTacToe.css - Neon Cyberpunk Styling for Tic-Tac-Toe with Copyable Room Code */
+
+.tictactoe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  user-select: none;
+}
+
+.tictactoe-panel {
+  background: rgba(12, 12, 22, 0.92);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(0, 243, 255, 0.4);
+  box-shadow: 0 0 35px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.1);
+  border-radius: 20px;
+  padding: 35px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.tictactoe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.tictactoe-title {
+  color: var(--neon-blue);
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+/* Clickable Header Room Badge */
+.tictactoe-room-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1.5px solid rgba(0, 243, 255, 0.5);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #00f3ff;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tictactoe-room-badge:hover {
+  background: rgba(0, 243, 255, 0.15);
+  border-color: #00f3ff;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.tictactoe-room-badge.copied {
+  border-color: #00ff66;
+  color: #00ff66;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.5);
+}
+
+/* Dedicated Waiting Card with Prominent Room Code Copy */
+.tictactoe-waiting-card {
+  background: rgba(255, 0, 255, 0.05);
+  border: 1.5px dashed rgba(255, 0, 255, 0.5);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  animation: waitingGlow 2.5s infinite alternate;
+}
+
+@keyframes waitingGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 0, 255, 0.15); }
+  100% { box-shadow: 0 0 22px rgba(255, 0, 255, 0.35); }
+}
+
+.waiting-title {
+  color: var(--neon-pink);
+  font-size: 1.15rem;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
+  animation: pulseText 1.5s infinite;
+}
+
+@keyframes pulseText {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.waiting-subtitle {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin-bottom: 14px;
+  letter-spacing: 0.5px;
+}
+
+.room-copy-action-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid #00f3ff;
+  border-radius: 12px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.25);
+}
+
+.room-copy-action-box:hover {
+  transform: translateY(-2px) scale(1.02);
+  border-color: #00ff66;
+  box-shadow: 0 0 22px rgba(0, 255, 102, 0.4);
+}
+
+.room-copy-action-box:active {
+  transform: scale(0.98);
+}
+
+.room-code-text {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.8);
+}
+
+.copy-button-badge {
+  background: linear-gradient(135deg, #00f3ff, #0099ff);
+  color: #0a0a0f;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.room-copy-action-box.is-copied {
+  border-color: #00ff66;
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
+}
+
+.room-copy-action-box.is-copied .copy-button-badge {
+  background: #00ff66;
+  box-shadow: 0 0 12px #00ff66;
+}
+
+/* Turn status in game */
+.turn-status-text {
+  font-size: 1.15rem;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+}
+
+/* VS Score Board */
+.tictactoe-scoreboard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.player-score-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vs-divider {
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 1.3rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+/* Grid Layout */
+.tictactoe-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 100px);
+  gap: 12px;
+  margin: 0 auto 25px auto;
+  max-width: 324px;
+}
+
+.tictactoe-cell {
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+  font-weight: 900;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tictactoe-cell.my-turn-empty:hover {
+  background: rgba(0, 243, 255, 0.1);
+  border-color: var(--neon-blue);
+  transform: scale(1.04);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+/* Game Over Overlay */
+.tictactoe-gameover-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 10, 18, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  z-index: 20;
+  animation: fadeIn 0.4s ease-out;
+}

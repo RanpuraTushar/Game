@@ -1,0 +1,536 @@
+/* App.css - Master Cyberpunk Arcade Nexus Styling */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Neon Palette */
+  --neon-blue: #00f3ff;
+  --neon-cyan: #00e5ff;
+  --neon-pink: #ff007f;
+  --neon-purple: #9d4edd;
+  --neon-green: #00ff66;
+  --neon-yellow: #ffd600;
+  --neon-orange: #ff6d00;
+  --neon-red: #ff3366;
+
+  /* Surfaces & Backgrounds */
+  --dark-bg: #07070e;
+  --dark-surface: #0e0e1b;
+  --dark-card: rgba(14, 14, 28, 0.85);
+  --dark-card-hover: rgba(22, 22, 42, 0.95);
+  --glass-bg: rgba(12, 12, 24, 0.78);
+  --glass-border: rgba(0, 243, 255, 0.22);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  /* Typography */
+  --text-primary: #ffffff;
+  --text-secondary: #a0a6c0;
+  --text-muted: #646a84;
+
+  /* Shadows */
+  --glow-blue: 0 0 20px rgba(0, 243, 255, 0.35);
+  --glow-pink: 0 0 20px rgba(255, 0, 127, 0.35);
+  --glow-green: 0 0 20px rgba(0, 255, 102, 0.35);
+  --glow-yellow: 0 0 20px rgba(255, 214, 0, 0.35);
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Sleek Neon Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07070e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(0, 243, 255, 0.4), rgba(255, 0, 127, 0.4));
+  border-radius: 4px;
+  border: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00f3ff, #ff007f);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+}
+
+/* App Master Layout */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 88px 24px 48px 24px;
+  position: relative;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(255, 0, 127, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(157, 78, 221, 0.04) 0%, transparent 60%),
+    linear-gradient(180deg, #07070e 0%, #0d0d1b 50%, #07070e 100%);
+  background-attachment: fixed;
+}
+
+/* Centered Auth Mode Layout */
+.app-container.auth-mode {
+  padding: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Global Fixed Top Navigation Bar
+   ========================================================================== */
+.app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 1000;
+  background: rgba(8, 8, 16, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 243, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  gap: 16px;
+}
+
+/* Left: Logo & Status */
+.nav-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.nav-brand-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.nav-brand-logo:hover {
+  transform: scale(1.02);
+}
+
+.brand-icon-bolt {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+  font-size: 1.4rem;
+}
+
+.brand-nexus-text {
+  background: linear-gradient(135deg, #00f3ff, #00ffcc, #ff007f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+}
+
+.nav-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(0, 255, 102, 0.1);
+  border: 1px solid rgba(0, 255, 102, 0.35);
+  color: #00ff66;
+}
+
+.nav-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00ff66;
+  box-shadow: 0 0 8px #00ff66;
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+}
+
+/* Center: Active Game / Navigation Breadcrumbs */
+.nav-center-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-back-hub-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.15);
+}
+
+.nav-back-hub-btn:hover {
+  background: var(--neon-blue);
+  color: #07070e;
+  box-shadow: 0 0 20px var(--neon-blue);
+  transform: translateX(-3px);
+}
+
+.nav-active-game-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 1px;
+}
+
+/* Right: Actions, Profile & Logout */
+.nav-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #d8dcee;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.nav-action-btn.leaderboard:hover {
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.nav-action-btn.trophies:hover {
+  border-color: var(--neon-yellow);
+  color: var(--neon-yellow);
+  box-shadow: 0 0 15px rgba(255, 214, 0, 0.4);
+}
+
+.nav-user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 0, 127, 0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  color: #ccc;
+}
+
+.nav-user-avatar {
+  font-size: 1rem;
+}
+
+.nav-username {
+  color: var(--neon-pink);
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+}
+
+.nav-logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 51, 102, 0.4);
+  color: #ff3366;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-logout-btn:hover {
+  background: #ff3366;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Typography & Reusable Utilities
+   ========================================================================== */
+.neon-text {
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+  background: transparent;
+  color: var(--neon-blue);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--neon-blue);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 12px inset rgba(0, 243, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--neon-blue);
+  color: #07070e;
+  box-shadow: 0 0 22px var(--neon-blue);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--neon-pink);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--neon-pink);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 12px inset rgba(255, 0, 127, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--neon-pink);
+  color: #07070e;
+  box-shadow: 0 0 22px var(--neon-pink);
+  transform: translateY(-2px);
+}
+
+.btn-tertiary {
+  background: transparent;
+  color: var(--neon-green);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 10px 22px;
+  border: 1.5px solid var(--neon-green);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 12px inset rgba(0, 255, 102, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-tertiary:hover:not(:disabled) {
+  background: var(--neon-green);
+  color: #07070e;
+  box-shadow: 0 0 22px var(--neon-green);
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-tertiary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Win Animations */
+@keyframes celebrationPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--neon-blue);
+  }
+
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 40px var(--neon-blue), 0 0 70px var(--neon-pink);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px var(--neon-blue);
+  }
+}
+
+.win-celebration {
+  animation: celebrationPulse 1.5s infinite;
+  border-color: var(--neon-pink) !important;
+}
+
+@keyframes textPulse {
+  0% {
+    text-shadow: 0 0 10px var(--neon-blue);
+  }
+
+  50% {
+    text-shadow: 0 0 20px var(--neon-blue), 0 0 35px var(--neon-pink);
+    color: #fff;
+  }
+
+  100% {
+    text-shadow: 0 0 10px var(--neon-blue);
+  }
+}
+
+.win-text {
+  animation: textPulse 1.5s infinite;
+  color: var(--neon-pink) !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 900px) {
+  .app-navbar {
+    padding: 0 16px;
+    height: 64px;
+  }
+
+  .app-container {
+    padding-top: 78px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .nav-action-btn span,
+  .nav-logout-btn {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+
+  .nav-user-pill {
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-action-btn .btn-text {
+    display: none;
+  }
+
+  .nav-brand-logo {
+    font-size: 1.1rem;
+  }
+
+  .nav-status-pill {
+    display: none;
+  }
+}

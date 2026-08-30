@@ -1,0 +1,165 @@
+/* BlackjackGame.css */
+.blackjack-container {
+  max-width: 580px;
+  margin: 15px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bj-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.bj-chips-box {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+}
+
+.bj-table {
+  width: 100%;
+  background: radial-gradient(circle at center, #064e3b, #022c22);
+  border: 3px solid #00e676;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 230, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  min-height: 320px;
+  justify-content: space-between;
+}
+
+.hand-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.hand-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  color: #a7f3d0;
+  letter-spacing: 1px;
+}
+
+.cards-row {
+  display: flex;
+  gap: 10px;
+  min-height: 80px;
+}
+
+.bj-card {
+  width: 58px;
+  height: 84px;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px;
+  font-weight: 900;
+  user-select: none;
+  animation: cardDeal 0.2s ease-out;
+}
+
+@keyframes cardDeal {
+  0% { transform: translateY(-30px) scale(0.8); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.bj-card.red-card {
+  color: #dc2626;
+}
+
+.bj-card.black-card {
+  color: #0f172a;
+}
+
+.bj-card.card-back {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  border: 2px solid #00f3ff;
+  color: #00f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.card-val {
+  font-size: 1.1rem;
+}
+
+.card-suit {
+  font-size: 1.4rem;
+}
+
+.bj-game-message {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #ffd600;
+  text-shadow: 0 0 10px #ffd600;
+}
+
+.bj-controls-bar {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.betting-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.chip-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.chip-btn {
+  padding: 8px 16px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 20px;
+  color: #ffd600;
+  font-family: 'Orbitron', monospace;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.chip-btn.active {
+  background: rgba(255, 214, 0, 0.2);
+  border-color: #ffd600;
+  box-shadow: 0 0 10px rgba(255, 214, 0, 0.4);
+}
+
+.deal-btn {
+  width: 100%;
+  max-width: 320px;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+.playing-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 12px 0;
+  font-size: 1rem;
+}

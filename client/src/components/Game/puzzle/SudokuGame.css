@@ -1,0 +1,127 @@
+/* SudokuGame.css */
+.sudoku-container {
+  max-width: 480px;
+  margin: 15px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sudoku-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sudoku-diff-pills {
+  display: flex;
+  gap: 8px;
+}
+
+.diff-pill {
+  padding: 4px 12px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 20px;
+  color: #aaa;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.diff-pill.active {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: #00f3ff;
+  color: #00f3ff;
+}
+
+.mistakes-counter {
+  font-size: 0.9rem;
+  color: #aaa;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1;
+  background: #0f172a;
+  border: 3px solid #00f3ff;
+  border-radius: 8px;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+  overflow: hidden;
+}
+
+.sudoku-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #00e5ff;
+  border: 1px solid #1e293b;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.12s;
+}
+
+.sudoku-cell:hover {
+  background: rgba(0, 243, 255, 0.15);
+}
+
+.sudoku-cell.fixed {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sudoku-cell.selected {
+  background: rgba(0, 243, 255, 0.35);
+  box-shadow: inset 0 0 8px #00f3ff;
+}
+
+.sudoku-cell.border-r {
+  border-right: 2px solid #00f3ff;
+}
+
+.sudoku-cell.border-b {
+  border-bottom: 2px solid #00f3ff;
+}
+
+.numpad-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  justify-content: center;
+}
+
+.numpad-btn {
+  flex: 1;
+  padding: 10px 0;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: #00f3ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.numpad-btn:hover {
+  background: #00f3ff;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px #00f3ff;
+}
+
+.numpad-btn.erase-btn {
+  color: #ff3b30;
+}

@@ -1,0 +1,139 @@
+/* WordleGame.css */
+.wordle-container {
+  max-width: 480px;
+  margin: 15px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wordle-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wordle-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  color: #00ff66;
+  letter-spacing: 2px;
+}
+
+.wordle-attempts {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.95rem;
+}
+
+.wordle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.wordle-row {
+  display: flex;
+  gap: 6px;
+}
+
+.wordle-cell {
+  width: 52px;
+  height: 52px;
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.wordle-cell.has-letter {
+  border-color: #64748b;
+  animation: popLetter 0.1s ease-out;
+}
+
+@keyframes popLetter {
+  0% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.wordle-cell.correct {
+  background: #16a34a;
+  border-color: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.wordle-cell.present {
+  background: #ca8a04;
+  border-color: #eab308;
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+}
+
+.wordle-cell.absent {
+  background: #1e293b;
+  border-color: #334155;
+  color: #64748b;
+}
+
+.wordle-keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 440px;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.key-btn {
+  flex: 1;
+  height: 44px;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: all 0.12s;
+}
+
+.key-btn.wide-key {
+  flex: 1.5;
+  font-size: 0.75rem;
+}
+
+.key-btn.correct {
+  background: #16a34a;
+  border-color: #22c55e;
+}
+
+.key-btn.present {
+  background: #ca8a04;
+  border-color: #eab308;
+}
+
+.key-btn.absent {
+  background: #0f172a;
+  color: #475569;
+  border-color: #1e293b;
+}

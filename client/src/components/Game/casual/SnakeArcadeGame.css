@@ -1,0 +1,45 @@
+/* SnakeArcadeGame.css */
+.snake-arcade-container {
+  max-width: 480px;
+  margin: 15px auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.snake-arcade-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.snake-stats-bar {
+  display: flex;
+  gap: 15px;
+  font-size: 0.95rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 14px;
+  border-radius: 8px;
+}
+
+.snake-canvas-wrap {
+  border: 2px solid #00ff66;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
+}
+
+.snake-canvas {
+  display: block;
+  background: #0a0a14;
+}
+
+.snake-hint {
+  margin-top: 12px;
+  color: #777;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,32 @@
+/* BubbleShooterGame.css */
+.bubble-shooter-container {
+  max-width: 480px;
+  margin: 15px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bs-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.bs-score {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+}
+
+.bs-canvas {
+  background: #0a0e1c;
+  border: 3px solid #00e676;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(0, 230, 118, 0.2);
+  cursor: crosshair;
+  max-width: 100%;
+  height: auto;
+}

@@ -1,0 +1,113 @@
+/* AchievementsModal.css - Cyberpunk Trophy Vault */
+
+.achievements-grid-container {
+  padding: 24px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(14, 14, 28, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease;
+}
+
+.achievement-card.unlocked {
+  border-color: var(--neon-yellow);
+  background: linear-gradient(135deg, rgba(255, 214, 0, 0.08), rgba(255, 145, 0, 0.05));
+  box-shadow: 0 0 20px rgba(255, 214, 0, 0.2), inset 0 0 10px rgba(255, 214, 0, 0.05);
+}
+
+.achievement-card.locked {
+  opacity: 0.5;
+  filter: grayscale(0.8);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.achievement-card:hover {
+  transform: translateY(-2px);
+}
+
+.achievement-card.unlocked:hover {
+  box-shadow: 0 0 25px rgba(255, 214, 0, 0.35);
+  border-color: #ffe033;
+}
+
+.ach-icon-box {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.achievement-card.unlocked .ach-icon-box {
+  background: rgba(255, 214, 0, 0.18);
+  border-color: var(--neon-yellow);
+  box-shadow: 0 0 15px rgba(255, 214, 0, 0.35);
+}
+
+.ach-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ach-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.ach-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ach-points {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--neon-yellow);
+  background: rgba(255, 214, 0, 0.15);
+  border: 1px solid rgba(255, 214, 0, 0.3);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.ach-desc {
+  font-size: 0.85rem;
+  color: #9aa1b8;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.ach-game-tag {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--neon-blue);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}

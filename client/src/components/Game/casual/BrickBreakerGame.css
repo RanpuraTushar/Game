@@ -1,0 +1,45 @@
+/* BrickBreakerGame.css */
+.brick-container {
+  max-width: 540px;
+  margin: 15px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brick-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.brick-score-bar {
+  display: flex;
+  gap: 20px;
+  font-size: 1.1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 8px;
+}
+
+.brick-canvas-wrap {
+  border: 2px solid var(--neon-pink);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.25);
+  cursor: crosshair;
+}
+
+.brick-canvas {
+  display: block;
+}
+
+.brick-hint {
+  margin-top: 12px;
+  color: #777;
+  font-size: 0.85rem;
+}

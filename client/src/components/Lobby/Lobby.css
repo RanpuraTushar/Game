@@ -1,0 +1,122 @@
+/* Lobby.css - Multiplayer Lobby Styling */
+
+.lobby-container {
+  width: 760px;
+  max-width: 95vw;
+  margin: 20px auto;
+  padding: 36px;
+  background: rgba(14, 14, 28, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(0, 243, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 243, 255, 0.15);
+  border-radius: 20px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.lobby-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 20px;
+}
+
+.join-room-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.join-room-section input {
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.lobby-error {
+  background: rgba(255, 51, 102, 0.15);
+  border: 1.5px solid #ff3366;
+  color: #ff3366;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(255, 51, 102, 0.4);
+}
+
+.lobby-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(8, 8, 16, 0.7);
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--neon-blue);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.player-name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.player-class {
+  color: var(--neon-pink);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.class-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.class-btn {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  padding: 12px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.class-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--neon-blue);
+  transform: translateX(4px);
+}
+
+.class-btn.selected {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+  font-weight: 800;
+}
+
+@media (max-width: 700px) {
+  .lobby-content {
+    grid-template-columns: 1fr;
+  }
+}

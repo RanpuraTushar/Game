@@ -1,0 +1,477 @@
+/* Ludo.css - Authentic Ludo King Style 15x15 Board & Premium 3D Dice */
+
+.ludo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  user-select: none;
+}
+
+.ludo-panel {
+  background: rgba(12, 12, 22, 0.92);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 0, 255, 0.4);
+  box-shadow: 0 0 40px rgba(255, 0, 255, 0.25), inset 0 0 15px rgba(255, 0, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 680px;
+  width: 100%;
+}
+
+.ludo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ludo-title {
+  color: #ff00ff;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(255, 0, 255, 0.8);
+  margin: 0;
+}
+
+/* Player Cards Grid */
+.ludo-players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ludo-player-card {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.ludo-player-card.active-turn {
+  box-shadow: 0 0 18px currentColor;
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, 0.12);
+  border-width: 2px;
+}
+
+.ludo-player-card .lp-name {
+  font-size: 0.85rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ludo-player-card .lp-tokens {
+  font-size: 0.78rem;
+  color: #ddd;
+  margin-top: 3px;
+}
+
+/* 15x15 Ludo Board */
+.ludo-board-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 20px rgba(255, 0, 255, 0.15);
+  border: 5px solid #1a1a2e;
+  background: #fff;
+  overflow: hidden;
+}
+
+.ludo-board-grid {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.ludo-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid #e0e0e0;
+  background: #ffffff;
+}
+
+/* Quadrant Bases (6x6) */
+.ludo-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1.5px solid #222;
+}
+
+.ludo-base-inner {
+  width: 74%;
+  height: 74%;
+  background: #ffffff;
+  border-radius: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.35);
+}
+
+.base-token-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  background: radial-gradient(circle, #ffffff 15%, #e8e8ea 60%, #c5c5cb 100%);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+/* Center Finish Area (3x3) */
+.ludo-center-triangle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  overflow: hidden;
+}
+
+.center-triangle-red {
+  position: absolute;
+  top: 0; left: 0; width: 0; height: 0;
+  border-top: 52px solid #ff3b30;
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+}
+
+.center-triangle-green {
+  position: absolute;
+  top: 0; right: 0; width: 0; height: 0;
+  border-right: 52px solid #00e676;
+  border-top: 52px solid transparent;
+  border-bottom: 52px solid transparent;
+}
+
+.center-triangle-yellow {
+  position: absolute;
+  bottom: 0; left: 0; width: 0; height: 0;
+  border-bottom: 52px solid #ffea00;
+  border-left: 52px solid transparent;
+  border-right: 52px solid transparent;
+}
+
+.center-triangle-blue {
+  position: absolute;
+  top: 0; left: 0; width: 0; height: 0;
+  border-left: 52px solid #2979ff;
+  border-top: 52px solid transparent;
+  border-bottom: 52px solid transparent;
+}
+
+/* Star Safe Cells */
+.safe-star {
+  font-size: 1.25rem;
+  color: #e65100;
+  text-shadow: 0 0 4px rgba(230, 81, 0, 0.6);
+  pointer-events: none;
+}
+
+/* 3D Royal Pawn Piece (Ludo King Style) */
+.ludo-token-piece {
+  width: 29px;
+  height: 35px;
+  cursor: default;
+  transition: transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.22s ease;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  pointer-events: auto;
+}
+
+.ludo-pawn-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+}
+
+.ludo-token-piece.movable {
+  cursor: pointer;
+  animation: royalPawnPulse 0.75s infinite alternate ease-in-out;
+  filter: drop-shadow(0 0 10px #ffff00) drop-shadow(0 0 4px #ffea00);
+}
+
+.ludo-token-piece.movable:hover {
+  transform: translate(-50%, -64%) scale(1.22) !important;
+}
+
+.ludo-token-piece.hopping {
+  animation: ludoHop 0.22s infinite alternate ease-in-out;
+}
+
+@keyframes royalPawnPulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -62%) scale(1.18); }
+}
+
+@keyframes ludoHop {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -75%) scale(1.25); }
+}
+
+/* Choice Prompt */
+.ludo-choice-prompt {
+  background: linear-gradient(90deg, rgba(255, 234, 0, 0.15), rgba(255, 234, 0, 0.3), rgba(255, 234, 0, 0.15));
+  border: 1.5px solid #ffea00;
+  border-radius: 8px;
+  color: #ffea00;
+  padding: 8px 16px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  display: inline-block;
+  box-shadow: 0 0 12px rgba(255, 234, 0, 0.3);
+  animation: pulsePrompt 1s infinite alternate;
+}
+
+@keyframes pulsePrompt {
+  0% { transform: scale(0.98); opacity: 0.85; }
+  100% { transform: scale(1.02); opacity: 1; }
+}
+
+/* =========================================
+   PREMIUM 3D GLOSSY DICE (LUDO KING STYLE)
+   ========================================= */
+.controls-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 16px;
+}
+
+.dice-container-3d {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dice-turn-glow {
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #00ff66, #00f3ff, #ff00ff, #ffea00);
+  background-size: 300% 300%;
+  animation: rotateGlow 3s ease infinite;
+  filter: blur(6px);
+  opacity: 0.85;
+  z-index: 1;
+}
+
+@keyframes rotateGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dice-button-premium {
+  position: relative;
+  z-index: 2;
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(135deg, #ffffff 0%, #f7f7fa 40%, #e1e1ea 100%);
+  border: 3px solid #ffffff;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.6),
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px rgba(255, 255, 255, 0.9),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dice-button-premium:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 
+    0 14px 28px rgba(0, 243, 255, 0.5),
+    0 6px 10px rgba(0, 0, 0, 0.3),
+    inset 0 3px 5px #fff;
+}
+
+.dice-button-premium:active:not(:disabled) {
+  transform: translateY(2px) scale(0.96);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dice-button-premium:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #666 0%, #444 100%);
+  border-color: #555;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.dice-button-premium.my-turn-idle {
+  animation: diceIdleHop 1.2s infinite ease-in-out;
+}
+
+@keyframes diceIdleHop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.05); }
+}
+
+/* 3D Dice Face & Inset Pips */
+.dice-face-3d {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 52px;
+  height: 52px;
+  padding: 4px;
+}
+
+.dice-pip {
+  width: 11px;
+  height: 11px;
+  background: radial-gradient(circle at 35% 35%, #2a2a35 0%, #0d0d12 100%);
+  border-radius: 50%;
+  align-self: center;
+  justify-self: center;
+  box-shadow: 
+    inset 0 2px 3px rgba(0, 0, 0, 0.8),
+    0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* Authentic Red Center Pip for Ace (1) */
+.dice-pip.pip-center-one {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 35%, #ff5252 0%, #d50000 70%, #8b0000 100%);
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.6),
+    0 2px 5px rgba(213, 0, 0, 0.5),
+    inset 0 -2px 4px rgba(0,0,0,0.4);
+}
+
+.dice-rolling-3d {
+  animation: rollTumbleSmooth 1.1s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes rollTumbleSmooth {
+  0% { transform: rotate(0deg) scale(1) translateY(0); }
+  15% { transform: rotate(-120deg) scale(1.22) translateY(-14px); }
+  35% { transform: rotate(180deg) scale(0.92) translateY(-4px); }
+  55% { transform: rotate(340deg) scale(1.15) translateY(-10px); }
+  75% { transform: rotate(500deg) scale(0.96) translateY(-3px); }
+  90% { transform: rotate(680deg) scale(1.05) translateY(-2px); }
+  100% { transform: rotate(720deg) scale(1) translateY(0); }
+}
+
+.dice-landed-pop {
+  animation: diceLandedPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes diceLandedPop {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.2) translateY(-4px); box-shadow: 0 0 25px rgba(0, 255, 102, 0.8); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Roll Badge */
+.roll-prompt-badge {
+  position: absolute;
+  top: -14px;
+  background: #00ff66;
+  color: #0a0a0f;
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 2px 10px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px #00ff66;
+  z-index: 3;
+}
+
+/* Turn Info & Roll Result Banner */
+.turn-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 180px;
+  gap: 4px;
+}
+
+.roll-result-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1.5px solid #00f3ff;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 0.95rem;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+  animation: bannerFade 0.3s ease-out;
+}
+
+.roll-result-banner.six-banner {
+  border-color: #ffea00;
+  box-shadow: 0 0 16px rgba(255, 234, 0, 0.5);
+  background: rgba(255, 234, 0, 0.12);
+}
+
+.roll-highlight-num {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #00ff66;
+  padding: 0 4px;
+  text-shadow: 0 0 10px rgba(0, 255, 102, 0.8);
+}
+
+.roll-result-banner.six-banner .roll-highlight-num {
+  color: #ffea00;
+  text-shadow: 0 0 12px rgba(255, 234, 0, 0.9);
+}
+
+.bonus-tag {
+  background: #ff3b30;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  margin-left: 4px;
+}
+
+.rolling-text {
+  color: #00f3ff;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+@keyframes bannerFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

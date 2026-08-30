@@ -1,0 +1,673 @@
+/* PianoTilesGame.css - Real Acoustic Grand Piano & Studio */
+
+.real-piano-nexus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 16px;
+  padding: 10px 16px 40px 16px;
+  animation: fadeIn 0.35s ease-out;
+  user-select: none;
+}
+
+/* Header Top Panel */
+.piano-top-panel {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-radius: 16px;
+}
+
+.piano-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.piano-header-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.6));
+}
+
+.piano-main-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.piano-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #9da6c5;
+}
+
+.sustain-pill {
+  background: rgba(0, 255, 102, 0.15);
+  border: 1px solid #00ff66;
+  color: #00ff66;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.piano-tab-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.piano-mode-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #9da6c5;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.piano-mode-tab.active {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: var(--neon-blue);
+  color: #00f3ff;
+  box-shadow: 0 0 14px rgba(0, 243, 255, 0.3);
+}
+
+.btn-exit-hub {
+  padding: 8px 14px;
+  font-size: 0.82rem;
+}
+
+/* ==========================================================================
+   MODE 1: STUDIO TOOLBAR & SONG GUIDE
+   ========================================================================== */
+.piano-studio-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.studio-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toolbar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toolbar-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #7b85a4;
+}
+
+.instrument-buttons, .song-selector-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.tool-pill, .song-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0a8c7;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.tool-pill.active, .song-pill.active {
+  background: var(--neon-blue);
+  border-color: var(--neon-blue);
+  color: #07070e;
+  box-shadow: 0 0 12px var(--neon-blue);
+}
+
+.song-actions {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.btn-auto-play {
+  background: rgba(255, 214, 0, 0.15);
+  border: 1px solid #ffd600;
+  color: #ffd600;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-auto-play.playing {
+  background: #ffd600;
+  color: #07070e;
+  box-shadow: 0 0 16px #ffd600;
+}
+
+.btn-sustain-toggle {
+  background: rgba(0, 255, 102, 0.12);
+  border: 1px solid #00ff66;
+  color: #00ff66;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-sustain-toggle.active {
+  background: #00ff66;
+  color: #07070e;
+  box-shadow: 0 0 16px #00ff66;
+}
+
+/* Song Guide Progress HUD */
+.song-guide-hud {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-radius: 12px;
+  gap: 16px;
+}
+
+.guide-song-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.guide-song-icon {
+  font-size: 1.8rem;
+}
+
+.guide-song-info strong {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.guide-note-hint {
+  font-size: 0.85rem;
+  color: #a0a8c7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.target-key-badge {
+  background: #ffd600;
+  color: #07070e;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 900;
+  animation: pulseBadge 0.8s infinite alternate;
+}
+
+@keyframes pulseBadge {
+  0% { transform: scale(1); box-shadow: 0 0 6px #ffd600; }
+  100% { transform: scale(1.1); box-shadow: 0 0 16px #ffd600; }
+}
+
+.guide-progress-bar {
+  flex: 1;
+  max-width: 380px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.guide-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00f3ff, #00ff66);
+  box-shadow: 0 0 10px #00ff66;
+  transition: width 0.25s ease;
+}
+
+.guide-step-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #8c96b8;
+}
+
+/* ==========================================================================
+   THE 3D MASTER REAL PIANO KEYBOARD CASING
+   ========================================================================== */
+.real-piano-casing {
+  width: 100%;
+  background: linear-gradient(180deg, #0a0a14 0%, #15152a 100%);
+  border: 3px solid rgba(0, 243, 255, 0.35);
+  border-radius: 18px;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.9), 
+    0 0 35px rgba(0, 243, 255, 0.2), 
+    inset 0 2px 4px rgba(255, 255, 255, 0.15);
+  padding: 12px 14px 16px 14px;
+  position: relative;
+  overflow-x: auto;
+}
+
+.piano-wood-rim {
+  width: 100%;
+  height: 28px;
+  background: linear-gradient(180deg, #1c1511 0%, #0d0a08 100%);
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid #2d221b;
+}
+
+.brand-gold-emblem {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #d4af37;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
+
+.bottom-rim {
+  border-radius: 0 0 10px 10px;
+  height: 14px;
+  border-bottom: none;
+  border-top: 2px solid #2d221b;
+}
+
+/* Piano Keys Bed Layout */
+.piano-keys-bed {
+  display: flex;
+  position: relative;
+  height: 220px;
+  padding: 0 4px;
+  background: #000000;
+}
+
+/* Base Key Style */
+.piano-key {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.08s ease;
+  user-select: none;
+}
+
+/* 3D Ivory White Key */
+.key-white {
+  flex: 1;
+  min-width: 34px;
+  height: 100%;
+  background: linear-gradient(180deg, #fbfbfb 0%, #ececec 85%, #d8d8d8 100%);
+  border: 1px solid #111111;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9), 
+    inset -1px 0 3px rgba(0, 0, 0, 0.15), 
+    0 4px 6px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 12px;
+  z-index: 1;
+}
+
+.key-white:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f0f7ff 100%);
+}
+
+.key-white.key-pressed {
+  background: linear-gradient(180deg, #00f3ff 0%, #00b4d8 100%) !important;
+  transform: translateY(4px);
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.4), 
+    0 0 16px rgba(0, 243, 255, 0.8) !important;
+}
+
+/* 3D Ebony Black Key */
+.key-black {
+  width: 22px;
+  height: 60%;
+  margin-left: -11px;
+  margin-right: -11px;
+  background: linear-gradient(180deg, #2b2b2b 0%, #151515 85%, #050505 100%);
+  border: 1px solid #000;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3), 
+    2px 4px 8px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 8px;
+  z-index: 2;
+}
+
+.key-black:hover {
+  background: linear-gradient(180deg, #3d3d3d 0%, #202020 100%);
+}
+
+.key-black.key-pressed {
+  background: linear-gradient(180deg, #ff007f 0%, #9d4edd 100%) !important;
+  transform: translateY(3px);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.5), 
+    0 0 16px rgba(255, 0, 127, 0.8) !important;
+}
+
+/* Target Guide Key Glow */
+.key-guide-target {
+  box-shadow: 0 0 20px #ffd600, inset 0 0 12px #ffd600 !important;
+  border-color: #ffd600 !important;
+}
+
+.guide-pulse-dot {
+  position: absolute;
+  top: 14px;
+  width: 10px;
+  height: 10px;
+  background: #ffd600;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffd600;
+  animation: pulseDot 0.6s infinite alternate;
+}
+
+/* Key Labels */
+.key-labels-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.key-white .key-note-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.key-white .key-pc-shortcut {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #0284c7;
+}
+
+.key-black .key-note-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.key-black .key-pc-shortcut {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ff007f;
+}
+
+/* PC Guide Text */
+.piano-pc-guide-text {
+  background: rgba(14, 14, 28, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #a4acc4;
+}
+
+.piano-pc-guide-text strong {
+  color: #00f3ff;
+}
+
+/* ==========================================================================
+   MODE 2: ARCADE RHYTHM HIGHWAY
+   ========================================================================== */
+.piano-arcade-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 14px;
+}
+
+.arcade-hud-stats {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 12px;
+}
+
+.hud-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #8c96b8;
+}
+
+.stat-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.btn-start-arcade {
+  padding: 8px 20px;
+  font-size: 0.88rem;
+}
+
+/* Beats Stage */
+.arcade-beats-stage {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(180deg, rgba(8, 8, 16, 0.95) 0%, rgba(14, 14, 32, 0.9) 100%);
+  border: 2px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.hit-timing-line {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff007f, #00f3ff, #ff007f);
+  box-shadow: 0 0 16px #00f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12px;
+}
+
+.timing-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #00f3ff;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.falling-note-block {
+  position: absolute;
+  width: 32px;
+  height: 40px;
+  background: linear-gradient(180deg, #00f3ff 0%, #0284c7 100%);
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 0 14px #00f3ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #07070e;
+  z-index: 5;
+  transition: opacity 0.1s;
+}
+
+.hit-pop {
+  opacity: 0;
+  transform: scale(1.4);
+}
+
+.arcade-piano-casing {
+  border-radius: 0 0 18px 18px;
+  margin-top: -6px;
+}
+
+/* Game Over Card */
+.arcade-game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.game-over-card {
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.game-over-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.game-over-msg {
+  color: #a4acc4;
+  margin-bottom: 16px;
+}
+
+.game-over-score-badge {
+  background: rgba(0, 243, 255, 0.15);
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.game-over-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Achievement Toast */
+.piano-achievement-banner {
+  background: linear-gradient(90deg, #ffd600, #ff6d00);
+  color: #07070e;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(255, 214, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.piano-achievement-banner button {
+  background: transparent;
+  border: none;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .key-white {
+    min-width: 24px;
+  }
+
+  .key-black {
+    width: 16px;
+    margin-left: -8px;
+    margin-right: -8px;
+  }
+
+  .studio-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
