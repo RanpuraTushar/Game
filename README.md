@@ -43,4 +43,4 @@ Client runs on `http://localhost:3000`
 - **Backend:** Node.js, Express, Socket.IO (Authoritative Server)
 - **Database:** MySQL
 
-## Platform Status: Active & Ready
+
