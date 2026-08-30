@@ -187,6 +187,71 @@ export const GAMES_LIST = [
     color: '#00e676',
     controls: 'Aim mouse cursor & click to shoot bubble',
     badge: 'Cluster Pop'
+  },
+  {
+    id: 'CYBER_RACER',
+    title: 'Cyber Highway Racer',
+    description: 'Dodge retro synthwave highway traffic at breakneck speeds. Collect energy coins, dodge trucks, and ignite Nitro!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🏎️',
+    color: '#ff007f',
+    controls: 'A / D or Left / Right to steer, W to accelerate, Shift / Space for Nitro',
+    badge: '2.5D Nitro Rush'
+  },
+  {
+    id: 'AIR_HOCKEY',
+    title: 'Glow Air Hockey',
+    description: 'High-speed glowing air hockey duel! Defend your crease, bounce bank shots, and smash goals against Pro AI or a friend.',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '🏓',
+    color: '#00f3ff',
+    controls: 'Drag mouse / touch to position mallet (Arrows for P2 in 2-Player mode)',
+    badge: '60 FPS Physics'
+  },
+  {
+    id: 'FRUIT_SLICER',
+    title: 'Fruit Blade Slicer',
+    description: 'Slash flying juicy fruits with razor-sharp glowing blade swipes. Build massive combo multipliers and avoid explosive bombs!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🍉',
+    color: '#ff9100',
+    controls: 'Click & Drag mouse or swipe screen to slice fruits',
+    badge: 'Juicy Combos'
+  },
+  {
+    id: 'KNIFE_HIT',
+    title: 'Knife Hit Master',
+    description: 'Throw blades into rotating logs and neon boss shields. Slice apples, dodge existing blades, and clear 5 epic stages!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🎯',
+    color: '#9d00ff',
+    controls: 'Tap screen or press Spacebar to launch knives',
+    badge: 'Boss Battles'
+  },
+  {
+    id: 'BLOCK_PUZZLE',
+    title: 'Neon Block Jewel 10x10',
+    description: 'Place glowing jewel polyomino shapes onto the 10x10 grid. Complete horizontal and vertical lines to trigger laser line clears!',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🧱',
+    color: '#e040fb',
+    controls: 'Click jewel piece in tray, then click grid cell to place',
+    badge: '10x10 Laser Blast'
   }
 ];
 
@@ -203,5 +268,11 @@ export const ACHIEVEMENTS_DATA = [
   { key: 'BRICK_SCORE_500', gameKey: 'BRICK_BREAKER', title: 'Laser Matrix Breaker', desc: 'Score 500+ points in Brick Breaker', icon: '🧱', points: 45 },
   { key: 'PONG_SHUTOUT', gameKey: 'PONG', title: 'Flawless Paddle', desc: 'Win a Pong match without conceding a point', icon: '🏓', points: 60 },
   { key: 'PIANO_TILES_100', gameKey: 'PIANO_TILES', title: 'Virtuoso Maestro', desc: 'Hit 100 consecutive piano tiles', icon: '🎹', points: 50 },
-  { key: 'BUBBLE_CLEAR_BOARD', gameKey: 'BUBBLE_SHOOTER', title: 'Cluster Buster', desc: 'Pop 50 bubbles in Bubble Shooter', icon: '🔮', points: 40 }
+  { key: 'BUBBLE_CLEAR_BOARD', gameKey: 'BUBBLE_SHOOTER', title: 'Cluster Buster', desc: 'Pop 50 bubbles in Bubble Shooter', icon: '🔮', points: 40 },
+  { key: 'RACER_SCORE_1000', gameKey: 'CYBER_RACER', title: 'Highway Phantom', desc: 'Survive and score 1000+ in Cyber Racer', icon: '🏎️', points: 70 },
+  { key: 'HOCKEY_WIN_MASTER', gameKey: 'AIR_HOCKEY', title: 'Rink Dominator', desc: 'Defeat the Master AI in Glow Air Hockey', icon: '🏓', points: 65 },
+  { key: 'FRUIT_COMBO_5X', gameKey: 'FRUIT_SLICER', title: 'Blade Master', desc: 'Achieve a 5x fruit slice combo', icon: '🍉', points: 55 },
+  { key: 'KNIFE_STAGE_CLEAR', gameKey: 'KNIFE_HIT', title: 'Target Virtuoso', desc: 'Clear all 5 Knife Hit stages', icon: '🎯', points: 75 },
+  { key: 'BLOCK_MULTI_CLEAR', gameKey: 'BLOCK_PUZZLE', title: 'Matrix Demolition', desc: 'Clear 3 or more lines at once in Block Puzzle', icon: '🧱', points: 60 }
 ];
+

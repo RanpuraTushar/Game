@@ -26,10 +26,18 @@ import PongGame from './components/Game/casual/PongGame';
 import PianoTilesGame from './components/Game/action/PianoTilesGame';
 import BubbleShooterGame from './components/Game/action/BubbleShooterGame';
 
+// 4. New Viral Games Suite
+import CyberRacerGame from './components/Game/action/CyberRacerGame';
+import AirHockeyGame from './components/Game/action/AirHockeyGame';
+import FruitSlicerGame from './components/Game/action/FruitSlicerGame';
+import KnifeHitGame from './components/Game/action/KnifeHitGame';
+import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
+
 // Connect to local backend
 const socket = io(`http://${window.location.hostname}:3001`);
 
-const MULTIPLAYER_GAMES = ['CHESS', 'LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4', 'PONG'];
+const MULTIPLAYER_GAMES = ['CHESS', 'LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4', 'PONG', 'AIR_HOCKEY'];
+
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -226,6 +234,23 @@ function App() {
           )}
           {selectedGame === 'BUBBLE_SHOOTER' && (
             <BubbleShooterGame user={user} onLeave={handleLeaveGame} />
+          )}
+
+          {/* 4. New Viral Hit Games */}
+          {selectedGame === 'CYBER_RACER' && (
+            <CyberRacerGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'AIR_HOCKEY' && (
+            <AirHockeyGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'FRUIT_SLICER' && (
+            <FruitSlicerGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'KNIFE_HIT' && (
+            <KnifeHitGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'BLOCK_PUZZLE' && (
+            <BlockPuzzleGame user={user} onLeave={handleLeaveGame} />
           )}
         </>
       )}

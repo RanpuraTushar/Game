@@ -1,0 +1,186 @@
+/* BlockPuzzleGame.css - Neon Block Jewel 10x10 */
+
+.block-puzzle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 90px);
+  padding: 15px;
+  background: radial-gradient(circle at center, #0d122b 0%, #040712 100%);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  user-select: none;
+}
+
+.puzzle-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: rgba(14, 18, 42, 0.92);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 0 35px rgba(0, 243, 255, 0.2), inset 0 0 25px rgba(255, 0, 127, 0.1);
+  border-radius: 20px;
+  padding: 18px;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.puzzle-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.puzzle-hud {
+  display: flex;
+  gap: 16px;
+}
+
+.puzzle-stat {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 6px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.board-10x10 {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 3px;
+  width: 100%;
+  max-width: 440px;
+  height: 440px;
+  background: #070a1a;
+  padding: 8px;
+  border-radius: 14px;
+  border: 2px solid rgba(0, 243, 255, 0.4);
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+}
+
+.cell-10x10 {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell-10x10.filled {
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.4), 0 0 8px currentColor;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.cell-10x10.preview-valid {
+  background: rgba(0, 243, 255, 0.45) !important;
+  box-shadow: 0 0 12px #00f3ff;
+}
+
+.cell-10x10.preview-invalid {
+  background: rgba(255, 0, 85, 0.35) !important;
+}
+
+.cell-10x10.clearing {
+  animation: lineClearFlash 0.4s ease forwards;
+}
+
+@keyframes lineClearFlash {
+  0% { transform: scale(1.1); filter: brightness(2); }
+  50% { transform: scale(1.2); filter: brightness(3); box-shadow: 0 0 20px #fff; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.pieces-tray {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 12px;
+  min-height: 110px;
+}
+
+.tray-piece {
+  display: grid;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tray-piece:hover, .tray-piece.selected {
+  transform: scale(1.12);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.tray-cell {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.puzzle-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 14, 32, 0.94);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  z-index: 10;
+  text-align: center;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.puzzle-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00f3ff, #e040fb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+.puzzle-btn-play {
+  background: linear-gradient(135deg, #00f3ff, #e040fb);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 36px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+  transition: all 0.25s ease;
+  letter-spacing: 1px;
+}
+
+.puzzle-btn-play:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 0 30px rgba(224, 64, 251, 0.7);
+}
