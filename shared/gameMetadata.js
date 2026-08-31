@@ -252,6 +252,32 @@ export const GAMES_LIST = [
     color: '#e040fb',
     controls: 'Click jewel piece in tray, then click grid cell to place',
     badge: '10x10 Laser Blast'
+  },
+  {
+    id: 'ZOMBIE_CLICKER',
+    title: 'Cyber Zombie Clicker',
+    description: 'Tap to blast hordes of cyber zombies and giant boss mutants! Collect gold coins, upgrade click power, and deploy auto-drones.',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🧟',
+    color: '#ff3d00',
+    controls: 'Click / Tap Zombie to deal damage & buy arsenal upgrades',
+    badge: 'Idle RPG Clicker'
+  },
+  {
+    id: 'CARROM',
+    title: 'Authentic 3D Carrom Board',
+    description: 'Realistic wooden carrom board with true physics! Pocket white/black carrom men, sink and cover the Red Queen, and challenge Smart AI or friends.',
+    category: GAME_CATEGORIES.BOARD,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '🎱',
+    color: '#ffd600',
+    controls: 'Slide striker on baseline, drag backwards to aim & set power, release to shoot',
+    badge: 'Realistic Physics & Queen Cover'
   }
 ];
 
@@ -273,6 +299,8 @@ export const ACHIEVEMENTS_DATA = [
   { key: 'HOCKEY_WIN_MASTER', gameKey: 'AIR_HOCKEY', title: 'Rink Dominator', desc: 'Defeat the Master AI in Glow Air Hockey', icon: '🏓', points: 65 },
   { key: 'FRUIT_COMBO_5X', gameKey: 'FRUIT_SLICER', title: 'Blade Master', desc: 'Achieve a 5x fruit slice combo', icon: '🍉', points: 55 },
   { key: 'KNIFE_STAGE_CLEAR', gameKey: 'KNIFE_HIT', title: 'Target Virtuoso', desc: 'Clear all 5 Knife Hit stages', icon: '🎯', points: 75 },
-  { key: 'BLOCK_MULTI_CLEAR', gameKey: 'BLOCK_PUZZLE', title: 'Matrix Demolition', desc: 'Clear 3 or more lines at once in Block Puzzle', icon: '🧱', points: 60 }
+  { key: 'BLOCK_MULTI_CLEAR', gameKey: 'BLOCK_PUZZLE', title: 'Matrix Demolition', desc: 'Clear 3 or more lines at once in Block Puzzle', icon: '🧱', points: 60 },
+  { key: 'ZOMBIE_SLAYER_10', gameKey: 'ZOMBIE_CLICKER', title: 'Apocalypse Survivor', desc: 'Defeat 10 waves of cyber zombies', icon: '🧟', points: 50 },
+  { key: 'CARROM_QUEEN_COVER', gameKey: 'CARROM', title: 'Carrom Grandmaster', desc: 'Win a Carrom match by pocketing and covering the Queen', icon: '🎱', points: 75 }
 ];
 

@@ -32,6 +32,8 @@ import AirHockeyGame from './components/Game/action/AirHockeyGame';
 import FruitSlicerGame from './components/Game/action/FruitSlicerGame';
 import KnifeHitGame from './components/Game/action/KnifeHitGame';
 import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
+import ZombieClickerGame from './components/Game/action/ZombieClickerGame';
+import CarromBoardGame from './components/Game/casual/CarromBoardGame';
 
 // Connect to local backend
 const socket = io(`http://${window.location.hostname}:3001`);
@@ -122,7 +124,7 @@ function App() {
           <div>
             <h1 className="neon-text" style={{ fontSize: '1.4rem', margin: 0, letterSpacing: '2px' }}>CYBER ARCADE</h1>
             <span style={{ fontSize: '0.75rem', color: isConnected ? 'var(--neon-green)' : 'var(--neon-pink)', letterSpacing: '1px' }}>
-              ● {isConnected ? 'SYSTEM ONLINE (12 GAMES ACTIVE)' : 'CONNECTING...'}
+              ● {isConnected ? `SYSTEM ONLINE (${GAMES_LIST.length} GAMES ACTIVE)` : 'CONNECTING...'}
             </span>
           </div>
         </div>
@@ -253,6 +255,12 @@ function App() {
           )}
           {selectedGame === 'BLOCK_PUZZLE' && (
             <BlockPuzzleGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'ZOMBIE_CLICKER' && (
+            <ZombieClickerGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'CARROM' && (
+            <CarromBoardGame user={user} onLeave={handleLeaveGame} />
           )}
         </>
       )}

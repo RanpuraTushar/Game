@@ -10,12 +10,15 @@ router.get('/', (req, res) => {
   res.json({ success: true, achievements: ACHIEVEMENTS_DATA });
 });
 
-// Get user unlocked achievements
-router.get('/user/:userId', (req, res) => {
-  const { userId } = req.params;
-  const unlockedSet = memDB.user_achievements[userId] || new Set();
-  const unlocked = ACHIEVEMENTS_DATA.filter(a => unlockedSet.has(a.key));
-  res.json({ success: true, unlocked, total: ACHIEVEMENTS_DATA.length });
+// Unlock an achievement directly
+router.post('/unlock', (req, res) => {
+  const { key, userId = 1 } = req.body;
+  if (!memDB.user_achievements[userId]) {
+    memDB.user_achievements[userId] = new Set();
+  }
+  memDB.user_achievements[userId].add(key);
+  const achievement = ACHIEVEMENTS_DATA.find(a => a.key === key);
+  res.json({ success: true, achievement });
 });
 
 export default router;

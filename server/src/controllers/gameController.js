@@ -119,6 +119,8 @@ export const submitGameScore = async (req, res) => {
     if (gameKey === 'FRUIT_SLICER' && score >= 500) checkAndUnlock('FRUIT_COMBO_5X');
     if (gameKey === 'KNIFE_HIT' && (isWin || score >= 5)) checkAndUnlock('KNIFE_STAGE_CLEAR');
     if (gameKey === 'BLOCK_PUZZLE' && score >= 300) checkAndUnlock('BLOCK_MULTI_CLEAR');
+    if (gameKey === 'ZOMBIE_CLICKER') checkAndUnlock('ZOMBIE_SLAYER_10');
+    if (gameKey === 'CARROM' && isWin) checkAndUnlock('CARROM_QUEEN_COVER');
 
     // Also persist to MySQL if connected
     if (isDbConnected()) {

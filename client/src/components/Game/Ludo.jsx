@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Ludo.css';
 import { soundFX } from '../../utils/SoundEffects';
+import { api } from '../../services/api';
 
 const COLOR_MAP = {
   RED: { hex: '#ff3b30', name: 'Red', homeRow: 7, homeColStart: 1, baseRow: 0, baseCol: 0 },
@@ -103,6 +104,9 @@ const Ludo = ({ socket, room, user, onLeave }) => {
 
       if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket.id) {
         soundFX.playWinFanfare();
+        if (user?.id) {
+          api.submitScore('LUDO', 500, true, user).catch(() => {});
+        }
       }
     };
 

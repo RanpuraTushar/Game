@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './TicTacToe.css';
+import { api } from '../../services/api';
+import SoundEffects from '../../utils/SoundEffects';
 
 const TicTacToe = ({ socket, room, user, onLeave }) => {
   const [gameState, setGameState] = useState(room);
@@ -8,12 +10,24 @@ const TicTacToe = ({ socket, room, user, onLeave }) => {
   useEffect(() => {
     socket.on('roomUpdated', (updatedRoom) => {
       setGameState(updatedRoom);
+      if (updatedRoom.status === 'FINISHED') {
+        if (updatedRoom.winner === socket?.id) {
+          try { SoundEffects.playWin(); } catch(e) {}
+          if (user?.id) {
+            api.submitScore('TIC_TAC_TOE', 100, true, user).catch(() => {});
+          }
+        } else if (updatedRoom.winner === 'DRAW') {
+          try { SoundEffects.playClick(); } catch(e) {}
+        } else {
+          try { SoundEffects.playLoss(); } catch(e) {}
+        }
+      }
     });
 
     return () => {
       socket.off('roomUpdated');
     };
-  }, [socket]);
+  }, [socket, user]);
 
   const handleCopyRoomCode = () => {
     const code = gameState.id;

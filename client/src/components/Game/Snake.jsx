@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './Snake.css';
 import { soundFX } from '../../utils/SoundEffects';
+import { api } from '../../services/api';
 
 const PLAYER_COLORS = ['#ff3b30', '#00e676', '#ffea00', '#2979ff'];
 const CELL_PALETTE = ['#f8d7da', '#d1ecf1', '#d4edda', '#fff3cd', '#ffffff'];
@@ -76,6 +77,9 @@ const Snake = ({ socket, room, user, onLeave }) => {
 
       if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket.id) {
         soundFX.playWinFanfare();
+        if (user?.id) {
+          api.submitScore('SNAKE', 200, true, user).catch(() => {});
+        }
       }
     };
 

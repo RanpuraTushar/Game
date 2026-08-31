@@ -83,6 +83,21 @@ export const api = {
     }
   },
 
+  // Unlock achievement directly
+  async unlockAchievement(key, user) {
+    try {
+      const res = await fetch(`${API_BASE}/achievements/unlock`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, userId: user?.id || 1 })
+      });
+      return await res.json();
+    } catch (err) {
+      console.error('Error unlocking achievement:', err);
+      return { success: false };
+    }
+  },
+
   // Generic POST helper
   async post(endpoint, data) {
     try {
