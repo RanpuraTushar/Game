@@ -223,10 +223,7 @@ const BlockPuzzleGame = ({ user, onLeave }) => {
 
     if (user?.id) {
       try {
-        await api.post('/games/score', {
-          gameKey: 'BLOCK_PUZZLE',
-          score: finalScore
-        });
+        await api.submitScore('BLOCK_PUZZLE', finalScore, finalScore >= 300, user);
       } catch (err) {}
     }
   };

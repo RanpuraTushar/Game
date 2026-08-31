@@ -81,5 +81,33 @@ export const api = {
       console.error('Error fetching user achievements:', err);
       return { success: false, unlocked: [] };
     }
+  },
+
+  // Generic POST helper
+  async post(endpoint, data) {
+    try {
+      const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+      const res = await fetch(`${API_BASE}${path}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      return await res.json();
+    } catch (err) {
+      console.error(`Error POST ${endpoint}:`, err);
+      return { success: false };
+    }
+  },
+
+  // Generic GET helper
+  async get(endpoint) {
+    try {
+      const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+      const res = await fetch(`${API_BASE}${path}`);
+      return await res.json();
+    } catch (err) {
+      console.error(`Error GET ${endpoint}:`, err);
+      return { success: false };
+    }
   }
 };

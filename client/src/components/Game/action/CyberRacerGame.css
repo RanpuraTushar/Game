@@ -108,8 +108,9 @@
   font-weight: 800;
   background: linear-gradient(135deg, #00f3ff, #ff007f);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+  filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.4));
   margin-bottom: 5px;
   letter-spacing: 2px;
 }

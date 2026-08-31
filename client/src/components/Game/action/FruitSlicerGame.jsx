@@ -341,10 +341,7 @@ const FruitSlicerGame = ({ user, onLeave }) => {
 
     if (user?.id) {
       try {
-        await api.post('/games/score', {
-          gameKey: 'FRUIT_SLICER',
-          score: finalScore
-        });
+        await api.submitScore('FRUIT_SLICER', finalScore, finalScore >= 500, user);
       } catch (err) {}
     }
   };

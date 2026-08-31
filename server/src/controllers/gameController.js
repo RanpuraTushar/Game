@@ -108,12 +108,17 @@ export const submitGameScore = async (req, res) => {
     if (gameKey === 'GAME_2048' && score >= 2048) checkAndUnlock('2048_VICTORY');
     if (gameKey === 'MINESWEEPER' && isWin) checkAndUnlock('MINE_CLEAR_EASY');
 
-    // Arcade Achievements
+    // Arcade & Action Achievements
     if (gameKey === 'SNAKE_GAME' && score >= 100) checkAndUnlock('SNAKE_SCORE_100');
     if (gameKey === 'BRICK_BREAKER' && score >= 500) checkAndUnlock('BRICK_SCORE_500');
     if (gameKey === 'PONG' && isWin) checkAndUnlock('PONG_SHUTOUT');
     if (gameKey === 'PIANO_TILES' && score >= 100) checkAndUnlock('PIANO_TILES_100');
     if (gameKey === 'BUBBLE_SHOOTER' && score >= 300) checkAndUnlock('BUBBLE_CLEAR_BOARD');
+    if (gameKey === 'CYBER_RACER' && score >= 1000) checkAndUnlock('RACER_SCORE_1000');
+    if (gameKey === 'AIR_HOCKEY' && isWin) checkAndUnlock('HOCKEY_WIN_MASTER');
+    if (gameKey === 'FRUIT_SLICER' && score >= 500) checkAndUnlock('FRUIT_COMBO_5X');
+    if (gameKey === 'KNIFE_HIT' && (isWin || score >= 5)) checkAndUnlock('KNIFE_STAGE_CLEAR');
+    if (gameKey === 'BLOCK_PUZZLE' && score >= 300) checkAndUnlock('BLOCK_MULTI_CLEAR');
 
     // Also persist to MySQL if connected
     if (isDbConnected()) {

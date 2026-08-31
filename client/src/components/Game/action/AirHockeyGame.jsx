@@ -225,7 +225,7 @@ const AirHockeyGame = ({ user, onLeave }) => {
               setWinner('PLAYER 1');
               setGameState('GAMEOVER');
               if (user?.id) {
-                api.post('/games/score', { gameKey: 'AIR_HOCKEY', score: 1000 }).catch(() => {});
+                api.submitScore('AIR_HOCKEY', 1000, true, user).catch(() => {});
               }
             } else {
               resetPuck(false);

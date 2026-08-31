@@ -277,10 +277,7 @@ const KnifeHitGame = ({ user, onLeave }) => {
 
     if (user?.id) {
       try {
-        await api.post('/games/score', {
-          gameKey: 'KNIFE_HIT',
-          score: finalScore
-        });
+        await api.submitScore('KNIFE_HIT', finalScore, finalScore >= 5, user);
       } catch (err) {}
     }
   };

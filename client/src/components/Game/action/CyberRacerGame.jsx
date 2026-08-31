@@ -297,10 +297,7 @@ const CyberRacerGame = ({ user, onLeave }) => {
 
     if (user?.id) {
       try {
-        await api.post('/games/score', {
-          gameKey: 'CYBER_RACER',
-          score: finalScore
-        });
+        await api.submitScore('CYBER_RACER', finalScore, finalScore >= 1000, user);
       } catch (err) {
         console.error('Failed to submit score', err);
       }
