@@ -8,9 +8,11 @@ import AchievementsModal from './components/Achievements/AchievementsModal';
 import { GAMES_LIST } from '../../shared/gameMetadata.js';
 
 // ==========================================
-// 1. Board & Multiplayer Classics (6 Games)
+// 1. Board & Multiplayer Classics (8 Games)
 // ==========================================
 import ChessGame from './components/Game/strategy/ChessGame';
+import EightBallPoolGame from './components/Game/casual/EightBallPoolGame';
+import UnoGame from './components/Game/casual/UnoGame';
 import Ludo from './components/Game/Ludo';
 import Snake from './components/Game/Snake';
 import TicTacToe from './components/Game/TicTacToe';
@@ -26,8 +28,12 @@ import MinesweeperGame from './components/Game/puzzle/MinesweeperGame';
 import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
 
 // ==========================================
-// 3. Fast-Paced Action & Arcade (9 Games)
+// 3. Fast-Paced Action & Arcade (13 Games)
 // ==========================================
+import RooftopSnipersGame from './components/Game/action/RooftopSnipersGame';
+import SlopeGame from './components/Game/action/SlopeGame';
+import SoccerPhysicsGame from './components/Game/action/SoccerPhysicsGame';
+import TankBattleGame from './components/Game/action/TankBattleGame';
 import PongGame from './components/Game/casual/PongGame';
 import AirHockeyGame from './components/Game/action/AirHockeyGame';
 import CyberRacerGame from './components/Game/action/CyberRacerGame';
@@ -203,6 +209,12 @@ function App() {
           {selectedGame === 'CHESS' && (
             <ChessGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}
+          {selectedGame === 'EIGHT_BALL_POOL' && (
+            <EightBallPoolGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'UNO' && (
+            <UnoGame user={user} onLeave={handleLeaveGame} />
+          )}
           {selectedGame === 'LUDO' && (
             <Ludo socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}
@@ -233,7 +245,19 @@ function App() {
             <BlockPuzzleGame user={user} onLeave={handleLeaveGame} />
           )}
 
-          {/* 3. Fast-Paced Action & Arcade */}
+          {/* 3. Fast-Paced Action & CrazyGames Hits */}
+          {selectedGame === 'ROOFTOP_SNIPERS' && (
+            <RooftopSnipersGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'SLOPE_3D' && (
+            <SlopeGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'SOCCER_PHYSICS' && (
+            <SoccerPhysicsGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'TANK_BATTLE' && (
+            <TankBattleGame user={user} onLeave={handleLeaveGame} />
+          )}
           {selectedGame === 'PONG' && (
             <PongGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}

@@ -1,4 +1,4 @@
-// shared/gameMetadata.js - The 19 Ultimate Hit Games Catalog (Curated & User-Friendly)
+// shared/gameMetadata.js - The Curated Hit Games Catalog (Curated & User-Friendly)
 
 export const GAME_CATEGORIES = {
   ALL: 'ALL',
@@ -10,7 +10,7 @@ export const GAME_CATEGORIES = {
 
 export const GAMES_LIST = [
   // ==========================================
-  // 1. BOARD & MULTIPLAYER CLASSICS (6 Games)
+  // 1. BOARD & MULTIPLAYER CLASSICS (8 Games)
   // ==========================================
   {
     id: 'CHESS',
@@ -24,6 +24,32 @@ export const GAMES_LIST = [
     color: '#00f3ff',
     controls: 'Click piece to show legal moves, click destination square to play',
     badge: 'AI & 2-Player'
+  },
+  {
+    id: 'EIGHT_BALL_POOL',
+    title: '8-Ball Pool Billiards',
+    description: 'Classic 6-pocket table with realistic 2D ball physics, cue aiming laser, vertical power slider, Solids vs Stripes, AI Bot and 2-Player Pass & Play.',
+    category: GAME_CATEGORIES.BOARD,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '🎱',
+    color: '#00f3ff',
+    controls: 'Move mouse to aim laser line, drag vertical power slider, click Strike to shoot',
+    badge: 'AI & 2-Player'
+  },
+  {
+    id: 'UNO',
+    title: 'UNO Cyber Cards',
+    description: 'Match colors and numbers, play Skip, Reverse, +2, +4 Wild cards, shout UNO, and beat 3 Smart AI Bots or friends in 2-Player Pass & Play!',
+    category: GAME_CATEGORIES.BOARD,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 4,
+    icon: '🃏',
+    color: '#ff007f',
+    controls: 'Click matching card to discard, tap draw deck if no moves',
+    badge: '4-Player Table'
   },
   {
     id: 'LUDO',
@@ -85,7 +111,7 @@ export const GAMES_LIST = [
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
-    icon: '🎱',
+    icon: '🎯',
     color: '#ffd600',
     controls: 'Position striker on baseline, drag back to aim & shoot',
     badge: 'AI & 2-Player'
@@ -104,189 +130,252 @@ export const GAMES_LIST = [
     maxPlayers: 2,
     icon: '📝',
     color: '#00ff66',
-    controls: 'Type on keyboard or tap virtual letters',
+    controls: 'Type letters using virtual keyboard or physical keyboard, press Enter to submit',
     badge: 'Solo & 2-Player'
   },
   {
     id: 'GAME_2048',
     title: 'Neon 2048',
-    description: 'Slide and merge matching numbered tiles to construct the 2048 block with undo and 2-Player Turn Clash!',
+    description: 'Slide numbered tiles, merge matching numbers, and climb to the 2048 tile! Featuring Undo, D-Pad, and 2-Player Turn Clash mode.',
     category: GAME_CATEGORIES.PUZZLE,
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
     icon: '🔢',
-    color: '#ff9100',
-    controls: 'Arrow Keys / WASD / D-Pad to slide tiles',
+    color: '#ffd600',
+    controls: 'Arrow keys / WASD / On-screen D-Pad or swipe to slide tiles',
     badge: 'Solo & 2-Player'
   },
   {
     id: 'MINESWEEPER',
     title: 'Cyber Minesweeper',
-    description: 'Uncover safe tiles, flag suspected mines, and clear the grid. Includes 2-Player Mine Hunt Duel!',
+    description: 'Classic minefield clearance! Uncover safe sectors, plant warning flags, and clear the field without detonating mines. Solo & 2P Mine Hunt!',
     category: GAME_CATEGORIES.PUZZLE,
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
     icon: '💣',
     color: '#ff3366',
-    controls: 'Left-Click reveal, Right-Click / Flag Mode to mark',
+    controls: 'Left Click to reveal sector, Right Click (or Flag Toggle) to plant flag',
     badge: 'Solo & 2-Player'
   },
   {
     id: 'BLOCK_PUZZLE',
     title: 'Neon Block Jewel 10x10',
-    description: 'Place glowing jewel polyomino shapes onto the 10x10 grid. Complete horizontal and vertical lines to trigger laser line clears!',
+    description: 'Place randomized jewel tetromino blocks on a 10x10 grid. Complete horizontal and vertical lines to trigger laser line clears and combos.',
     category: GAME_CATEGORIES.PUZZLE,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🧱',
-    color: '#e040fb',
-    controls: 'Click jewel piece in tray, then click grid cell to place',
-    badge: '10x10 Laser Blast'
+    color: '#00f3ff',
+    controls: 'Click piece from tray and click grid slot to place it',
+    badge: 'Classic 10x10'
   },
 
   // ==========================================
-  // 3. FAST-PACED ACTION & ARCADE (9 Games)
+  // 3. FAST-PACED ACTION & ARCADE (13 Games)
   // ==========================================
   {
-    id: 'PONG',
-    title: 'Retro Neon Pong',
-    description: 'High-speed 60fps retro tennis battle! Play vs Smart AI or 2-Player with split W/S and Arrow keys.',
+    id: 'ROOFTOP_SNIPERS',
+    title: 'Rooftop Cyber Snipers',
+    description: 'Viral 2-Player ragdoll sniper duel! Jump, rotate rifle, fire sniper recoil bullets, and knock your opponent off the skyscraper roof!',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
-    icon: '🏓',
-    color: '#ff00ff',
-    controls: 'P1: Mouse / W-S keys | P2: Up-Down Arrow keys',
+    icon: '🎯',
+    color: '#00f3ff',
+    controls: 'P1: W to Jump, E to Shoot | P2: I / Up to Jump, O / Enter to Shoot',
+    badge: 'CrazyGames Hit'
+  },
+  {
+    id: 'SLOPE_3D',
+    title: 'Slope 3D Neon Runner',
+    description: 'CrazyGames #1 viral endless runner! Control a glowing 3D neon ball rolling down steep polygonal slopes and dodge red barrier blocks.',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🌐',
+    color: '#00ff66',
+    controls: 'A/D or Left/Right Arrow keys to steer ball',
+    badge: 'CrazyGames Hit'
+  },
+  {
+    id: 'SOCCER_PHYSICS',
+    title: '2-Player Soccer Physics',
+    description: 'Hilarious 1-button ragdoll football duel! Jump, kick, and header bouncing soccer balls into the goal against AI or friends!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '⚽',
+    color: '#ffd600',
+    controls: 'P1: Press W or Space | P2: Press Up Arrow or Enter to Jump & Kick',
+    badge: 'CrazyGames Hit'
+  },
+  {
+    id: 'TANK_BATTLE',
+    title: '2-Player Retro Tank Battle',
+    description: 'Top-down neon tank duel! Bouncing laser shells, destructible brick walls, shields, and triple shot power-ups in 2-Player & vs AI mode!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '💥',
+    color: '#00f3ff',
+    controls: 'P1: WASD + Space to Fire | P2: Arrows + Enter to Fire',
     badge: 'AI & 2-Player'
   },
   {
-    id: 'AIR_HOCKEY',
-    title: 'Glow Air Hockey',
-    description: 'High-speed glowing air hockey duel! Defend your crease, bounce bank shots, and smash goals vs AI or 2-Player.',
+    id: 'PONG',
+    title: 'Retro Neon Pong',
+    description: 'High-speed classic table tennis arcade! Play solo vs Smart AI or grab a friend for split-screen 2-Player keyboard duel.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
     icon: '🏓',
     color: '#00f3ff',
-    controls: 'P1: Mouse / Touch | P2: Arrow keys',
+    controls: 'P1: W/S keys or Left Mouse | P2: Up/Down Arrow keys',
+    badge: 'AI & 2-Player'
+  },
+  {
+    id: 'AIR_HOCKEY',
+    title: 'Glow Air Hockey',
+    description: '2D table physics with striker mallets and gliding puck. Defend your goal and score goals against AI or in 2-Player keyboard mode.',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: true,
+    minPlayers: 1,
+    maxPlayers: 2,
+    icon: '⚡',
+    color: '#00e5ff',
+    controls: 'P1: Mouse / Touch to glide mallet | P2: Arrow keys in 2-Player mode',
     badge: 'AI & 2-Player'
   },
   {
     id: 'CYBER_RACER',
     title: 'Cyber Highway Racer',
-    description: 'Dodge retro synthwave highway traffic at breakneck speeds. Collect energy coins, dodge trucks, and ignite Nitro!',
+    description: 'Drive realistic 3D supercars down infinite cyberpunk highways. Choose from 4 garage cars, dodge traffic, and activate Nitro boosts.',
     category: GAME_CATEGORIES.ACTION,
-    isMultiplayer: false,
+    isMultiplayer: true,
     minPlayers: 1,
-    maxPlayers: 1,
+    maxPlayers: 2,
     icon: '🏎️',
     color: '#ff007f',
-    controls: 'A / D or Left / Right to steer, W to accelerate, Shift / Space for Nitro',
-    badge: '2.5D Nitro Rush'
+    controls: 'A/D or Left/Right Arrow to steer, W or Up to Nitro boost',
+    badge: 'Real Supercar'
   },
   {
     id: 'FRUIT_SLICER',
     title: 'Fruit Blade Slicer',
-    description: 'Slash flying juicy fruits with razor-sharp glowing blade swipes. Build massive combo multipliers and avoid explosive bombs!',
+    description: 'Slice flying watermelons, oranges, bananas, and coconuts with razor-sharp neon katana swipes while avoiding explosive bombs.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🍉',
-    color: '#ff9100',
-    controls: 'Click & Drag mouse or swipe screen to slice fruits',
+    color: '#00ff66',
+    controls: 'Click and drag mouse (or swipe finger) across flying fruits to slice',
     badge: 'Juicy Combos'
   },
   {
     id: 'KNIFE_HIT',
     title: 'Knife Hit Master',
-    description: 'Throw blades into rotating logs and neon boss shields. Slice apples, dodge existing blades, and clear 5 epic stages!',
+    description: 'Throw glowing laser daggers into rotating logs and boss shields. Hit apples for bonus points and never overlap existing blades.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🎯',
-    color: '#9d00ff',
-    controls: 'Tap screen or press Spacebar to launch knives',
+    color: '#ffd600',
+    controls: 'Click anywhere or tap Spacebar to throw dagger',
     badge: 'Boss Battles'
   },
   {
     id: 'SNAKE_GAME',
     title: 'Cyber Snake Arena',
-    description: 'Slither, consume neon power apples, and grow your snake without crashing into walls or yourself.',
+    description: 'Classic slithering snake in a neon cyber arena. Eat glowing orbs, grow longer, avoid wall collisions, and beat high score records.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🐍',
     color: '#00ff66',
-    controls: 'Arrow Keys / WASD to steer snake',
-    badge: 'Apple Slither'
+    controls: 'Arrow keys or WASD or On-Screen D-Pad to turn',
+    badge: 'Classic Arcade'
   },
   {
     id: 'BRICK_BREAKER',
     title: 'Hyper Brick Breaker',
-    description: 'Smash matrices of high-tech neon bricks with paddle deflections and explosive ball bounces.',
+    description: 'Neon paddle & ball demolition! Smash tiered bricks, catch multi-ball laser drops, and clear colorful puzzle waves.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🧱',
-    color: '#e040fb',
-    controls: 'Move mouse left/right to slide paddle',
-    badge: 'Brick Demolition'
+    color: '#00f3ff',
+    controls: 'Move mouse or Left/Right arrows to control paddle',
+    badge: 'Multi-Ball'
   },
   {
     id: 'PIANO_TILES',
     title: 'Grand Piano & Beats',
-    description: 'Play a realistic 3D acoustic grand piano! Includes Song Lessons (Für Elise, Canon in D, Interstellar), Free Play, and Arcade Beat Rush.',
+    description: 'Interactive grand keyboard simulator with song lesson autoplay, dynamic neon audio synthesizers, and fast-paced falling beat rush.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🎹',
-    color: '#00f3ff',
-    controls: 'Play PC keys (Q-M, 1-0, Space for pedal) or tap piano keys',
-    badge: 'Real Grand Piano'
+    color: '#e040fb',
+    controls: 'Tap piano keys with mouse, or use keyboard row (A,S,D,F,G,H,J,K)',
+    badge: 'Music & Arcade'
   },
   {
     id: 'BUBBLE_SHOOTER',
     title: 'Bubble Shooter Arena',
-    description: 'Aim your neon bubble cannon! Match 3 or more bubbles of identical color to pop clusters.',
+    description: 'Aim and shoot matching colored bubbles to form clusters of 3 or more. Trigger massive bubble drops and clear the ceiling grid.',
     category: GAME_CATEGORIES.ACTION,
     isMultiplayer: false,
     minPlayers: 1,
     maxPlayers: 1,
     icon: '🔮',
-    color: '#00e676',
-    controls: 'Aim mouse cursor & click to shoot bubble',
-    badge: 'Cluster Pop'
+    color: '#ff3366',
+    controls: 'Move mouse to aim trajectory line, Click to fire bubble',
+    badge: 'Match-3'
   }
 ];
 
 export const ACHIEVEMENTS_DATA = [
-  { key: 'CHESS_GRANDMASTER_WIN', gameKey: 'CHESS', title: 'Grandmaster Checkmate', desc: 'Defeat the AI or an opponent in Chess', icon: '♟️', points: 80 },
-  { key: 'LUDO_ROYAL_VICTORY', gameKey: 'LUDO', title: 'Royal Sovereign', desc: 'Win a full match of 3D Ludo Kingdom', icon: '👑', points: 60 },
-  { key: 'SNAKE_LADDER_WIN', gameKey: 'SNAKE', title: 'Serpentine Climber', desc: 'Reach cell 100 in Snakes & Ladders', icon: '🎲', points: 40 },
-  { key: 'TTT_FIRST_WIN', gameKey: 'TIC_TAC_TOE', title: 'Grid Tactician', desc: 'Win your first match in Tic-Tac-Toe', icon: '❌', points: 20 },
-  { key: 'C4_FIRST_WIN', gameKey: 'CONNECT_4', title: 'Vertical Supremacy', desc: 'Win your first Connect-4 match', icon: '🔴', points: 25 },
-  { key: 'CARROM_QUEEN_COVER', gameKey: 'CARROM', title: 'Carrom Monarch', desc: 'Pocket and cover the Queen in Carrom Board', icon: '🎱', points: 70 },
-  { key: 'WORDLE_SOLVED', gameKey: 'WORDLE', title: 'Linguistic Oracle', desc: 'Guess the secret 5-letter word', icon: '📝', points: 45 },
-  { key: '2048_VICTORY', gameKey: 'GAME_2048', title: 'Nexus Quantum 2048', desc: 'Create the legendary 2048 tile!', icon: '🏆', points: 100 },
-  { key: 'MINE_CLEAR_EASY', gameKey: 'MINESWEEPER', title: 'Bomb Squad', desc: 'Clear a full Minesweeper grid safely', icon: '💣', points: 40 },
-  { key: 'BLOCK_MULTI_CLEAR', gameKey: 'BLOCK_PUZZLE', title: 'Matrix Demolition', desc: 'Clear 3 or more lines at once in Block Puzzle', icon: '🧱', points: 60 },
-  { key: 'PONG_SHUTOUT', gameKey: 'PONG', title: 'Flawless Paddle', desc: 'Win a Pong match without conceding a point', icon: '🏓', points: 60 },
-  { key: 'HOCKEY_WIN_MASTER', gameKey: 'AIR_HOCKEY', title: 'Rink Dominator', desc: 'Defeat the Master AI in Glow Air Hockey', icon: '🏓', points: 65 },
-  { key: 'RACER_SCORE_1000', gameKey: 'CYBER_RACER', title: 'Highway Phantom', desc: 'Survive and score 1000+ in Cyber Racer', icon: '🏎️', points: 70 },
-  { key: 'FRUIT_COMBO_5X', gameKey: 'FRUIT_SLICER', title: 'Blade Master', desc: 'Achieve a 5x fruit slice combo', icon: '🍉', points: 55 },
-  { key: 'KNIFE_STAGE_CLEAR', gameKey: 'KNIFE_HIT', title: 'Target Virtuoso', desc: 'Clear all 5 Knife Hit stages', icon: '🎯', points: 75 },
-  { key: 'SNAKE_SCORE_100', gameKey: 'SNAKE_GAME', title: 'Cyber Centurion', desc: 'Score over 100 points in Snake Arena', icon: '🐍', points: 50 },
-  { key: 'BRICK_SCORE_500', gameKey: 'BRICK_BREAKER', title: 'Laser Matrix Breaker', desc: 'Score 500+ points in Brick Breaker', icon: '🧱', points: 45 },
-  { key: 'PIANO_TILES_100', gameKey: 'PIANO_TILES', title: 'Virtuoso Maestro', desc: 'Hit 100 consecutive piano tiles', icon: '🎹', points: 50 },
-  { key: 'BUBBLE_CLEAR_BOARD', gameKey: 'BUBBLE_SHOOTER', title: 'Cluster Buster', desc: 'Pop 50 bubbles in Bubble Shooter', icon: '🔮', points: 40 }
+  // Board & Classics Achievements
+  { key: 'CHESS_GRANDMASTER_WIN', title: 'Grandmaster Tactician', description: 'Win a full chess match against the AI or human player.', points: 150, icon: '♟️' },
+  { key: 'POOL_8BALL_WIN', title: 'Pool Shark Master', description: 'Pocket the 8-ball and win an 8-Ball Pool match.', points: 150, icon: '🎱' },
+  { key: 'UNO_MATCH_WIN', title: 'UNO Champion', description: 'Play your final card and win a match of UNO!', points: 150, icon: '🃏' },
+  { key: 'LUDO_ROYAL_VICTORY', title: 'Kingdom Crown', description: 'Lead all 4 tokens into the royal center home triangle in Ludo.', points: 150, icon: '👑' },
+  { key: 'SNAKE_LADDER_WIN', title: 'Ladder Climber', description: 'Reach tile 100 first in Snakes & Ladders 3D.', points: 100, icon: '🎲' },
+  { key: 'TTT_FIRST_WIN', title: 'Triple Threat', description: 'Win a Tic-Tac-Toe match with 3 in a row.', points: 50, icon: '❌' },
+  { key: 'C4_FIRST_WIN', title: 'Gravity Master', description: 'Connect four colored tokens in a line.', points: 75, icon: '🔴' },
+  { key: 'CARROM_QUEEN_COVER', title: 'Carrom Monarch', description: 'Pocket the Queen and cover it with a carrom coin.', points: 100, icon: '🎯' },
+
+  // Puzzle Achievements
+  { key: 'WORDLE_SOLVED', title: 'Lexicon Prodigy', description: 'Deduce the secret 5-letter word in Wordle Nexus.', points: 100, icon: '📝' },
+  { key: '2048_VICTORY', title: 'Fusion Reactor', description: 'Merge tiles to create the 2048 neon block.', points: 200, icon: '🔢' },
+  { key: 'MINE_CLEAR_EASY', title: 'Bomb Technician', description: 'Clear a minefield without detonating any cyber mines.', points: 100, icon: '💣' },
+  { key: 'BLOCK_MULTI_CLEAR', title: 'Jewel Overload', description: 'Score 300+ points placing blocks in Block Puzzle 10x10.', points: 100, icon: '🧱' },
+
+  // Action & CrazyGames Achievements
+  { key: 'SNIPER_ROOFTOP_WIN', title: 'Rooftop Legend', description: 'Win a 2-Player or AI Rooftop Sniper duel.', points: 150, icon: '🎯' },
+  { key: 'SLOPE_SCORE_1000', title: 'Slope Master', description: 'Survive 1000+ meters in Slope 3D Neon Runner.', points: 150, icon: '🌐' },
+  { key: 'SOCCER_PHYSICS_WIN', title: 'Golden Boot', description: 'Score 5 goals and win a Soccer Physics match.', points: 150, icon: '⚽' },
+  { key: 'TANK_WAR_WIN', title: 'Tank Commander', description: 'Win a 2-Player or AI Retro Tank Battle duel.', points: 150, icon: '💥' },
+  { key: 'PONG_SHUTOUT', title: 'Neon Paddle Master', description: 'Win a match in Retro Neon Pong.', points: 100, icon: '🏓' },
+  { key: 'HOCKEY_WIN_MASTER', title: 'Air Hockey Ace', description: 'Score 7 goals and win a Glow Air Hockey match.', points: 100, icon: '⚡' },
+  { key: 'RACER_SCORE_1000', title: 'Speed Demon', description: 'Survive and score 1000+ meters in Cyber Highway Racer.', points: 100, icon: '🏎️' },
+  { key: 'FRUIT_COMBO_5X', title: 'Blade Master', description: 'Score 500+ points slicing flying fruits.', points: 100, icon: '🍉' },
+  { key: 'KNIFE_STAGE_CLEAR', title: 'Bullseye Assassin', description: 'Clear 5 stages of spinning logs in Knife Hit Master.', points: 100, icon: '🎯' },
+  { key: 'SNAKE_SCORE_100', title: 'Arena Apex', description: 'Grow your cyber snake to 100+ points in Snake Arena.', points: 75, icon: '🐍' },
+  { key: 'BRICK_SCORE_500', title: 'Demolition Legend', description: 'Score 500+ points destroying neon bricks.', points: 100, icon: '🧱' },
+  { key: 'PIANO_TILES_100', title: 'Virtuoso Maestro', description: 'Tap 100+ piano keys in Grand Piano & Beats.', points: 100, icon: '🎹' },
+  { key: 'BUBBLE_CLEAR_BOARD', title: 'Orb Nova', description: 'Score 300+ points popping match-3 bubble orbs.', points: 100, icon: '🔮' }
 ];

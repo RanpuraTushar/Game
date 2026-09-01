@@ -1,0 +1,112 @@
+/* TankBattleGame.css - Master 2-Player Retro Tank Battle Styling */
+
+.tank-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 740px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 24px;
+  position: relative;
+  border-radius: 20px;
+  background: rgba(12, 12, 26, 0.9);
+  border: 1.5px solid rgba(0, 243, 255, 0.28);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 243, 255, 0.1);
+}
+
+.tank-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tank-status-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tank-player-score {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.tank-player-score.p1 { color: #00f3ff; }
+.tank-player-score.p2 { color: #ff007f; align-items: flex-end; }
+
+.tank-hp-bar {
+  width: 120px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tank-hp-fill {
+  height: 100%;
+  transition: width 0.2s ease;
+}
+
+.tank-hp-fill.p1 { background: #00f3ff; box-shadow: 0 0 8px #00f3ff; }
+.tank-hp-fill.p2 { background: #ff007f; box-shadow: 0 0 8px #ff007f; }
+
+.tank-target-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #ffd600;
+  background: rgba(255, 214, 0, 0.15);
+  border: 1px solid rgba(255, 214, 0, 0.4);
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+}
+
+.tank-canvas-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.tank-canvas {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  aspect-ratio: 680 / 440;
+  border-radius: 14px;
+  border: 2px solid rgba(0, 243, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.tank-controls-legend {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #d8dcee;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

@@ -101,6 +101,8 @@ export const submitGameScore = async (req, res) => {
 
     // Board & Multiplayer Achievements
     if (gameKey === 'CHESS' && isWin) checkAndUnlock('CHESS_GRANDMASTER_WIN');
+    if (gameKey === 'EIGHT_BALL_POOL' && isWin) checkAndUnlock('POOL_8BALL_WIN');
+    if (gameKey === 'UNO' && isWin) checkAndUnlock('UNO_MATCH_WIN');
     if (gameKey === 'LUDO' && isWin) checkAndUnlock('LUDO_ROYAL_VICTORY');
     if (gameKey === 'SNAKE' && isWin) checkAndUnlock('SNAKE_LADDER_WIN');
     if (gameKey === 'TIC_TAC_TOE' && isWin) checkAndUnlock('TTT_FIRST_WIN');
@@ -113,7 +115,11 @@ export const submitGameScore = async (req, res) => {
     if (gameKey === 'MINESWEEPER' && isWin) checkAndUnlock('MINE_CLEAR_EASY');
     if (gameKey === 'BLOCK_PUZZLE' && score >= 300) checkAndUnlock('BLOCK_MULTI_CLEAR');
 
-    // Action & Arcade Achievements
+    // Action & CrazyGames Achievements
+    if (gameKey === 'ROOFTOP_SNIPERS' && isWin) checkAndUnlock('SNIPER_ROOFTOP_WIN');
+    if (gameKey === 'SLOPE_3D' && score >= 1000) checkAndUnlock('SLOPE_SCORE_1000');
+    if (gameKey === 'SOCCER_PHYSICS' && isWin) checkAndUnlock('SOCCER_PHYSICS_WIN');
+    if (gameKey === 'TANK_BATTLE' && isWin) checkAndUnlock('TANK_WAR_WIN');
     if (gameKey === 'PONG' && isWin) checkAndUnlock('PONG_SHUTOUT');
     if (gameKey === 'AIR_HOCKEY' && isWin) checkAndUnlock('HOCKEY_WIN_MASTER');
     if (gameKey === 'CYBER_RACER' && score >= 1000) checkAndUnlock('RACER_SCORE_1000');
