@@ -7,19 +7,36 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [isSpinning, setIsSpinning] = useState(false);
 
-  const categories = ['ALL', 'BOARD', 'PUZZLE', 'ACTION'];
+  const categories = [
+    { id: 'ALL', label: 'ALL GAMES', icon: '🎮' },
+    { id: 'BOARD', label: 'BOARD & CLASSICS', icon: '♟️' },
+    { id: 'PUZZLE', label: 'PUZZLE & LOGIC', icon: '🧩' },
+    { id: 'ACTION', label: 'ACTION & ARCADE', icon: '⚡' },
+    { id: 'MULTIPLAYER', label: '👥 2-PLAYER / MULTI', icon: '👥' }
+  ];
 
   const filteredGames = GAMES_LIST.filter(game => {
-    const matchesCategory = activeCategory === 'ALL' || game.category === activeCategory;
+    let matchesCategory = false;
+    if (activeCategory === 'ALL') {
+      matchesCategory = true;
+    } else if (activeCategory === 'MULTIPLAYER') {
+      matchesCategory = game.isMultiplayer === true || (game.maxPlayers && game.maxPlayers > 1);
+    } else {
+      matchesCategory = game.category === activeCategory;
+    }
+
     const matchesSearch = game.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           game.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (game.badge && game.badge.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
-  const getCategoryCount = (cat) => {
-    if (cat === 'ALL') return GAMES_LIST.length;
-    return GAMES_LIST.filter(g => g.category === cat).length;
+  const getCategoryCount = (catId) => {
+    if (catId === 'ALL') return GAMES_LIST.length;
+    if (catId === 'MULTIPLAYER') {
+      return GAMES_LIST.filter(g => g.isMultiplayer === true || (g.maxPlayers && g.maxPlayers > 1)).length;
+    }
+    return GAMES_LIST.filter(g => g.category === catId).length;
   };
 
   const handleRandomSelect = () => {
@@ -44,13 +61,13 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
         <div className="hero-content">
           <div className="hero-badge-pill">
             <span className="sparkle-icon">✨</span>
-            <span>CYBER ARCADE ARENA &bull; {GAMES_LIST.length} HIT GAMES</span>
+            <span>CYBER ARCADE ARENA &bull; {GAMES_LIST.length} HIT GAMES READY</span>
           </div>
           <h1 className="hero-main-title">
             CYBER <span className="neon-cyan-text">ARCADE</span>
           </h1>
           <p className="hero-description">
-            Play the world's most popular casual & arcade hits solo against AI or challenge friends in 1v1 multiplayer.
+            Play your favorite hit arcade, puzzle, and board classics solo vs Smart AI or challenge friends in 2-Player Pass & Play and online multiplayer duels!
           </p>
         </div>
 
@@ -88,82 +105,79 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
 
         <div className="hub-category-tabs">
           {categories.map(cat => {
-            const count = getCategoryCount(cat);
+            const count = getCategoryCount(cat.id);
+            const isActive = activeCategory === cat.id;
+
             return (
               <button
-                key={cat}
-                className={`category-tab-btn ${activeCategory === cat ? 'active' : ''}`}
-                onClick={() => setActiveCategory(cat)}
+                key={cat.id}
+                className={`category-tab-btn ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat.id)}
               >
-                <span>{cat}</span>
-                <span className="cat-count">{count}</span>
+                <span className="tab-icon">{cat.icon}</span>
+                <span className="tab-label">{cat.label}</span>
+                <span className="tab-count-badge">{count}</span>
               </button>
             );
           })}
         </div>
       </section>
 
-      {/* Games 3D Cards Grid */}
-      <section className="hub-games-section">
+      {/* Game Cards Grid */}
+      <main className="hub-games-grid-section">
         {filteredGames.length === 0 ? (
-          <div className="hub-empty-state glass-panel">
-            <span className="empty-state-icon">👾</span>
-            <h3 className="empty-state-title">No Games Found</h3>
-            <p className="empty-state-desc">No games matched your search query "{searchTerm}".</p>
-            <button 
-              className="btn-secondary" 
-              onClick={() => { setSearchTerm(''); setActiveCategory('ALL'); }}
-              style={{ marginTop: '15px' }}
-            >
-              Reset Filters
+          <div className="no-games-found">
+            <span className="empty-icon">🕹️</span>
+            <h3>NO GAMES FOUND</h3>
+            <p>Try searching for a different keyword or select another category filter.</p>
+            <button className="btn-tertiary" onClick={() => { setSearchTerm(''); setActiveCategory('ALL'); }}>
+              RESET FILTERS
             </button>
           </div>
         ) : (
-          <div className="hub-cards-grid">
-            {filteredGames.map(game => {
-              const accent = game.color || '#00f3ff';
+          <div className="games-cards-grid">
+            {filteredGames.map((game, index) => {
+              const maxP = game.maxPlayers || 1;
+              const isMulti = game.isMultiplayer || maxP > 1;
+
               return (
-                <div 
-                  key={game.id} 
-                  className="nexus-game-card glass-panel"
+                <div
+                  key={game.id}
+                  className="game-catalog-card"
                   onClick={() => onSelectGame(game.id)}
-                  style={{ '--theme-color': accent }}
+                  style={{ animationDelay: `${index * 30}ms` }}
                 >
-                  <div className="card-top-header">
-                    <div 
-                      className="card-icon-bubble" 
-                      style={{ 
-                        background: `radial-gradient(circle at 35% 35%, rgba(255,255,255,0.1), rgba(0,0,0,0.6))`,
-                        borderColor: accent,
-                        boxShadow: `0 0 16px ${accent}44`
-                      }}
-                    >
-                      <span className="card-icon-symbol">{game.icon}</span>
+                  <div className="card-top-row">
+                    <div className="card-icon-halo" style={{ '--halo-color': game.color || '#00f3ff' }}>
+                      <span className="card-game-icon">{game.icon}</span>
                     </div>
 
                     <div className="card-badges-wrapper">
-                      <span className="card-cat-badge">{game.category}</span>
+                      {isMulti && (
+                        <span className="card-players-badge">
+                          {maxP > 2 ? `👑 1-${maxP}P` : '👥 1-2P'}
+                        </span>
+                      )}
                       {game.badge && (
-                        <span 
-                          className="card-mode-badge" 
-                          style={{ borderColor: accent, color: accent }}
-                        >
+                        <span className="card-badge-pill" style={{ borderColor: game.color || 'rgba(0,243,255,0.4)' }}>
                           {game.badge}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <h3 className="game-card-title">{game.title}</h3>
-                  <p className="game-card-desc">{game.description}</p>
+                  <h3 className="card-game-title">{game.title}</h3>
+                  <p className="card-game-desc">{game.description}</p>
 
-                  <div className="game-card-footer">
-                    <div className="game-controls-info">
-                      <span className="controls-icon">🎮</span>
-                      <span className="controls-text" title={game.controls}>{game.controls || 'Intuitive Controls'}</span>
-                    </div>
-                    <button className="card-play-action-btn">
-                      PLAY <span className="play-arrow-glyph">&rarr;</span>
+                  <div className="card-controls-hint">
+                    <span className="hint-label">🎮 Controls:</span>
+                    <span className="hint-text">{game.controls || 'Tap or click to play'}</span>
+                  </div>
+
+                  <div className="card-footer-action">
+                    <button className="btn-play-card" style={{ '--btn-accent': game.color || '#00f3ff' }}>
+                      <span>PLAY NOW</span>
+                      <span className="play-arrow">→</span>
                     </button>
                   </div>
                 </div>
@@ -171,7 +185,7 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
             })}
           </div>
         )}
-      </section>
+      </main>
     </div>
   );
 };

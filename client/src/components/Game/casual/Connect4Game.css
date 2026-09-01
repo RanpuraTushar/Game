@@ -1,11 +1,18 @@
-/* Connect4Game.css */
+/* Connect4Game.css - Master Cyber Connect 4 Styling */
+
 .connect4-container {
   max-width: 580px;
+  width: 100%;
   margin: 15px auto;
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  background: rgba(12, 12, 26, 0.85);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 243, 255, 0.1);
 }
 
 .connect4-header {
@@ -13,42 +20,48 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .turn-indicator {
-  font-size: 1rem;
-  color: #aaa;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.88rem;
+  color: #a4acc4;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .turn-badge {
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.9rem;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.8px;
 }
 
 .turn-badge.red {
   background: rgba(255, 59, 48, 0.2);
   color: #ff3b30;
   border: 1px solid #ff3b30;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.3);
 }
 
 .turn-badge.yellow {
   background: rgba(255, 234, 0, 0.2);
   color: #ffea00;
   border: 1px solid #ffea00;
+  box-shadow: 0 0 10px rgba(255, 234, 0, 0.3);
 }
 
 .c4-board {
-  background: #002244;
-  border: 4px solid #0055aa;
-  box-shadow: 0 0 30px rgba(0, 85, 170, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.6);
+  background: #081028;
+  border: 3px solid rgba(0, 243, 255, 0.4);
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 0, 0, 0.8);
   border-radius: 16px;
-  padding: 15px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -63,11 +76,11 @@
 .drop-arrow-btn {
   background: transparent;
   border: none;
-  color: #00f3ff;
-  font-size: 1.2rem;
+  color: var(--neon-blue);
+  font-size: 1.3rem;
   cursor: pointer;
   padding: 4px 0;
-  transition: transform 0.2s;
+  transition: transform 0.2s, color 0.2s;
 }
 
 .drop-arrow-btn:hover:not(:disabled) {
@@ -85,9 +98,9 @@
 .c4-slot {
   width: 52px;
   height: 52px;
-  background: #001122;
+  background: #040814;
   border-radius: 50%;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,12 +120,12 @@
 
 .c4-disc.red {
   background: radial-gradient(circle at 35% 35%, #ff8a80, #d50000 60%, #7f0000);
-  box-shadow: 0 0 12px #ff3b30;
+  box-shadow: 0 0 15px #ff3b30;
 }
 
 .c4-disc.yellow {
   background: radial-gradient(circle at 35% 35%, #ffff8d, #ffd600 60%, #ff6d00);
-  box-shadow: 0 0 12px #ffd600;
+  box-shadow: 0 0 15px #ffd600;
 }
 
 .c4-disc.win-pulse {

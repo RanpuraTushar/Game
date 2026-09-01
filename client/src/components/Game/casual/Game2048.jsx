@@ -4,6 +4,11 @@ import { api } from '../../../services/api';
 import './Game2048.css';
 
 const Game2048 = ({ user, onLeave }) => {
+  const [gameMode, setGameMode] = useState('SOLO'); // 'SOLO' or 'TWO_PLAYER'
+  const [turn, setTurn] = useState('P1'); // 'P1' (Cyan) or 'P2' (Pink)
+  const [p1Score, setP1Score] = useState(0);
+  const [p2Score, setP2Score] = useState(0);
+
   const [grid, setGrid] = useState(Array(16).fill(0));
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
@@ -12,10 +17,9 @@ const Game2048 = ({ user, onLeave }) => {
   const [won, setWon] = useState(false);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
 
-  // Initialize new game
   useEffect(() => {
     startNewGame();
-  }, []);
+  }, [gameMode]);
 
   const startNewGame = () => {
     let newGrid = Array(16).fill(0);
@@ -23,6 +27,9 @@ const Game2048 = ({ user, onLeave }) => {
     newGrid = addRandomTile(newGrid);
     setGrid(newGrid);
     setScore(0);
+    setP1Score(0);
+    setP2Score(0);
+    setTurn('P1');
     setGameOver(false);
     setWon(false);
     setHistory(null);
@@ -49,15 +56,14 @@ const Game2048 = ({ user, onLeave }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [grid, gameOver, score]);
+  }, [grid, gameOver, score, turn, gameMode]);
 
   const move = async (direction) => {
     let newGrid = [...grid];
     let gainedScore = 0;
     let hasMoved = false;
 
-    // Save previous state for Undo
-    const prevHistory = { grid: [...grid], score };
+    const prevHistory = { grid: [...grid], score, p1Score, p2Score, turn };
 
     const getRow = (r) => [newGrid[r * 4], newGrid[r * 4 + 1], newGrid[r * 4 + 2], newGrid[r * 4 + 3]];
     const setRow = (r, row) => { for (let c = 0; c < 4; c++) newGrid[r * 4 + c] = row[c]; };
@@ -108,14 +114,22 @@ const Game2048 = ({ user, onLeave }) => {
     }
 
     if (hasMoved) {
-      SoundEffects.playTokenMove();
+      SoundEffects.playTokenStep();
       const updatedGrid = addRandomTile(newGrid);
       const updatedScore = score + gainedScore;
+
+      if (turn === 'P1') setP1Score(p => p + gainedScore);
+      else setP2Score(p => p + gainedScore);
 
       setHistory(prevHistory);
       setGrid(updatedGrid);
       setScore(updatedScore);
       if (updatedScore > bestScore) setBestScore(updatedScore);
+
+      // Switch turn in 2-Player mode
+      if (gameMode === 'TWO_PLAYER') {
+        setTurn(t => t === 'P1' ? 'P2' : 'P1');
+      }
 
       // Check 2048 achievement
       if (updatedGrid.includes(2048) && !won) {
@@ -150,6 +164,9 @@ const Game2048 = ({ user, onLeave }) => {
     if (history) {
       setGrid(history.grid);
       setScore(history.score);
+      if (history.p1Score !== undefined) setP1Score(history.p1Score);
+      if (history.p2Score !== undefined) setP2Score(history.p2Score);
+      if (history.turn !== undefined) setTurn(history.turn);
       setHistory(null);
       SoundEffects.playClick();
     }
@@ -174,19 +191,51 @@ const Game2048 = ({ user, onLeave }) => {
 
   return (
     <div className="game-2048-container glass-panel">
-      {/* Header */}
+      {/* Top Header */}
       <div className="game-2048-header">
-        <button className="btn-secondary" onClick={onLeave}>&larr; LEAVE</button>
-        <div className="scores-row">
-          <div className="score-badge-2048">
-            <span className="score-lbl">SCORE</span>
-            <span className="score-val">{score}</span>
-          </div>
-          <div className="score-badge-2048 best">
-            <span className="score-lbl">BEST</span>
-            <span className="score-val">{bestScore}</span>
-          </div>
+        <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>
+        
+        {/* Mode Selector */}
+        <div className="game-mode-toggle-group">
+          <button 
+            className={`mode-pill-btn ${gameMode === 'SOLO' ? 'active' : ''}`}
+            onClick={() => setGameMode('SOLO')}
+          >
+            👤 SOLO
+          </button>
+          <button 
+            className={`mode-pill-btn ${gameMode === 'TWO_PLAYER' ? 'active' : ''}`}
+            onClick={() => setGameMode('TWO_PLAYER')}
+          >
+            👥 2-PLAYER CLASH
+          </button>
         </div>
+
+        <button className="btn-tertiary" onClick={startNewGame}>↺ RESTART</button>
+      </div>
+
+      {/* Status Bar */}
+      <div className="status-2048-bar">
+        {gameMode === 'SOLO' ? (
+          <div className="scores-row">
+            <div className="score-badge-2048">
+              <span className="score-lbl">SCORE</span>
+              <span className="score-val">{score}</span>
+            </div>
+            <div className="score-badge-2048 best">
+              <span className="score-lbl">BEST</span>
+              <span className="score-val">{bestScore}</span>
+            </div>
+          </div>
+        ) : (
+          <div className="duel-2048-banner">
+            <span style={{ color: '#00f3ff' }}>P1 PTS: <strong>{p1Score}</strong></span>
+            <span className="turn-indicator-pill" style={{ color: turn === 'P1' ? '#00f3ff' : '#ff007f' }}>
+              {turn === 'P1' ? '🔵 PLAYER 1 TURN' : '🔴 PLAYER 2 TURN'}
+            </span>
+            <span style={{ color: '#ff007f' }}>P2 PTS: <strong>{p2Score}</strong></span>
+          </div>
+        )}
       </div>
 
       {unlockedBanner && (
@@ -200,9 +249,12 @@ const Game2048 = ({ user, onLeave }) => {
         <button className="btn-tertiary undo-btn" onClick={handleUndo} disabled={!history}>
           ↩ UNDO
         </button>
-        <button className="btn-primary reset-btn" onClick={startNewGame}>
-          NEW GAME
-        </button>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          <button className="dpad-btn" onClick={() => move('UP')}>▲</button>
+          <button className="dpad-btn" onClick={() => move('LEFT')}>◀</button>
+          <button className="dpad-btn" onClick={() => move('DOWN')}>▼</button>
+          <button className="dpad-btn" onClick={() => move('RIGHT')}>▶</button>
+        </div>
       </div>
 
       {/* 4x4 Grid Matrix */}
@@ -221,14 +273,30 @@ const Game2048 = ({ user, onLeave }) => {
         ))}
       </div>
 
-      <p className="hint-2048">💡 Use <strong>Arrow Keys</strong> or <strong>W, A, S, D</strong> to slide and merge tiles.</p>
+      <p className="hint-2048">💡 Slide with <strong>Arrow Keys</strong>, <strong>W/A/S/D</strong>, or touch buttons.</p>
 
       {/* Game Over / Victory Overlay */}
       {gameOver && (
         <div className="finish-overlay">
-          <h2 className="neon-text" style={{ color: '#ff0055' }}>GAME OVER</h2>
-          <p style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px' }}>Final Score: {score}</p>
-          <button className="btn-primary" onClick={startNewGame}>TRY AGAIN</button>
+          {gameMode === 'SOLO' ? (
+            <>
+              <h2 className="neon-text" style={{ color: '#ff0055' }}>GAME OVER</h2>
+              <p style={{ color: '#fff', fontSize: '1.2rem', margin: '10px 0 20px 0' }}>Final Score: {score}</p>
+            </>
+          ) : (
+            <>
+              <h2 className="neon-text" style={{ color: p1Score > p2Score ? '#00f3ff' : p1Score === p2Score ? '#ffd600' : '#ff007f' }}>
+                {p1Score > p2Score ? '🏆 PLAYER 1 WINS THE CLASH!' : p1Score === p2Score ? 'DRAW MATCH!' : '🏆 PLAYER 2 WINS THE CLASH!'}
+              </h2>
+              <p style={{ color: '#fff', fontSize: '1.2rem', margin: '10px 0 20px 0' }}>
+                P1 Merge Score: {p1Score} &bull; P2 Merge Score: {p2Score}
+              </p>
+            </>
+          )}
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button className="btn-primary" onClick={startNewGame}>PLAY AGAIN</button>
+            <button className="btn-secondary" onClick={onLeave}>BACK TO HUB</button>
+          </div>
         </div>
       )}
     </div>

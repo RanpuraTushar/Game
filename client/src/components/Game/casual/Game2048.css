@@ -1,11 +1,18 @@
-/* Game2048.css */
+/* Game2048.css - Master Cyber 2048 Matrix Styling */
+
 .game-2048-container {
-  max-width: 440px;
-  margin: 15px auto;
-  padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 480px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 24px;
+  position: relative;
+  border-radius: 18px;
+  background: rgba(12, 12, 26, 0.85);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 243, 255, 0.1);
 }
 
 .game-2048-header {
@@ -13,82 +20,130 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.status-2048-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .scores-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .score-badge-2048 {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  background: #090916;
+  border: 1.5px solid rgba(0, 243, 255, 0.3);
   padding: 6px 14px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 70px;
+}
+
+.score-lbl {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #8f98b6;
+  letter-spacing: 1px;
+}
+
+.score-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
 }
 
 .score-badge-2048.best {
   border-color: #ffd600;
 }
 
-.score-badge-2048 .score-lbl {
-  font-size: 0.7rem;
-  color: #888;
-  letter-spacing: 1px;
-}
-
-.score-badge-2048 .score-val {
-  font-size: 1.2rem;
-  font-weight: 900;
-  color: #00f3ff;
-}
-
 .score-badge-2048.best .score-val {
   color: #ffd600;
 }
 
-.controls-action-bar {
+.duel-2048-banner {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 18px;
+  align-items: center;
+  font-size: 0.85rem;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.grid-2048 {
+.controls-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  max-width: 360px;
-  height: 360px;
-  background: #111122;
-  border: 2px solid rgba(0, 243, 255, 0.4);
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+  margin-bottom: 16px;
+}
+
+.dpad-btn {
+  background: #171c38;
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+}
+
+.dpad-btn:active {
+  background: var(--neon-blue);
+  color: #000;
+}
+
+/* 4x4 Grid */
+.grid-2048 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  background: #080814;
+  border: 2px solid rgba(0, 243, 255, 0.35);
+  border-radius: 14px;
   padding: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+  margin-bottom: 12px;
 }
 
 .cell-2048 {
-  background: rgba(255, 255, 255, 0.05);
+  background: #121528;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: 900;
-  font-family: 'Orbitron', monospace;
-  transition: transform 0.15s ease, background 0.15s ease;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  transition: transform 0.12s ease;
+  user-select: none;
 }
 
 .cell-2048.tile-active {
   background: var(--tile-color);
-  box-shadow: 0 0 15px var(--tile-color);
-  animation: popTile 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 16px var(--tile-color);
+  animation: popTile 0.15s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 @keyframes popTile {
@@ -97,7 +152,7 @@
 }
 
 .hint-2048 {
-  margin-top: 15px;
-  color: #777;
   font-size: 0.85rem;
+  color: #8f98b6;
+  text-align: center;
 }

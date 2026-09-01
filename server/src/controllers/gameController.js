@@ -75,7 +75,7 @@ export const submitGameScore = async (req, res) => {
       globalEntry = { username, total_points: 0, total_wins: 0, rank_title: 'Novice Gamer' };
       memDB.global_leaderboard.push(globalEntry);
     }
-    globalEntry.total_points += Math.max(score, isWin ? 50 : 10);
+    globalEntry.total_points += Math.max(score || 0, isWin ? 50 : 10);
     if (isWin) globalEntry.total_wins += 1;
     
     // Update rank title based on total points
@@ -99,28 +99,30 @@ export const submitGameScore = async (req, res) => {
       }
     };
 
-    // Board & Logic Achievements
+    // Board & Multiplayer Achievements
+    if (gameKey === 'CHESS' && isWin) checkAndUnlock('CHESS_GRANDMASTER_WIN');
     if (gameKey === 'LUDO' && isWin) checkAndUnlock('LUDO_ROYAL_VICTORY');
     if (gameKey === 'SNAKE' && isWin) checkAndUnlock('SNAKE_LADDER_WIN');
     if (gameKey === 'TIC_TAC_TOE' && isWin) checkAndUnlock('TTT_FIRST_WIN');
     if (gameKey === 'CONNECT_4' && isWin) checkAndUnlock('C4_FIRST_WIN');
+    if (gameKey === 'CARROM' && isWin) checkAndUnlock('CARROM_QUEEN_COVER');
+
+    // Puzzle Achievements
     if (gameKey === 'WORDLE' && isWin) checkAndUnlock('WORDLE_SOLVED');
     if (gameKey === 'GAME_2048' && score >= 2048) checkAndUnlock('2048_VICTORY');
     if (gameKey === 'MINESWEEPER' && isWin) checkAndUnlock('MINE_CLEAR_EASY');
+    if (gameKey === 'BLOCK_PUZZLE' && score >= 300) checkAndUnlock('BLOCK_MULTI_CLEAR');
 
-    // Arcade & Action Achievements
-    if (gameKey === 'SNAKE_GAME' && score >= 100) checkAndUnlock('SNAKE_SCORE_100');
-    if (gameKey === 'BRICK_BREAKER' && score >= 500) checkAndUnlock('BRICK_SCORE_500');
+    // Action & Arcade Achievements
     if (gameKey === 'PONG' && isWin) checkAndUnlock('PONG_SHUTOUT');
-    if (gameKey === 'PIANO_TILES' && score >= 100) checkAndUnlock('PIANO_TILES_100');
-    if (gameKey === 'BUBBLE_SHOOTER' && score >= 300) checkAndUnlock('BUBBLE_CLEAR_BOARD');
-    if (gameKey === 'CYBER_RACER' && score >= 1000) checkAndUnlock('RACER_SCORE_1000');
     if (gameKey === 'AIR_HOCKEY' && isWin) checkAndUnlock('HOCKEY_WIN_MASTER');
+    if (gameKey === 'CYBER_RACER' && score >= 1000) checkAndUnlock('RACER_SCORE_1000');
     if (gameKey === 'FRUIT_SLICER' && score >= 500) checkAndUnlock('FRUIT_COMBO_5X');
     if (gameKey === 'KNIFE_HIT' && (isWin || score >= 5)) checkAndUnlock('KNIFE_STAGE_CLEAR');
-    if (gameKey === 'BLOCK_PUZZLE' && score >= 300) checkAndUnlock('BLOCK_MULTI_CLEAR');
-    if (gameKey === 'ZOMBIE_CLICKER') checkAndUnlock('ZOMBIE_SLAYER_10');
-    if (gameKey === 'CARROM' && isWin) checkAndUnlock('CARROM_QUEEN_COVER');
+    if (gameKey === 'SNAKE_GAME' && score >= 100) checkAndUnlock('SNAKE_SCORE_100');
+    if (gameKey === 'BRICK_BREAKER' && score >= 500) checkAndUnlock('BRICK_SCORE_500');
+    if (gameKey === 'PIANO_TILES' && score >= 100) checkAndUnlock('PIANO_TILES_100');
+    if (gameKey === 'BUBBLE_SHOOTER' && score >= 300) checkAndUnlock('BUBBLE_CLEAR_BOARD');
 
     // Also persist to MySQL if connected
     if (isDbConnected()) {

@@ -8,6 +8,11 @@ const COLS = 9;
 const MINES_COUNT = 10;
 
 const MinesweeperGame = ({ user, onLeave }) => {
+  const [gameMode, setGameMode] = useState('SOLO'); // 'SOLO' or 'TWO_PLAYER'
+  const [turn, setTurn] = useState('P1'); // 'P1' (Cyan) or 'P2' (Pink)
+  const [p1Points, setP1Points] = useState(0);
+  const [p2Points, setP2Points] = useState(0);
+
   const [grid, setGrid] = useState([]);
   const [mineLocations, setMineLocations] = useState(new Set());
   const [gameOver, setGameOver] = useState(false);
@@ -23,7 +28,7 @@ const MinesweeperGame = ({ user, onLeave }) => {
   useEffect(() => {
     startNewGame();
     return () => clearInterval(timerRef.current);
-  }, []);
+  }, [gameMode]);
 
   const startNewGame = () => {
     clearInterval(timerRef.current);
@@ -80,6 +85,9 @@ const MinesweeperGame = ({ user, onLeave }) => {
     setGameWon(false);
     setFlagsLeft(MINES_COUNT);
     setStatusFace('🙂');
+    setTurn('P1');
+    setP1Points(0);
+    setP2Points(0);
 
     timerRef.current = setInterval(() => {
       setTimer(t => t + 1);
@@ -98,7 +106,7 @@ const MinesweeperGame = ({ user, onLeave }) => {
     if (cell.revealed || cell.flagged) return;
 
     if (cell.isMine) {
-      // Hit a mine!
+      // Detonated!
       revealAllMines(grid);
       setGameOver(true);
       setStatusFace('😵');
@@ -110,27 +118,37 @@ const MinesweeperGame = ({ user, onLeave }) => {
 
     SoundEffects.playClick();
     const newGrid = grid.map(row => row.map(cObj => ({ ...cObj })));
-    floodReveal(newGrid, r, c);
+    const cellsRevealed = floodReveal(newGrid, r, c);
     setGrid(newGrid);
+
+    if (turn === 'P1') setP1Points(p => p + cellsRevealed * 10);
+    else setP2Points(p => p + cellsRevealed * 10);
+
+    // Switch turn in 2-Player mode
+    if (gameMode === 'TWO_PLAYER') {
+      setTurn(t => t === 'P1' ? 'P2' : 'P1');
+    }
 
     // Check Victory
     checkVictory(newGrid);
   };
 
   const floodReveal = (g, r, c) => {
-    if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return;
+    if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return 0;
     const cell = g[r][c];
-    if (cell.revealed || cell.flagged || cell.isMine) return;
+    if (cell.revealed || cell.flagged || cell.isMine) return 0;
 
     cell.revealed = true;
+    let count = 1;
 
     if (cell.neighborMines === 0) {
       for (let dr = -1; dr <= 1; dr++) {
         for (let dc = -1; dc <= 1; dc++) {
-          floodReveal(g, r + dr, c + dc);
+          count += floodReveal(g, r + dr, c + dc);
         }
       }
     }
+    return count;
   };
 
   const toggleFlag = (r, c) => {
@@ -175,7 +193,7 @@ const MinesweeperGame = ({ user, onLeave }) => {
       setStatusFace('😎');
       clearInterval(timerRef.current);
       SoundEffects.playWin();
-      const scoreGained = Math.max(50, 300 - timer * 2);
+      const scoreGained = Math.max(50, 350 - timer * 2);
       const res = await api.submitScore('MINESWEEPER', scoreGained, true, user);
       if (res?.unlockedAchievements?.length > 0) setUnlockedBanner(res.unlockedAchievements[0]);
     }
@@ -197,19 +215,54 @@ const MinesweeperGame = ({ user, onLeave }) => {
 
   return (
     <div className="minesweeper-container glass-panel">
+      {/* Top Header */}
       <div className="minesweeper-header">
-        <button className="btn-secondary" onClick={onLeave}>&larr; LEAVE</button>
-        <div className="mine-control-box">
-          <div className="digital-counter">{String(flagsLeft).padStart(3, '0')}</div>
-          <button className="face-btn" onClick={startNewGame}>{statusFace}</button>
-          <div className="digital-counter">{String(timer).padStart(3, '0')}</div>
+        <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>
+        
+        {/* Mode Selector */}
+        <div className="game-mode-toggle-group">
+          <button 
+            className={`mode-pill-btn ${gameMode === 'SOLO' ? 'active' : ''}`}
+            onClick={() => setGameMode('SOLO')}
+          >
+            👤 SOLO
+          </button>
+          <button 
+            className={`mode-pill-btn ${gameMode === 'TWO_PLAYER' ? 'active' : ''}`}
+            onClick={() => setGameMode('TWO_PLAYER')}
+          >
+            👥 2-PLAYER DUEL
+          </button>
         </div>
+
         <button 
           className={`btn-tertiary flag-toggle-btn ${flagMode ? 'active' : ''}`}
           onClick={() => setFlagMode(!flagMode)}
         >
-          🚩 {flagMode ? 'FLAG MODE ON' : 'DIG MODE'}
+          🚩 {flagMode ? 'FLAGGING' : 'DIGGING'}
         </button>
+      </div>
+
+      {/* Control Box & Score */}
+      <div className="minesweeper-status-bar">
+        {gameMode === 'SOLO' ? (
+          <div className="mine-control-box">
+            <div className="digital-counter">{String(flagsLeft).padStart(3, '0')}</div>
+            <button className="face-btn" onClick={startNewGame}>{statusFace}</button>
+            <div className="digital-counter">{String(timer).padStart(3, '0')}</div>
+          </div>
+        ) : (
+          <div className="mines-duel-banner">
+            <span style={{ color: '#00f3ff' }}>P1 PTS: <strong>{p1Points}</strong></span>
+            <div className="mine-control-box mini">
+              <button className="face-btn" onClick={startNewGame}>{statusFace}</button>
+            </div>
+            <span className="turn-indicator-pill" style={{ color: turn === 'P1' ? '#00f3ff' : '#ff007f' }}>
+              {turn === 'P1' ? '🔵 P1 TURN' : '🔴 P2 TURN'}
+            </span>
+            <span style={{ color: '#ff007f' }}>P2 PTS: <strong>{p2Points}</strong></span>
+          </div>
+        )}
       </div>
 
       {unlockedBanner && (
@@ -244,16 +297,29 @@ const MinesweeperGame = ({ user, onLeave }) => {
         ))}
       </div>
 
-      <p className="mines-hint">💡 Left-Click reveals cell. Right-Click or toggle "Flag Mode" to plant flags.</p>
+      <p className="mines-hint">💡 Left-Click reveals. Right-Click or toggle "Flagging" to plant flags.</p>
 
       {(gameOver || gameWon) && (
         <div className="finish-overlay">
-          <h2 className="neon-text" style={{ color: gameWon ? '#00ff66' : '#ff3366' }}>
-            {gameWon ? '🏆 SECTOR CLEARED!' : 'MINE DETONATED!'}
-          </h2>
-          <p style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px' }}>
-            {gameWon ? `Time: ${timer}s` : 'System Overload'}
-          </p>
+          {gameMode === 'SOLO' ? (
+            <>
+              <h2 className="neon-text" style={{ color: gameWon ? '#00ff66' : '#ff3366' }}>
+                {gameWon ? '🏆 SECTOR CLEARED!' : 'MINE DETONATED!'}
+              </h2>
+              <p style={{ color: '#fff', fontSize: '1.2rem', margin: '10px 0 20px 0' }}>
+                {gameWon ? `Cleared in ${timer}s` : 'System Overload'}
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="neon-text" style={{ color: gameOver ? (turn === 'P1' ? '#ff007f' : '#00f3ff') : (p1Points > p2Points ? '#00f3ff' : '#ff007f') }}>
+                {gameOver ? (turn === 'P1' ? '💥 P1 DETONATED MINE! P2 WINS!' : '💥 P2 DETONATED MINE! P1 WINS!') : (p1Points > p2Points ? '🏆 PLAYER 1 WINS!' : '🏆 PLAYER 2 WINS!')}
+              </h2>
+              <p style={{ color: '#fff', fontSize: '1.2rem', margin: '10px 0 20px 0' }}>
+                P1: {p1Points} pts &bull; P2: {p2Points} pts
+              </p>
+            </>
+          )}
           <div style={{ display: 'flex', gap: '12px' }}>
             <button className="btn-primary" onClick={startNewGame}>PLAY AGAIN</button>
             <button className="btn-secondary" onClick={onLeave}>BACK TO HUB</button>

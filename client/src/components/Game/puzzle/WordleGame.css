@@ -1,11 +1,18 @@
-/* WordleGame.css */
+/* WordleGame.css - Master Cyber Wordle Styling */
+
 .wordle-container {
-  max-width: 480px;
-  margin: 15px auto;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 520px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 24px;
+  position: relative;
+  border-radius: 18px;
+  background: rgba(12, 12, 26, 0.85);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 243, 255, 0.1);
 }
 
 .wordle-header {
@@ -13,127 +20,137 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 16px;
 }
 
-.wordle-title {
+.wordle-status-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.wordle-phase-banner {
   font-family: 'Orbitron', sans-serif;
-  font-weight: 900;
-  color: #00ff66;
-  letter-spacing: 2px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.wordle-attempts {
-  font-family: 'Orbitron', monospace;
-  font-size: 0.95rem;
+.wordle-set-word-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  background: #080814;
+  border: 1.5px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
+/* 6x5 Grid */
 .wordle-grid {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
 .wordle-row {
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 
 .wordle-cell {
-  width: 52px;
-  height: 52px;
-  background: #0f172a;
-  border: 2px solid #334155;
-  border-radius: 6px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 900;
+  width: 50px;
+  height: 50px;
+  background: #11152a;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
   user-select: none;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
 }
 
 .wordle-cell.has-letter {
-  border-color: #64748b;
-  animation: popLetter 0.1s ease-out;
-}
-
-@keyframes popLetter {
-  0% { transform: scale(0.9); }
-  100% { transform: scale(1); }
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
 }
 
 .wordle-cell.correct {
-  background: #16a34a;
-  border-color: #22c55e;
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+  background: #00e676;
+  border-color: #00e676;
+  color: #000000;
+  box-shadow: 0 0 14px #00e676;
 }
 
 .wordle-cell.present {
-  background: #ca8a04;
-  border-color: #eab308;
-  box-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
+  background: #ffd600;
+  border-color: #ffd600;
+  color: #000000;
+  box-shadow: 0 0 14px #ffd600;
 }
 
 .wordle-cell.absent {
-  background: #1e293b;
-  border-color: #334155;
-  color: #64748b;
+  background: #20243d;
+  border-color: #20243d;
+  color: #727a96;
 }
 
+/* Virtual Keyboard */
 .wordle-keyboard {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
 }
 
 .keyboard-row {
   display: flex;
-  gap: 4px;
+  gap: 5px;
   justify-content: center;
 }
 
 .key-btn {
-  flex: 1;
-  height: 44px;
-  background: #1e293b;
-  border: 1px solid #475569;
-  border-radius: 4px;
-  color: #fff;
+  background: #171c38;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.9rem;
-  font-weight: bold;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 6px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  user-select: none;
-  transition: all 0.12s;
+  transition: all 0.15s ease;
+  min-width: 32px;
+}
+
+.key-btn:hover {
+  background: var(--neon-blue);
+  color: #000;
+  box-shadow: 0 0 10px var(--neon-blue);
 }
 
 .key-btn.wide-key {
-  flex: 1.5;
-  font-size: 0.75rem;
+  padding: 10px 16px;
+  font-size: 0.78rem;
 }
 
-.key-btn.correct {
-  background: #16a34a;
-  border-color: #22c55e;
-}
-
-.key-btn.present {
-  background: #ca8a04;
-  border-color: #eab308;
-}
-
-.key-btn.absent {
-  background: #0f172a;
-  color: #475569;
-  border-color: #1e293b;
-}
+.key-btn.correct { background: #00e676; color: #000; border-color: #00e676; }
+.key-btn.present { background: #ffd600; color: #000; border-color: #ffd600; }
+.key-btn.absent { background: #0c0e1a; color: #4b5563; border-color: #171c38; }

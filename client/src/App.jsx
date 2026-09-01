@@ -7,41 +7,42 @@ import LeaderboardModal from './components/Leaderboard/LeaderboardModal';
 import AchievementsModal from './components/Achievements/AchievementsModal';
 import { GAMES_LIST } from '../../shared/gameMetadata.js';
 
-// 1. Board & Multiplayer Classics
+// ==========================================
+// 1. Board & Multiplayer Classics (6 Games)
+// ==========================================
 import ChessGame from './components/Game/strategy/ChessGame';
 import Ludo from './components/Game/Ludo';
 import Snake from './components/Game/Snake';
 import TicTacToe from './components/Game/TicTacToe';
 import Connect4Game from './components/Game/casual/Connect4Game';
+import CarromBoardGame from './components/Game/casual/CarromBoardGame';
 
-// 2. Addictive Puzzle Hits
+// ==========================================
+// 2. Addictive Puzzle & Mind Hits (4 Games)
+// ==========================================
 import WordleGame from './components/Game/puzzle/WordleGame';
 import Game2048 from './components/Game/casual/Game2048';
 import MinesweeperGame from './components/Game/puzzle/MinesweeperGame';
+import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
 
-// 3. Fast-Paced Arcade Classics
+// ==========================================
+// 3. Fast-Paced Action & Arcade (9 Games)
+// ==========================================
+import PongGame from './components/Game/casual/PongGame';
+import AirHockeyGame from './components/Game/action/AirHockeyGame';
+import CyberRacerGame from './components/Game/action/CyberRacerGame';
+import FruitSlicerGame from './components/Game/action/FruitSlicerGame';
+import KnifeHitGame from './components/Game/action/KnifeHitGame';
 import SnakeArcadeGame from './components/Game/casual/SnakeArcadeGame';
 import BrickBreakerGame from './components/Game/casual/BrickBreakerGame';
-import PongGame from './components/Game/casual/PongGame';
 import PianoTilesGame from './components/Game/action/PianoTilesGame';
 import BubbleShooterGame from './components/Game/action/BubbleShooterGame';
 
-// 4. New Viral Games Suite
-import CyberRacerGame from './components/Game/action/CyberRacerGame';
-import AirHockeyGame from './components/Game/action/AirHockeyGame';
-import FruitSlicerGame from './components/Game/action/FruitSlicerGame';
-import KnifeHitGame from './components/Game/action/KnifeHitGame';
-import BlockPuzzleGame from './components/Game/puzzle/BlockPuzzleGame';
-import ZombieClickerGame from './components/Game/action/ZombieClickerGame';
-import CarromBoardGame from './components/Game/casual/CarromBoardGame';
-
-// Connect to local backend
+// Connect to backend socket
 const socket = io(`http://${window.location.hostname}:3001`);
 
-// Only games that strictly require online room matchmaking go to Lobby; others launch directly with built-in AI
-const MULTIPLAYER_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
-
-
+// Games that strictly require online room matchmaking go through Lobby
+const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -83,76 +84,83 @@ function App() {
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem('games_user');
     setSelectedGame(null);
     setInGame(false);
     setActiveRoom(null);
+    localStorage.removeItem('games_user');
   };
 
   const handleSelectGame = (gameId) => {
     setSelectedGame(gameId);
-    setActiveRoom(null);
-    if (MULTIPLAYER_GAMES.includes(gameId)) {
-      setInGame(false); // Directs to Lobby for AI / 1v1 Room
-    } else {
-      setInGame(true); // Single player direct launch
+    if (!ONLINE_ROOM_GAMES.includes(gameId)) {
+      setInGame(true);
     }
   };
 
   const handleLeaveGame = () => {
+    setSelectedGame(null);
     setInGame(false);
     setActiveRoom(null);
-    setSelectedGame(null);
   };
 
   if (!user) {
-    return (
-      <div className="app-container auth-mode">
-        <AuthForms onLoginSuccess={handleLoginSuccess} />
-      </div>
-    );
+    return <AuthForms onLoginSuccess={handleLoginSuccess} />;
   }
 
-  const isMultiplayerGame = MULTIPLAYER_GAMES.includes(selectedGame);
+  const isOnlineLobbyGame = selectedGame && ONLINE_ROOM_GAMES.includes(selectedGame);
+  const activeGameMeta = GAMES_LIST.find(g => g.id === selectedGame);
 
   return (
-    <div className="app-container">
-      {/* Platform Header */}
-      <header className="app-header glass-panel" style={{ margin: '10px 20px', padding: '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', cursor: 'pointer' }} onClick={() => setSelectedGame(null)}>
-          <span style={{ fontSize: '1.8rem' }}>🎮</span>
-          <div>
-            <h1 className="neon-text" style={{ fontSize: '1.4rem', margin: 0, letterSpacing: '2px' }}>CYBER ARCADE</h1>
-            <span style={{ fontSize: '0.75rem', color: isConnected ? 'var(--neon-green)' : 'var(--neon-pink)', letterSpacing: '1px' }}>
-              ● {isConnected ? `SYSTEM ONLINE (${GAMES_LIST.length} GAMES ACTIVE)` : 'CONNECTING...'}
-            </span>
+    <div className="App" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Fixed Cyber Top Navigation Bar */}
+      <nav className="app-navbar glass-panel">
+        <div className="nav-left-section">
+          <div className="nav-brand" onClick={handleLeaveGame} style={{ cursor: 'pointer' }}>
+            <span className="brand-logo-icon">⚡</span>
+            <span className="brand-text">NEON<span className="cyan-text">RIFT</span></span>
           </div>
+
+          {selectedGame && (
+            <div className="nav-breadcrumbs">
+              <span className="crumb-sep">/</span>
+              <span className="crumb-active-game">
+                {activeGameMeta?.icon} {activeGameMeta?.title || selectedGame}
+              </span>
+            </div>
+          )}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div className="nav-right-section">
+          {selectedGame && (
+            <button 
+              className="btn-secondary nav-hub-return-btn"
+              onClick={handleLeaveGame}
+            >
+              ← HUB
+            </button>
+          )}
+
           <button 
             className="btn-tertiary"
             onClick={() => setShowLeaderboard(true)}
-            style={{ padding: '6px 14px', fontSize: '0.85rem' }}
           >
             🏆 RANKS
           </button>
           <button 
             className="btn-tertiary"
             onClick={() => setShowAchievements(true)}
-            style={{ padding: '6px 14px', fontSize: '0.85rem' }}
           >
             ✨ ACHIEVEMENTS
           </button>
-          <div style={{ color: '#fff', fontSize: '0.9rem', borderLeft: '1px solid rgba(255,255,255,0.2)', paddingLeft: '12px' }}>
-            <span style={{ color: '#aaa' }}>PLAYER: </span>
-            <strong style={{ color: 'var(--neon-blue)' }}>{user.username}</strong>
+          <div className="nav-user-profile-badge">
+            <span className="user-icon-avatar">👤</span>
+            <span className="user-name-label">{user.username}</span>
           </div>
           <button onClick={handleLogout} className="btn-primary" style={{ padding: '6px 14px', fontSize: '0.85rem' }}>
             LOGOUT
           </button>
         </div>
-      </header>
+      </nav>
 
       {/* Leaderboard Modal */}
       {showLeaderboard && (
@@ -177,25 +185,21 @@ function App() {
           onOpenLeaderboard={() => setShowLeaderboard(true)}
           onOpenAchievements={() => setShowAchievements(true)}
         />
-      ) : isMultiplayerGame && !inGame ? (
+      ) : isOnlineLobbyGame && !inGame ? (
         <Lobby 
           socket={socket} 
           user={user} 
           selectedGame={selectedGame}
-          onBack={() => {
-            setSelectedGame(null);
-            setActiveRoom(null);
-            setInGame(false);
-          }}
+          onBack={handleLeaveGame}
           onGameStart={(room) => {
             setActiveRoom(room);
             setInGame(true);
           }} 
         />
       ) : (
-        /* Active Game Render */
-        <>
-          {/* 1. Board Classics */}
+        /* Curated Hit Games Router */
+        <main className="game-view-container" style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          {/* 1. Board & Strategy Classics */}
           {selectedGame === 'CHESS' && (
             <ChessGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}
@@ -211,8 +215,11 @@ function App() {
           {selectedGame === 'CONNECT_4' && (
             <Connect4Game socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}
+          {selectedGame === 'CARROM' && (
+            <CarromBoardGame user={user} onLeave={handleLeaveGame} />
+          )}
 
-          {/* 2. Puzzle Hits */}
+          {/* 2. Addictive Puzzle Hits */}
           {selectedGame === 'WORDLE' && (
             <WordleGame user={user} onLeave={handleLeaveGame} />
           )}
@@ -222,30 +229,19 @@ function App() {
           {selectedGame === 'MINESWEEPER' && (
             <MinesweeperGame user={user} onLeave={handleLeaveGame} />
           )}
+          {selectedGame === 'BLOCK_PUZZLE' && (
+            <BlockPuzzleGame user={user} onLeave={handleLeaveGame} />
+          )}
 
-          {/* 3. Fast Arcade Hits */}
-          {selectedGame === 'SNAKE_GAME' && (
-            <SnakeArcadeGame user={user} onLeave={handleLeaveGame} />
-          )}
-          {selectedGame === 'BRICK_BREAKER' && (
-            <BrickBreakerGame user={user} onLeave={handleLeaveGame} />
-          )}
+          {/* 3. Fast-Paced Action & Arcade */}
           {selectedGame === 'PONG' && (
             <PongGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
           )}
-          {selectedGame === 'PIANO_TILES' && (
-            <PianoTilesGame user={user} onLeave={handleLeaveGame} />
-          )}
-          {selectedGame === 'BUBBLE_SHOOTER' && (
-            <BubbleShooterGame user={user} onLeave={handleLeaveGame} />
-          )}
-
-          {/* 4. New Viral Hit Games */}
-          {selectedGame === 'CYBER_RACER' && (
-            <CyberRacerGame user={user} onLeave={handleLeaveGame} />
-          )}
           {selectedGame === 'AIR_HOCKEY' && (
             <AirHockeyGame socket={socket} room={activeRoom} user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'CYBER_RACER' && (
+            <CyberRacerGame user={user} onLeave={handleLeaveGame} />
           )}
           {selectedGame === 'FRUIT_SLICER' && (
             <FruitSlicerGame user={user} onLeave={handleLeaveGame} />
@@ -253,16 +249,19 @@ function App() {
           {selectedGame === 'KNIFE_HIT' && (
             <KnifeHitGame user={user} onLeave={handleLeaveGame} />
           )}
-          {selectedGame === 'BLOCK_PUZZLE' && (
-            <BlockPuzzleGame user={user} onLeave={handleLeaveGame} />
+          {selectedGame === 'SNAKE_GAME' && (
+            <SnakeArcadeGame user={user} onLeave={handleLeaveGame} />
           )}
-          {selectedGame === 'ZOMBIE_CLICKER' && (
-            <ZombieClickerGame user={user} onLeave={handleLeaveGame} />
+          {selectedGame === 'BRICK_BREAKER' && (
+            <BrickBreakerGame user={user} onLeave={handleLeaveGame} />
           )}
-          {selectedGame === 'CARROM' && (
-            <CarromBoardGame user={user} onLeave={handleLeaveGame} />
+          {selectedGame === 'PIANO_TILES' && (
+            <PianoTilesGame user={user} onLeave={handleLeaveGame} />
           )}
-        </>
+          {selectedGame === 'BUBBLE_SHOOTER' && (
+            <BubbleShooterGame user={user} onLeave={handleLeaveGame} />
+          )}
+        </main>
       )}
     </div>
   );
