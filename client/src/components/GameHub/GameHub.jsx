@@ -12,6 +12,7 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
     { id: 'BOARD', label: 'BOARD & CLASSICS', icon: '♟️' },
     { id: 'PUZZLE', label: 'PUZZLE & LOGIC', icon: '🧩' },
     { id: 'ACTION', label: 'ACTION & ARCADE', icon: '⚡' },
+    { id: 'EDUCATIONAL', label: 'SKILL & EDUCATION', icon: '📚' },
     { id: 'MULTIPLAYER', label: '👥 2-PLAYER / MULTI', icon: '👥' }
   ];
 

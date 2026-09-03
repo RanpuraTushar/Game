@@ -1,0 +1,138 @@
+/* SpaceInvadersGame.css - Cyberpunk Space Shooter Styling */
+
+.invaders-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 540px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 16px;
+  position: relative;
+  border-radius: 20px;
+  background: rgba(6, 8, 20, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.invaders-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.invaders-dash-stats {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  color: #a4acc4;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.invaders-dash-stats strong {
+  color: #00f3ff;
+}
+
+.lives-tag {
+  color: #ff3366;
+}
+
+.invaders-canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.invaders-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.invaders-overlay-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.9);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  z-index: 20;
+}
+
+.invaders-over-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ff0055;
+  text-shadow: 0 0 20px #ff0055;
+  margin-bottom: 12px;
+}
+
+.invaders-final-score, .invaders-waves-cleared {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.invaders-final-score strong {
+  color: #00f3ff;
+}
+
+.invaders-mobile-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 14px;
+  gap: 10px;
+}
+
+.move-btn {
+  flex: 1;
+  padding: 12px 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.fire-btn {
+  flex: 1.5;
+  padding: 12px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%);
+  border: 1px solid #00f3ff;
+}
+
+.invaders-footer-hint {
+  font-size: 0.78rem;
+  color: #8f98b6;
+  text-align: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .invaders-master-container {
+    padding: 10px 6px;
+  }
+  .invaders-dash-stats {
+    font-size: 0.74rem;
+  }
+}

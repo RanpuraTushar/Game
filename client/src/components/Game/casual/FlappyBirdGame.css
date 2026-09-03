@@ -1,0 +1,171 @@
+/* FlappyBirdGame.css - Cyberpunk Flappy Drone Styling */
+
+.flappy-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 460px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 16px;
+  position: relative;
+  border-radius: 20px;
+  background: rgba(8, 10, 24, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.flappy-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.flappy-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 1px;
+}
+
+.flappy-score-badge {
+  background: rgba(0, 243, 255, 0.15);
+  border: 1px solid #00f3ff;
+  color: #00f3ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+}
+
+.flappy-canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  touch-action: none;
+}
+
+.flappy-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.flappy-overlay-screen {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  z-index: 10;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.flappy-hero-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #00f3ff;
+  text-shadow: 0 0 20px #00f3ff, 0 0 40px #ff007f;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.flappy-prompt-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffd600;
+  animation: pulsePrompt 1s infinite alternate;
+  margin-bottom: 12px;
+}
+
+@keyframes pulsePrompt {
+  from { opacity: 0.6; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1.04); }
+}
+
+.flappy-key-hint {
+  font-size: 0.8rem;
+  color: #a4acc4;
+}
+
+.flappy-over-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ff0055;
+  text-shadow: 0 0 20px #ff0055;
+  margin-bottom: 16px;
+}
+
+.flappy-stats-card {
+  background: rgba(14, 18, 36, 0.9);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 14px;
+  padding: 16px 24px;
+  width: 220px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
+.stat-row, .medal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-row strong {
+  color: #00f3ff;
+  font-size: 1.1rem;
+}
+
+.medal-row {
+  border-bottom: none;
+  padding-top: 10px;
+}
+
+.medal-row strong {
+  color: #ffd600;
+}
+
+.flappy-restart-btn {
+  padding: 12px 28px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.flappy-footer-hint {
+  font-size: 0.78rem;
+  color: #8f98b6;
+  text-align: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .flappy-master-container {
+    padding: 12px 8px;
+  }
+  .flappy-title {
+    font-size: 1rem;
+  }
+}

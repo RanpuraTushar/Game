@@ -1,0 +1,180 @@
+/* TypingTestGame.css - Realtime WPM Cyber Speed Typing */
+
+.typing-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 680px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 20px;
+  position: relative;
+  border-radius: 22px;
+  background: rgba(8, 10, 24, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+  cursor: text;
+}
+
+.typing-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.typing-duration-toggle {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.typing-stats-banner {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  color: #a4acc4;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wpm-glow {
+  color: #00ff66 !important;
+  font-size: 1.2rem;
+  text-shadow: 0 0 12px #00ff66;
+}
+
+.bad-err {
+  color: #ff0055 !important;
+}
+
+/* Passage Display */
+.typing-passage-box {
+  width: 100%;
+  background: rgba(12, 16, 36, 0.85);
+  border: 2px solid rgba(0, 243, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 180px;
+  line-height: 1.8;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.25rem;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.8);
+  margin-bottom: 16px;
+  word-break: break-word;
+}
+
+.passage-char {
+  transition: color 0.1s ease;
+}
+
+.char-pending {
+  color: #64748b;
+}
+
+.char-correct {
+  color: #00f3ff;
+  text-shadow: 0 0 6px rgba(0, 243, 255, 0.6);
+}
+
+.char-wrong {
+  color: #ff0055;
+  background: rgba(255, 0, 85, 0.25);
+  text-decoration: underline;
+}
+
+.char-active-cursor {
+  background: #00f3ff;
+  color: #050610;
+  animation: blinkCursor 0.9s infinite alternate;
+}
+
+@keyframes blinkCursor {
+  0% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+.hidden-typing-input {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Results Modal */
+.typing-results-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  border-radius: 20px;
+  z-index: 20;
+}
+
+.typing-results-modal h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ff66;
+  text-shadow: 0 0 25px #00ff66;
+  margin-bottom: 20px;
+}
+
+.typing-score-grid {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.score-stat {
+  display: flex;
+  flex-direction: column;
+  background: rgba(14, 18, 38, 0.85);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+
+.stat-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #00f3ff;
+}
+
+.stat-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  color: #8f98b6;
+  margin-top: 4px;
+}
+
+.typing-hint {
+  font-size: 0.78rem;
+  color: #8f98b6;
+  text-align: center;
+}
+
+@media (max-width: 540px) {
+  .typing-master-container {
+    padding: 12px 8px;
+  }
+  .typing-passage-box {
+    font-size: 1.05rem;
+    padding: 16px;
+  }
+  .typing-score-grid {
+    gap: 8px;
+  }
+  .stat-num {
+    font-size: 1.6rem;
+  }
+}

@@ -5,6 +5,7 @@ export const GAME_CATEGORIES = {
   BOARD: 'BOARD',
   PUZZLE: 'PUZZLE',
   ACTION: 'ACTION',
+  EDUCATIONAL: 'EDUCATIONAL',
   MULTIPLAYER: 'MULTIPLAYER'
 };
 
@@ -344,6 +345,165 @@ export const GAMES_LIST = [
     color: '#ff3366',
     controls: 'Move mouse to aim trajectory line, Click to fire bubble',
     badge: 'Match-3'
+  },
+
+  // ==========================================
+  // 4. NEW HIT CASUAL & ARCADE ADDITIONS
+  // ==========================================
+  {
+    id: 'FLAPPY_BIRD',
+    title: 'Cyber Flappy Drone',
+    description: 'Flap cyber wings, dodge neon laser pipes, collect medals, and beat high score records!',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🪶',
+    color: '#00f3ff',
+    controls: 'Click, Tap screen, or Spacebar to flap wings',
+    badge: 'Viral Hit'
+  },
+  {
+    id: 'SPACE_INVADERS',
+    title: 'Retro Space Invaders',
+    description: 'Classic neon arcade shooter! Marching alien squads, mystery UFOs, destructible bunkers, and laser blasts.',
+    category: GAME_CATEGORIES.ACTION,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '👾',
+    color: '#00ff66',
+    controls: 'A/D or Arrows to move, Spacebar to fire laser',
+    badge: 'Arcade Legend'
+  },
+
+  // ==========================================
+  // 5. NEW PUZZLE & LOGIC ADDITIONS
+  // ==========================================
+  {
+    id: 'SUDOKU',
+    title: 'Neon Cyber Sudoku',
+    description: 'Standard 9x9 logic puzzle grid with Easy, Medium, and Hard templates, pencil notes, and mistake tracker.',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🔢',
+    color: '#ffd600',
+    controls: 'Click cell and select 1-9 on numpad or keyboard',
+    badge: 'Brain Logic'
+  },
+  {
+    id: 'MATCH_3',
+    title: 'Cyber Candy Match-3',
+    description: 'Swap adjacent glowing candies, match 3+, unleash bombs & rainbow stars, and trigger gravity cascades!',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🍬',
+    color: '#ff007f',
+    controls: 'Click a candy then click an adjacent candy to swap',
+    badge: 'Juicy Combos'
+  },
+  {
+    id: 'TETRIS',
+    title: 'Tetris Block Arranger',
+    description: 'The legendary block-falling arcade! Rotate tetrominoes, hold pieces, ghost drop, and clear lines.',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🕹️',
+    color: '#00f3ff',
+    controls: 'Arrows / WASD to move & rotate, Spacebar to hard drop, C to hold',
+    badge: 'All-Time Classic'
+  },
+  {
+    id: 'MEMORY_MATCH',
+    title: 'Cyber Memory Match',
+    description: 'Flip glowing holographic cards, find matching pairs, build multiplier streaks, and test your memory!',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🧠',
+    color: '#9d4edd',
+    controls: 'Click to flip cards and match pairs',
+    badge: 'Memory Test'
+  },
+
+  // ==========================================
+  // 6. NEW BOARD & CARD ADDITIONS
+  // ==========================================
+  {
+    id: 'SOLITAIRE',
+    title: 'Klondike Solitaire',
+    description: 'Classic 52-card solitaire! 7 tableau cascades, 4 foundation piles, draw stock, and auto-move.',
+    category: GAME_CATEGORIES.BOARD,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '♠️',
+    color: '#00e5ff',
+    controls: 'Click / Double Click cards to move to tableaus or foundations',
+    badge: 'Card Classic'
+  },
+
+  // ==========================================
+  // 7. EDUCATIONAL & SKILL-BASED CHALLENGES
+  // ==========================================
+  {
+    id: 'MATH_QUIZ',
+    title: 'Speed Math Blitz',
+    description: 'Rapid-fire mental arithmetic! Addition, Subtraction, Multiplication, and Mixed speed challenges in 60s.',
+    category: GAME_CATEGORIES.EDUCATIONAL,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '➕',
+    color: '#00ff66',
+    controls: 'Click answer or press 1, 2, 3, 4 on keyboard',
+    badge: 'Speed Math'
+  },
+  {
+    id: 'WORD_SCRAMBLE',
+    title: 'Cyber Word Scramble',
+    description: 'Unscramble letters to solve tech, space, and gaming words before the clock runs out!',
+    category: GAME_CATEGORIES.EDUCATIONAL,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🔤',
+    color: '#ffd600',
+    controls: 'Type letters on keyboard or click letter tiles',
+    badge: 'Word Puzzle'
+  },
+  {
+    id: 'TYPING_TEST',
+    title: 'Hacker Typing Speed Test',
+    description: 'Test your typing speed and accuracy live! Real-time WPM gauge, accuracy %, and developer passages.',
+    category: GAME_CATEGORIES.EDUCATIONAL,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '⌨️',
+    color: '#00f3ff',
+    controls: 'Type on your keyboard to test WPM and accuracy',
+    badge: 'WPM Speed'
+  },
+  {
+    id: 'CODING_PUZZLE',
+    title: 'Code Quest Puzzles',
+    description: 'Gamified HTML, CSS, and JavaScript challenges with interactive code editor and instant unit test suite!',
+    category: GAME_CATEGORIES.EDUCATIONAL,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '💻',
+    color: '#00e676',
+    controls: 'Edit code in editor and click Run & Test',
+    badge: 'HTML/CSS/JS'
   }
 ];
 

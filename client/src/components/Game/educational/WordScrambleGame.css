@@ -1,0 +1,198 @@
+/* WordScrambleGame.css - Sleek Cyberpunk Anagram Challenge */
+
+.scramble-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 540px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 18px;
+  position: relative;
+  border-radius: 22px;
+  background: rgba(8, 10, 24, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.scramble-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.scramble-meta-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.78rem;
+  color: #a4acc4;
+}
+
+.scramble-meta-badge strong {
+  color: #00f3ff;
+}
+
+.scramble-stats-bar {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  color: #a4acc4;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.scramble-stats-bar strong {
+  color: #00f3ff;
+}
+
+/* Play Area */
+.scramble-play-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer-slots-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  min-height: 56px;
+}
+
+.answer-slot {
+  width: 50px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(14, 18, 38, 0.8);
+  border: 2px dashed rgba(0, 243, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.answer-slot.filled {
+  border-style: solid;
+  border-color: #00f3ff;
+  background: rgba(0, 243, 255, 0.15);
+  box-shadow: 0 0 16px rgba(0, 243, 255, 0.3);
+  color: #00f3ff;
+}
+
+.answer-slot.filled:hover {
+  border-color: #ff0055;
+  color: #ff0055;
+}
+
+.clue-container {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.clue-text {
+  font-size: 0.95rem;
+  color: #ffd600;
+  background: rgba(255, 214, 0, 0.1);
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 214, 0, 0.3);
+}
+
+.clue-reveal-btn {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+}
+
+/* Scrambled Tray */
+.scrambled-letters-tray {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.letter-tile {
+  width: 52px;
+  height: 56px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #161a38 0%, #221a48 100%);
+  border: 2px solid #00f3ff;
+  color: #00f3ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  transition: all 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.letter-tile:hover:not(:disabled) {
+  background: #00f3ff;
+  color: #050610;
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 0 20px #00f3ff;
+}
+
+.letter-tile.used {
+  opacity: 0.2;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: none;
+}
+
+.scramble-victory-screen {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.scramble-victory-screen h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #00ff66;
+  text-shadow: 0 0 25px #00ff66;
+  margin-bottom: 12px;
+}
+
+.scramble-victory-screen p {
+  color: #ffffff;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.scramble-hint {
+  font-size: 0.78rem;
+  color: #8f98b6;
+  text-align: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+  .scramble-master-container {
+    padding: 12px 6px;
+  }
+  .answer-slot, .letter-tile {
+    width: 42px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+}

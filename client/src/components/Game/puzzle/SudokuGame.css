@@ -1,0 +1,281 @@
+/* SudokuGame.css - High-contrast Cyberpunk Sudoku Grid */
+
+.sudoku-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 520px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 18px;
+  position: relative;
+  border-radius: 22px;
+  background: rgba(8, 10, 24, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.sudoku-top-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.sudoku-diff-selector {
+  display: flex;
+  gap: 6px;
+}
+
+.sudoku-status-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(14, 18, 36, 0.7);
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+.stat-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  color: #a4acc4;
+}
+
+.stat-badge strong {
+  color: #00f3ff;
+}
+
+.stat-badge strong.bad {
+  color: #ff0055;
+}
+
+/* 9x9 Grid Layout */
+.sudoku-grid-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  width: 100%;
+  height: 100%;
+  border: 3px solid #00f3ff;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #090b16;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+}
+
+.sudoku-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+/* 3x3 Subgrid Borders */
+.sudoku-cell:nth-child(3n) {
+  border-right: 2.5px solid #00f3ff;
+}
+.sudoku-cell:nth-child(9n) {
+  border-right: none;
+}
+
+.sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: 2.5px solid #00f3ff;
+}
+
+.sudoku-cell.initial {
+  background: rgba(0, 243, 255, 0.05);
+}
+
+.sudoku-cell.initial .cell-value {
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.cell-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00f3ff;
+}
+
+.sudoku-cell.dim-highlight {
+  background: rgba(0, 243, 255, 0.08);
+}
+
+.sudoku-cell.same-num {
+  background: rgba(255, 214, 0, 0.18);
+}
+
+.sudoku-cell.selected {
+  background: rgba(0, 243, 255, 0.35) !important;
+  box-shadow: inset 0 0 12px #00f3ff;
+}
+
+.sudoku-cell.error {
+  background: rgba(255, 0, 85, 0.3) !important;
+}
+
+.sudoku-cell.error .cell-value {
+  color: #ff0055;
+  animation: shakeError 0.25s ease;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+/* Pencil Notes */
+.cell-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+}
+
+.note-digit {
+  font-size: 0.62rem;
+  color: #a4acc4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* Modals */
+.sudoku-finish-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.94);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+.sudoku-finish-modal h2 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 12px;
+}
+
+.sudoku-finish-modal.win h2 {
+  color: #00ff66;
+  text-shadow: 0 0 20px #00ff66;
+}
+
+.sudoku-finish-modal.loss h2 {
+  color: #ff0055;
+  text-shadow: 0 0 20px #ff0055;
+}
+
+.sudoku-finish-modal p {
+  color: #a4acc4;
+  margin-bottom: 20px;
+}
+
+/* Action Controls Bar */
+.sudoku-action-bar {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 8px 10px;
+  background: rgba(18, 22, 44, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #a4acc4;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+  border-color: #00f3ff;
+  color: #00f3ff;
+}
+
+.btn-action.active-pencil {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: #00f3ff;
+  color: #00f3ff;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+.hint-btn:hover {
+  border-color: #ffd600;
+  color: #ffd600;
+}
+
+/* Number Pad 1-9 */
+.sudoku-numpad {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 6px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.numpad-btn {
+  background: rgba(14, 18, 36, 0.9);
+  border: 1.5px solid rgba(0, 243, 255, 0.3);
+  color: #00f3ff;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.numpad-btn:hover {
+  background: #00f3ff;
+  color: #050610;
+  box-shadow: 0 0 15px #00f3ff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .sudoku-master-container {
+    padding: 12px 6px;
+  }
+  .cell-value {
+    font-size: 1.35rem;
+  }
+  .numpad-btn {
+    font-size: 0.95rem;
+    padding: 8px 0;
+  }
+}

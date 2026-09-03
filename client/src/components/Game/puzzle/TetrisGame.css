@@ -1,0 +1,220 @@
+/* TetrisGame.css - Sleek Cyberpunk Tetris Styling */
+
+.tetris-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 540px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 16px;
+  position: relative;
+  border-radius: 22px;
+  background: rgba(8, 10, 24, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.tetris-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.tetris-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+}
+
+.tetris-stage-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+.tetris-side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 90px;
+}
+
+.tetris-info-box {
+  background: rgba(14, 18, 36, 0.85);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+
+.box-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #00f3ff;
+  letter-spacing: 0.8px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.mini-piece-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.mini-row {
+  display: flex;
+}
+
+.mini-cell {
+  width: 12px;
+  height: 12px;
+  margin: 1px;
+  border-radius: 2px;
+}
+
+.tetris-stats-card {
+  background: rgba(14, 18, 36, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  color: #8f98b6;
+}
+
+.stat-item strong {
+  color: #00f3ff;
+  font-size: 0.95rem;
+}
+
+/* 10x20 Matrix */
+.tetris-matrix-wrap {
+  position: relative;
+  background: #050610;
+  border: 2px solid #00f3ff;
+  border-radius: 12px;
+  padding: 4px;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+}
+
+.tetris-matrix {
+  display: grid;
+  grid-template-columns: repeat(10, 22px);
+  grid-template-rows: repeat(20, 22px);
+  gap: 1px;
+  background: rgba(12, 14, 28, 0.6);
+}
+
+.tetris-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: background 0.05s ease;
+}
+
+.tetris-cell.filled {
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+.tetris-cell.ghost {
+  border: 1px dashed rgba(0, 243, 255, 0.6) !important;
+}
+
+.tetris-gameover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.92);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  z-index: 20;
+}
+
+.tetris-gameover-overlay h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #ff0055;
+  text-shadow: 0 0 20px #ff0055;
+  margin-bottom: 12px;
+  font-size: 1.3rem;
+}
+
+.tetris-gameover-overlay p {
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.tetris-mobile-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 380px;
+  margin-top: 14px;
+}
+
+.control-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.ctrl-btn {
+  flex: 1;
+  padding: 10px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.rotate-btn {
+  background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%);
+}
+
+.dir-btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 480px) {
+  .tetris-master-container {
+    padding: 10px 4px;
+  }
+  .tetris-matrix {
+    grid-template-columns: repeat(10, 17px);
+    grid-template-rows: repeat(20, 17px);
+  }
+  .tetris-cell {
+    width: 17px;
+    height: 17px;
+  }
+  .tetris-side-col {
+    width: 70px;
+  }
+}

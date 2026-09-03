@@ -1,0 +1,210 @@
+/* SolitaireGame.css - Sleek Cyberpunk Solitaire Felt */
+
+.solitaire-master-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 720px;
+  width: 100%;
+  margin: 10px auto;
+  padding: 18px;
+  position: relative;
+  border-radius: 22px;
+  background: rgba(6, 12, 22, 0.96);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(0, 243, 255, 0.15);
+  user-select: none;
+}
+
+.solitaire-top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.solitaire-dash-stats {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  color: #a4acc4;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.solitaire-dash-stats strong {
+  color: #00f3ff;
+}
+
+/* Card Slot & Geometry */
+.card-slot {
+  width: 68px;
+  height: 96px;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(0, 243, 255, 0.25);
+  background: rgba(12, 16, 32, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.card-face {
+  width: 68px;
+  height: 96px;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-face.card-back {
+  background: linear-gradient(135deg, #0e122b 0%, #1a1638 100%);
+  border: 1.5px solid #00f3ff;
+  color: #00f3ff;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.card-face.face-up {
+  background: #ffffff;
+  border: 1.5px solid #dcdde1;
+}
+
+.card-face.face-up.red {
+  color: #ff0055;
+}
+
+.card-face.face-up.black {
+  color: #1e272e;
+}
+
+.card-face.selected {
+  border: 2px solid #00f3ff !important;
+  box-shadow: 0 0 16px #00f3ff !important;
+  transform: translateY(-6px);
+}
+
+.card-lbl {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.card-lbl.bot {
+  transform: rotate(180deg);
+  align-self: flex-end;
+}
+
+.card-big-sym {
+  font-size: 1.8rem;
+  align-self: center;
+  line-height: 1;
+}
+
+.slot-recycle-icon {
+  font-size: 1.6rem;
+  color: #00f3ff;
+  opacity: 0.6;
+}
+
+.foundation-suit-watermark {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.12);
+}
+
+/* Rows Layout */
+.solitaire-top-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.stock-waste-group, .foundations-group {
+  display: flex;
+  gap: 10px;
+}
+
+.solitaire-tableaus-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 380px;
+  gap: 8px;
+}
+
+.tableau-column {
+  position: relative;
+  width: 68px;
+  min-height: 280px;
+}
+
+.tableau-card-wrap {
+  position: absolute;
+  left: 0;
+  width: 68px;
+  height: 96px;
+}
+
+.solitaire-victory-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 20, 0.94);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  border-radius: 16px;
+  z-index: 30;
+}
+
+.solitaire-victory-modal h2 {
+  font-family: 'Orbitron', sans-serif;
+  color: #ffd600;
+  text-shadow: 0 0 25px #ffd600;
+  margin-bottom: 12px;
+}
+
+.solitaire-hint {
+  font-size: 0.78rem;
+  color: #8f98b6;
+  text-align: center;
+  margin-top: 14px;
+}
+
+@media (max-width: 600px) {
+  .solitaire-master-container {
+    padding: 10px 4px;
+  }
+  .card-slot, .card-face, .tableau-column, .tableau-card-wrap {
+    width: 44px;
+    height: 66px;
+  }
+  .card-lbl {
+    font-size: 0.72rem;
+  }
+  .card-big-sym {
+    font-size: 1.1rem;
+  }
+  .card-face.card-back {
+    font-size: 0.9rem;
+  }
+  .tableau-card-wrap {
+    top: 18px !important;
+  }
+}

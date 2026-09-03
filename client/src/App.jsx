@@ -44,6 +44,19 @@ import BrickBreakerGame from './components/Game/casual/BrickBreakerGame';
 import PianoTilesGame from './components/Game/action/PianoTilesGame';
 import BubbleShooterGame from './components/Game/action/BubbleShooterGame';
 
+// New Arcade, Puzzle, Board & Educational Additions
+import FlappyBirdGame from './components/Game/casual/FlappyBirdGame';
+import SpaceInvadersGame from './components/Game/action/SpaceInvadersGame';
+import SudokuGame from './components/Game/puzzle/SudokuGame';
+import Match3Game from './components/Game/puzzle/Match3Game';
+import TetrisGame from './components/Game/puzzle/TetrisGame';
+import MemoryMatchGame from './components/Game/puzzle/MemoryMatchGame';
+import SolitaireGame from './components/Game/casual/SolitaireGame';
+import MathQuizGame from './components/Game/educational/MathQuizGame';
+import WordScrambleGame from './components/Game/educational/WordScrambleGame';
+import TypingTestGame from './components/Game/educational/TypingTestGame';
+import CodingPuzzleGame from './components/Game/educational/CodingPuzzleGame';
+
 // Connect to backend socket
 const socket = io(`http://${window.location.hostname}:3001`);
 
@@ -147,23 +160,32 @@ function App() {
           )}
 
           <button 
-            className="btn-tertiary"
+            className="btn-tertiary nav-pill-btn nav-btn-ranks"
             onClick={() => setShowLeaderboard(true)}
+            title="Leaderboards & Ranks"
           >
-            🏆 RANKS
+            <span className="nav-icon">🏆</span>
+            <span className="nav-btn-text">RANKS</span>
           </button>
           <button 
-            className="btn-tertiary"
+            className="btn-tertiary nav-pill-btn nav-btn-achieve"
             onClick={() => setShowAchievements(true)}
+            title="Achievements & Badges"
           >
-            ✨ ACHIEVEMENTS
+            <span className="nav-icon">✨</span>
+            <span className="nav-btn-text">ACHIEVEMENTS</span>
           </button>
-          <div className="nav-user-profile-badge">
+          <div className="nav-user-profile-badge" title={`Logged in as ${user.username}`}>
             <span className="user-icon-avatar">👤</span>
             <span className="user-name-label">{user.username}</span>
           </div>
-          <button onClick={handleLogout} className="btn-primary" style={{ padding: '6px 14px', fontSize: '0.85rem' }}>
-            LOGOUT
+          <button 
+            onClick={handleLogout} 
+            className="btn-primary nav-btn-logout"
+            title="Logout"
+          >
+            <span className="nav-btn-text">LOGOUT</span>
+            <span className="nav-btn-icon">🚪</span>
           </button>
         </div>
       </nav>
@@ -284,6 +306,41 @@ function App() {
           )}
           {selectedGame === 'BUBBLE_SHOOTER' && (
             <BubbleShooterGame user={user} onLeave={handleLeaveGame} />
+          )}
+
+          {/* New Casual, Arcade, Puzzle & Educational Game Routes */}
+          {selectedGame === 'FLAPPY_BIRD' && (
+            <FlappyBirdGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'SPACE_INVADERS' && (
+            <SpaceInvadersGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'SUDOKU' && (
+            <SudokuGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'MATCH_3' && (
+            <Match3Game user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'TETRIS' && (
+            <TetrisGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'MEMORY_MATCH' && (
+            <MemoryMatchGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'SOLITAIRE' && (
+            <SolitaireGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'MATH_QUIZ' && (
+            <MathQuizGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'WORD_SCRAMBLE' && (
+            <WordScrambleGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'TYPING_TEST' && (
+            <TypingTestGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'CODING_PUZZLE' && (
+            <CodingPuzzleGame user={user} onLeave={handleLeaveGame} />
           )}
         </main>
       )}

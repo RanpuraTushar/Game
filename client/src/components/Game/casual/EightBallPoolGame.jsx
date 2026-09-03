@@ -101,7 +101,7 @@ class BilliardAudioEngine {
     try {
       const now = this.ctx.currentTime;
       const intensity = Math.min(1, Math.max(0.1, velocity / 14));
-      
+
       const osc1 = this.ctx.createOscillator();
       const osc2 = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -125,7 +125,7 @@ class BilliardAudioEngine {
       osc2.start(now);
       osc1.stop(now + 0.05);
       osc2.stop(now + 0.05);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   playCueStrike(power = 50) {
@@ -152,7 +152,7 @@ class BilliardAudioEngine {
 
       osc.start(now);
       osc.stop(now + 0.08);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   playCushionBounce(velocity = 8) {
@@ -179,7 +179,7 @@ class BilliardAudioEngine {
 
       osc.start(now);
       osc.stop(now + 0.06);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   playPocketDrop() {
@@ -204,7 +204,7 @@ class BilliardAudioEngine {
 
       osc.start(now);
       osc.stop(now + 0.18);
-    } catch (e) {}
+    } catch (e) { }
   }
 }
 
@@ -303,6 +303,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     isShooting: false,
     ballInHand: false,
     gameOver: false,
+    isBreakShot: true,
     turn: 'P1',
     gameMode: 'VS_AI',
     aiDifficulty: 'PRO',
@@ -310,6 +311,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     p2Type: null,
     cueStrikeAnim: null,
     isDraggingOnCanvas: false,
+    isDraggingPower: false,
     aimAngle: 0,
     power: 50
   });
@@ -341,9 +343,11 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     s.cushionHitThisTurn = false;
     s.cueStrikeAnim = null;
     s.isDraggingOnCanvas = false;
+    s.isDraggingPower = false;
     s.isShooting = false;
     s.ballInHand = false;
     s.gameOver = false;
+    s.isBreakShot = true;
     s.turn = 'P1';
     s.p1Type = null;
     s.p2Type = null;
@@ -641,7 +645,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     animId = requestAnimationFrame(loop);
 
     return () => cancelAnimationFrame(animId);
-  }, [aimAngle, power, turn, p1Type, p2Type, gameOver, feltTheme, ballInHand, spinOffset, updatePhysics]);
+  }, [feltTheme, updatePhysics]);
 
   // --- STRIKE LAUNCHER ---
   const triggerCueStrikeAnimation = (angle, shotPower) => {
@@ -689,6 +693,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
   };
 
   // --- OFFICIAL TOURNAMENT 8-BALL RULES RESOLUTION ---
+  // --- OFFICIAL TOURNAMENT 8-BALL RULES RESOLUTION ---
   const handleTurnEnd = async () => {
     const s = stateRef.current;
     const pocketed = [...s.pocketedThisTurn];
@@ -698,7 +703,10 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     const eightBallPotted = pocketed.some(b => b.num === 8);
     const regularPotted = pocketed.filter(b => b.num !== 8 && b !== s.cueBall);
 
-    // Scratch handling: Ball in Hand
+    const isBreak = s.isBreakShot;
+    s.isBreakShot = false;
+
+    // Reset cue ball if scratched
     if (cueScratch) {
       s.cueBall.active = true;
       s.cueBall.inPocket = false;
@@ -714,29 +722,75 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       SoundEffects.playLoss();
     }
 
-    // 8-Ball Win or Loss Check
+    // 1. Eight Ball Pocketed Resolution
     if (eightBallPotted) {
-      const myType = s.turn === 'P1' ? s.p1Type : s.p2Type;
-      const myRemaining = s.balls.filter(b => b.active && b.type === myType).length;
-
-      if (myRemaining === 0 && !cueScratch) {
-        triggerWin(s.turn === 'P1' ? 'PLAYER 1' : (s.gameMode === 'VS_AI' ? 'AI BOT' : 'PLAYER 2'));
+      if (isBreak) {
+        // Re-spot 8-ball on foot spot per tournament rules
+        const eightBall = s.balls.find(b => b.num === 8);
+        if (eightBall) {
+          eightBall.active = true;
+          eightBall.inPocket = false;
+          eightBall.x = 600;
+          eightBall.y = TABLE_HEIGHT / 2;
+          eightBall.vx = 0;
+          eightBall.vy = 0;
+          eightBall.scale = 1;
+        }
+        setTurnMessage('8-Ball potted on break! Re-spotted on foot spot.');
       } else {
-        triggerWin(s.turn === 'P1' ? (s.gameMode === 'VS_AI' ? 'AI BOT' : 'PLAYER 2') : 'PLAYER 1');
+        const myType = s.turn === 'P1' ? s.p1Type : s.p2Type;
+        const myRemaining = myType ? s.balls.filter(b => b.active && b.type === myType).length : 0;
+
+        if (myRemaining === 0 && !cueScratch && s.firstBallHit?.num === 8) {
+          triggerWin(s.turn === 'P1' ? 'PLAYER 1' : (s.gameMode === 'VS_AI' ? 'AI BOT' : 'PLAYER 2'));
+        } else {
+          // Early 8-ball pot, scratch on 8-ball, or wrong ball hit = LOSS!
+          triggerWin(s.turn === 'P1' ? (s.gameMode === 'VS_AI' ? 'AI BOT' : 'PLAYER 2') : 'PLAYER 1');
+        }
+        return;
       }
-      return;
     }
 
-    // Foul check: Wrong ball hit first
+    // 2. Comprehensive Official Foul Checking
     let isFoul = cueScratch;
-    const myType = s.turn === 'P1' ? s.p1Type : s.p2Type;
-    if (myType && s.firstBallHit && s.firstBallHit.type !== myType && s.firstBallHit.num !== 8) {
-      isFoul = true;
+    let foulReason = cueScratch ? 'Scratch in pocket!' : '';
+
+    if (!isFoul) {
+      if (!s.firstBallHit) {
+        isFoul = true;
+        foulReason = 'Missed all balls!';
+      } else {
+        const myType = s.turn === 'P1' ? s.p1Type : s.p2Type;
+        if (!myType) {
+          if (s.firstBallHit.num === 8) {
+            isFoul = true;
+            foulReason = 'Hit 8-Ball on open table!';
+          }
+        } else {
+          const myRemaining = s.balls.filter(b => b.active && b.type === myType).length;
+          if (myRemaining > 0) {
+            if (s.firstBallHit.type !== myType) {
+              isFoul = true;
+              foulReason = `Must hit ${myType === 'SOLID' ? 'Solids' : 'Stripes'} first!`;
+            }
+          } else {
+            if (s.firstBallHit.num !== 8) {
+              isFoul = true;
+              foulReason = 'Must hit the 8-ball first!';
+            }
+          }
+        }
+
+        if (!isFoul && !s.cushionHitThisTurn && pocketed.length === 0) {
+          isFoul = true;
+          foulReason = 'No ball reached cushion after hit!';
+        }
+      }
     }
 
-    // Solids / Stripes Assignment
+    // 3. Suit Assignment (Only after break and only on legal pot)
     let keepTurn = false;
-    if (regularPotted.length > 0 && !s.p1Type && !isFoul) {
+    if (!isBreak && !s.p1Type && regularPotted.length > 0 && !isFoul) {
       const firstType = regularPotted[0].type;
       const oppType = firstType === 'SOLID' ? 'STRIPE' : 'SOLID';
       if (s.turn === 'P1') {
@@ -752,13 +806,19 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       }
       keepTurn = true;
     } else if (regularPotted.length > 0 && !isFoul) {
-      const pottedMyBall = regularPotted.some(b => b.type === myType);
-      if (pottedMyBall) keepTurn = true;
+      if (isBreak) {
+        keepTurn = true;
+      } else {
+        const myType = s.turn === 'P1' ? s.p1Type : s.p2Type;
+        const pottedMyBall = myType && regularPotted.some(b => b.type === myType);
+        if (pottedMyBall) keepTurn = true;
+      }
     }
 
     setP1Potted(s.balls.filter(b => !b.active && b.type === s.p1Type));
     setP2Potted(s.balls.filter(b => !b.active && b.type === s.p2Type));
 
+    // 4. Turn & Announcement Resolution
     if (keepTurn && !isFoul) {
       setShotStreak(st => st + 1);
       const curName = s.turn === 'P1' ? 'Player 1' : (s.gameMode === 'VS_AI' ? 'AI Bot' : 'Player 2');
@@ -773,7 +833,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       if (isFoul) {
         s.ballInHand = true;
         setBallInHand(true);
-        setTurnMessage(`Foul! ${nextName} has Ball in Hand.`);
+        setTurnMessage(`Foul (${foulReason}) — ${nextName} has Ball in Hand.`);
       } else {
         setTurnMessage(`${nextName}'s Turn`);
       }
@@ -816,21 +876,33 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       setBallInHand(false);
     }
 
-    // 2. Determine target balls
+    // 2. Determine strictly legal target balls
     const myType = s.p2Type;
-    let candidates = s.balls.filter(b => b.active && (myType ? b.type === myType : b.type !== 'EIGHT'));
-    if (candidates.length === 0) {
-      // 8-Ball is the target when all suit balls potted!
-      candidates = s.balls.filter(b => b.active && b.num === 8);
+    let candidates = [];
+
+    if (!myType) {
+      // Open table: Can hit any solid or stripe (NEVER 8-ball)
+      candidates = s.balls.filter(b => b.active && b.type !== 'EIGHT');
+    } else {
+      const myRemaining = s.balls.filter(b => b.active && b.type === myType).length;
+      if (myRemaining > 0) {
+        // Must only target own suit balls!
+        candidates = s.balls.filter(b => b.active && b.type === myType);
+      } else {
+        // All suit balls cleared: legal target is the 8-ball
+        candidates = s.balls.filter(b => b.active && b.num === 8);
+      }
     }
+
     if (candidates.length === 0) {
       candidates = s.balls.filter(b => b.active);
     }
     if (candidates.length === 0) return;
 
-    // 3. Find best shot towards all 6 pockets
+    // 3. Find best shot towards all 6 pockets with strict obstacle checking
     let bestShot = null;
     let highestScore = -999999;
+    const R_COLL = BALL_RADIUS * 2;
 
     candidates.forEach(ball => {
       POCKETS.forEach(p => {
@@ -840,8 +912,18 @@ const EightBallPoolGame = ({ user, onLeave }) => {
         if (bpDist === 0) return;
         const toPocketAngle = Math.atan2(bpy, bpx);
 
-        const ghostX = ball.x - Math.cos(toPocketAngle) * BALL_RADIUS * 2;
-        const ghostY = ball.y - Math.sin(toPocketAngle) * BALL_RADIUS * 2;
+        const ghostX = ball.x - Math.cos(toPocketAngle) * R_COLL;
+        const ghostY = ball.y - Math.sin(toPocketAngle) * R_COLL;
+
+        // Check if ghost ball position is physically reachable within table rails
+        if (
+          ghostX < PLAY_X + BALL_RADIUS + 4 ||
+          ghostX > PLAY_X + PLAY_W - BALL_RADIUS - 4 ||
+          ghostY < PLAY_Y + BALL_RADIUS + 4 ||
+          ghostY > PLAY_Y + PLAY_H - BALL_RADIUS - 4
+        ) {
+          return;
+        }
 
         const cgx = ghostX - s.cueBall.x;
         const cgy = ghostY - s.cueBall.y;
@@ -852,33 +934,84 @@ const EightBallPoolGame = ({ user, onLeave }) => {
         if (angleDiff > Math.PI) angleDiff = 2 * Math.PI - angleDiff;
         const cutDeg = (angleDiff * 180) / Math.PI;
 
-        if (cutDeg < 80) {
-          const score = 2000 - bpDist * 1.0 - cgDist * 0.4 - cutDeg * 12;
-          if (score > highestScore) {
-            highestScore = score;
-            const calcPower = Math.min(85, Math.max(35, Math.round(cgDist * 0.12 + bpDist * 0.08)));
-            bestShot = { aimAng, power: calcPower, ball };
+        // Limit cut angle to physically feasible cuts (< 72 deg)
+        if (cutDeg > 72) return;
+
+        // Obstacle check 1: Cue ball to ghost ball path must be completely clear
+        let cueBlocked = false;
+        s.balls.forEach(other => {
+          if (other === ball || !other.active) return;
+          const cp = closestPointOnSegment(other.x, other.y, s.cueBall.x, s.cueBall.y, ghostX, ghostY);
+          if (Math.hypot(other.x - cp.x, other.y - cp.y) < BALL_RADIUS * 1.95) {
+            cueBlocked = true;
           }
+        });
+        if (cueBlocked) return;
+
+        // Obstacle check 2: Target ball to pocket path must be completely clear
+        let pocketBlocked = false;
+        s.balls.forEach(other => {
+          if (other === ball || !other.active) return;
+          const cp = closestPointOnSegment(other.x, other.y, ball.x, ball.y, p.x, p.y);
+          if (Math.hypot(other.x - cp.x, other.y - cp.y) < BALL_RADIUS * 1.95) {
+            pocketBlocked = true;
+          }
+        });
+        if (pocketBlocked) return;
+
+        // Scoring: Closer distance and straighter cut angle are prioritized
+        const score = 3000 - bpDist * 1.1 - cgDist * 0.4 - cutDeg * 18;
+        if (score > highestScore) {
+          highestScore = score;
+          const calcPower = Math.min(80, Math.max(35, Math.round(cgDist * 0.12 + bpDist * 0.08)));
+          bestShot = { aimAng, power: calcPower, ball };
         }
       });
     });
 
+    // 4. Fallback: If no clean pot is available, play a legal safety shot to avoid fouling
     if (!bestShot) {
-      const target = candidates[0];
-      const dx = target.x - s.cueBall.x;
-      const dy = target.y - s.cueBall.y;
-      bestShot = { aimAng: Math.atan2(dy, dx), power: 55, ball: target };
+      let safestHit = null;
+      let minSafeDist = 99999;
+
+      candidates.forEach(cand => {
+        let pathBlocked = false;
+        s.balls.forEach(other => {
+          if (other === cand || !other.active) return;
+          const cp = closestPointOnSegment(other.x, other.y, s.cueBall.x, s.cueBall.y, cand.x, cand.y);
+          if (Math.hypot(other.x - cp.x, other.y - cp.y) < BALL_RADIUS * 1.95) {
+            pathBlocked = true;
+          }
+        });
+
+        const d = Math.hypot(cand.x - s.cueBall.x, cand.y - s.cueBall.y);
+        if (!pathBlocked && d < minSafeDist) {
+          minSafeDist = d;
+          safestHit = cand;
+        }
+      });
+
+      if (safestHit) {
+        const dx = safestHit.x - s.cueBall.x;
+        const dy = safestHit.y - s.cueBall.y;
+        bestShot = { aimAng: Math.atan2(dy, dx), power: 45, ball: safestHit };
+      } else {
+        const target = candidates[0];
+        const dx = target.x - s.cueBall.x;
+        const dy = target.y - s.cueBall.y;
+        bestShot = { aimAng: Math.atan2(dy, dx), power: 50, ball: target };
+      }
     }
 
     let variance = 0;
     const diff = s.aiDifficulty || aiDifficulty;
-    if (diff === 'CASUAL') variance = (Math.random() - 0.5) * 0.055;
-    else if (diff === 'PRO') variance = (Math.random() - 0.5) * 0.016;
-    else if (diff === 'MASTER') variance = (Math.random() - 0.5) * 0.003;
+    if (diff === 'CASUAL') variance = (Math.random() - 0.5) * 0.04;
+    else if (diff === 'PRO') variance = (Math.random() - 0.5) * 0.012;
+    else if (diff === 'MASTER') variance = (Math.random() - 0.5) * 0.002;
 
     const targetAimAngle = bestShot.aimAng + variance;
 
-    // Update aim and power visually so user SEES the AI aim!
+    // Update aim and power visually so user SEES the AI aim smoothly!
     setAimAngle(targetAimAngle);
     setPower(bestShot.power);
 
@@ -974,21 +1107,73 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     }
   };
 
-  const handlePowerDrag = (e) => {
+  const handleCanvasTouchStart = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const touch = e.touches[0];
+      handleCanvasMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+      handleCanvasMouseDown({ button: 0, clientX: touch.clientX, clientY: touch.clientY, preventDefault: () => {} });
+    }
+  };
+
+  const handleCanvasTouchMove = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const touch = e.touches[0];
+      handleCanvasMouseMove({ clientX: touch.clientX, clientY: touch.clientY });
+    }
+  };
+
+  const handleCanvasTouchEnd = () => {
+    handleCanvasMouseUp();
+  };
+
+  const updatePowerFromPointer = (clientX, clientY) => {
     const s = stateRef.current;
     if (s.isShooting || (s.gameMode === 'VS_AI' && s.turn === 'P2') || s.gameOver) return;
     const gauge = powerGaugeRef.current;
     if (!gauge) return;
     const rect = gauge.getBoundingClientRect();
-    const relY = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
-    const p = Math.round((relY / rect.height) * 100);
-    setPower(Math.max(10, p));
+    const isHorizontal = rect.width > rect.height;
+    const rel = isHorizontal
+      ? Math.max(0, Math.min(rect.width, clientX - rect.left))
+      : Math.max(0, Math.min(rect.height, clientY - rect.top));
+    const maxDim = isHorizontal ? rect.width : rect.height;
+    const p = Math.round((rel / maxDim) * 100);
+    const clampedPower = Math.max(5, Math.min(100, p));
+    s.power = clampedPower;
+    setPower(clampedPower);
+  };
+
+  const handlePowerPointerDown = (e) => {
+    const s = stateRef.current;
+    if (s.isShooting || (s.gameMode === 'VS_AI' && s.turn === 'P2') || s.gameOver) return;
+    s.isDraggingPower = true;
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch (err) { }
+    updatePowerFromPointer(e.clientX, e.clientY);
+  };
+
+  const handlePowerPointerMove = (e) => {
+    if (stateRef.current.isDraggingPower) {
+      updatePowerFromPointer(e.clientX, e.clientY);
+    }
+  };
+
+  const handlePowerPointerUp = (e) => {
+    if (stateRef.current.isDraggingPower) {
+      stateRef.current.isDraggingPower = false;
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch (err) { }
+    }
   };
 
   // --- RENDER HYPER-REALISTIC BILLIARD TABLE ---
   const render = (ctx) => {
     ctx.clearRect(0, 0, TABLE_WIDTH, TABLE_HEIGHT);
     const s = stateRef.current;
+    const aimAngle = s.aimAngle;
+    const power = s.power;
 
     // 1. Mahogany Hardwood Outer Rails
     const woodGrad = ctx.createLinearGradient(0, 0, TABLE_WIDTH, TABLE_HEIGHT);
@@ -1088,20 +1273,30 @@ const EightBallPoolGame = ({ user, onLeave }) => {
     // 3. Trajectory Sight Line & Cue Stick (Rendered for BOTH Player & AI so AI aim is visible!)
     if (!s.isShooting && s.cueBall.active && !s.gameOver) {
       const cue = s.cueBall;
+      const cosA = Math.cos(aimAngle);
+      const sinA = Math.sin(aimAngle);
+      const R_COLL = BALL_RADIUS * 2;
+      const R_COLL_SQ = R_COLL * R_COLL;
+
       let closestBall = null;
-      let minRayDist = 720;
+      let minContactDist = 720;
 
       s.balls.forEach(b => {
         if (!b.active) return;
         const dx = b.x - cue.x;
         const dy = b.y - cue.y;
-        const proj = dx * Math.cos(aimAngle) + dy * Math.sin(aimAngle);
+        const proj = dx * cosA + dy * sinA;
 
         if (proj > 0) {
-          const perpDist = Math.abs(-dx * Math.sin(aimAngle) + dy * Math.cos(aimAngle));
-          if (perpDist < BALL_RADIUS * 2 && proj < minRayDist) {
-            minRayDist = proj;
-            closestBall = b;
+          const distSq = dx * dx + dy * dy;
+          const perpSq = distSq - proj * proj;
+
+          if (perpSq < R_COLL_SQ) {
+            const dContact = proj - Math.sqrt(R_COLL_SQ - perpSq);
+            if (dContact > 0 && dContact < minContactDist) {
+              minContactDist = dContact;
+              closestBall = b;
+            }
           }
         }
       });
@@ -1112,16 +1307,16 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       ctx.setLineDash([5, 4]);
       ctx.beginPath();
       ctx.moveTo(cue.x, cue.y);
-      ctx.lineTo(cue.x + Math.cos(aimAngle) * minRayDist, cue.y + Math.sin(aimAngle) * minRayDist);
+      ctx.lineTo(cue.x + cosA * minContactDist, cue.y + sinA * minContactDist);
       ctx.stroke();
       ctx.setLineDash([]);
 
       // Ghost Ball & Target Path
       if (closestBall) {
-        const hitX = cue.x + Math.cos(aimAngle) * minRayDist;
-        const hitY = cue.y + Math.sin(aimAngle) * minRayDist;
+        const hitX = cue.x + cosA * minContactDist;
+        const hitY = cue.y + sinA * minContactDist;
 
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
         ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -1129,8 +1324,10 @@ const EightBallPoolGame = ({ user, onLeave }) => {
         ctx.fill();
         ctx.stroke();
 
-        const targetDeflect = Math.atan2(closestBall.y - hitY, closestBall.x - hitX);
-        const targetLineLen = 110;
+        const normalX = (closestBall.x - hitX) / R_COLL;
+        const normalY = (closestBall.y - hitY) / R_COLL;
+        const targetDeflect = Math.atan2(normalY, normalX);
+        const targetLineLen = 130;
 
         ctx.strokeStyle = '#ffd600';
         ctx.lineWidth = 2.5;
@@ -1143,18 +1340,35 @@ const EightBallPoolGame = ({ user, onLeave }) => {
         ctx.stroke();
 
         POCKETS.forEach(p => {
-          const dx = p.x - closestBall.x;
-          const dy = p.y - closestBall.y;
-          const dist = Math.hypot(dx, dy);
-          const pocketAngle = Math.atan2(dy, dx);
-          const angleDiff = Math.abs(pocketAngle - targetDeflect);
+          const pdx = p.x - closestBall.x;
+          const pdy = p.y - closestBall.y;
+          const pdist = Math.hypot(pdx, pdy);
+          if (pdist < 450) {
+            const pocketAngle = Math.atan2(pdy, pdx);
+            let angleDiff = Math.abs(pocketAngle - targetDeflect);
+            if (angleDiff > Math.PI) angleDiff = 2 * Math.PI - angleDiff;
 
-          if (dist < 320 && angleDiff < 0.12) {
-            targetPocketGlow = p;
+            const maxAngleDiff = Math.atan2(p.radius * 0.88, pdist);
+            if (angleDiff <= maxAngleDiff) {
+              let pathBlocked = false;
+              s.balls.forEach(other => {
+                if (other === closestBall || !other.active) return;
+                const cp = closestPointOnSegment(other.x, other.y, closestBall.x, closestBall.y, p.x, p.y);
+                if (Math.hypot(other.x - cp.x, other.y - cp.y) < BALL_RADIUS * 1.95) {
+                  pathBlocked = true;
+                }
+              });
+
+              if (!pathBlocked) {
+                targetPocketGlow = p;
+              }
+            }
           }
         });
 
-        let cueDeflect = targetDeflect + (Math.sin(aimAngle - targetDeflect) > 0 ? -Math.PI / 2 : Math.PI / 2);
+        const cross = cosA * normalY - sinA * normalX;
+        const tangentSign = cross > 0 ? 1 : -1;
+        let cueDeflect = targetDeflect + (tangentSign * Math.PI / 2);
         if (spinOffset.y < 0) cueDeflect += Math.PI * 0.18 * Math.abs(spinOffset.y);
         else if (spinOffset.y > 0) cueDeflect -= Math.PI * 0.18 * spinOffset.y;
 
@@ -1462,11 +1676,13 @@ const EightBallPoolGame = ({ user, onLeave }) => {
           <div
             ref={powerGaugeRef}
             className="vertical-power-track"
-            onMouseMove={(e) => { if (e.buttons === 1) handlePowerDrag(e); }}
-            onMouseDown={handlePowerDrag}
+            onPointerDown={handlePowerPointerDown}
+            onPointerMove={handlePowerPointerMove}
+            onPointerUp={handlePowerPointerUp}
+            onPointerCancel={handlePowerPointerUp}
           >
             <div className="vertical-power-fill" style={{ height: `${power}%` }} />
-            <div className="vertical-cue-slider" style={{ top: `${100 - power}%` }}>
+            <div className="vertical-cue-slider" style={{ top: `${power}%` }}>
               <div className="slider-grip-line" />
             </div>
           </div>
@@ -1482,6 +1698,9 @@ const EightBallPoolGame = ({ user, onLeave }) => {
             onMouseMove={handleCanvasMouseMove}
             onMouseDown={handleCanvasMouseDown}
             onMouseUp={handleCanvasMouseUp}
+            onTouchStart={handleCanvasTouchStart}
+            onTouchMove={handleCanvasTouchMove}
+            onTouchEnd={handleCanvasTouchEnd}
             onContextMenu={(e) => e.preventDefault()}
           />
         </div>
@@ -1559,7 +1778,7 @@ const EightBallPoolGame = ({ user, onLeave }) => {
       </div>
 
       <p className="pool-pro-hint">
-        💡 <strong>Aim:</strong> Move mouse on table or use <strong>← / →</strong> Arrow keys &bull; 
+        💡 <strong>Aim:</strong> Move mouse on table or use <strong>← / →</strong> Arrow keys &bull;
         <strong> Shoot:</strong> Click & drag cue stick back on canvas and release, or click <strong>STRIKE</strong> (Spacebar).
       </p>
 
