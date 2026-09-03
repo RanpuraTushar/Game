@@ -27,16 +27,16 @@ export const GAMES_LIST = [
   },
   {
     id: 'EIGHT_BALL_POOL',
-    title: '8-Ball Pool Billiards',
-    description: 'Classic 6-pocket table with realistic 2D ball physics, cue aiming laser, vertical power slider, Solids vs Stripes, AI Bot and 2-Player Pass & Play.',
+    title: '8-Ball Pool Billiards Pro',
+    description: 'Realistic tournament pool simulator with 3D rotating balls, segmented rubber cushions with angled pocket jaws, authentic spin (draw/follow/english), direct interactive cue stick pull & release, fine-aim dial, and intelligent AI Bot.',
     category: GAME_CATEGORIES.BOARD,
     isMultiplayer: true,
     minPlayers: 1,
     maxPlayers: 2,
     icon: '🎱',
     color: '#00f3ff',
-    controls: 'Move mouse to aim laser line, drag vertical power slider, click Strike to shoot',
-    badge: 'AI & 2-Player'
+    controls: 'Mouse/Arrows to aim, drag cue back or use power gauge to shoot, click ball for spin',
+    badge: 'Pro AI & 2-Player'
   },
   {
     id: 'UNO',
