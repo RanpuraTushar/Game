@@ -2,8 +2,24 @@ import React, { useState } from 'react';
 import './AuthForms.css';
 
 const AuthForms = ({ onLoginSuccess }) => {
+  const [savedUser, setSavedUser] = useState(() => {
+    try {
+      const u = localStorage.getItem('games_user');
+      return u ? JSON.parse(u) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+  const [showManualLogin, setShowManualLogin] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(() => {
+    try {
+      const u = localStorage.getItem('games_user');
+      return u ? JSON.parse(u).username || '' : '';
+    } catch (e) {
+      return '';
+    }
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -69,7 +85,7 @@ const AuthForms = ({ onLoginSuccess }) => {
         <div className="auth-hero-panel">
           <div className="hero-top-badge">
             <span className="hero-status-dot"></span>
-            <span>CYBER ARCADE • 12 GAMES READY</span>
+            <span>CYBER ARCADE • 25+ GAMES READY</span>
           </div>
 
           <div className="hero-brand-section">
@@ -78,7 +94,7 @@ const AuthForms = ({ onLoginSuccess }) => {
               CYBER <span className="hero-title-highlight">ARCADE</span>
             </h1>
             <p className="hero-subtitle">
-              Your ultimate online arcade station. Play 12+ retro and multiplayer hit games, challenge friends in real-time, and reach the top ranks!
+              Your ultimate online arcade station. Play 25+ retro and multiplayer hit games, challenge friends in real-time, and reach the top ranks!
             </p>
           </div>
 
@@ -86,29 +102,29 @@ const AuthForms = ({ onLoginSuccess }) => {
             <div className="feature-pill">
               <span className="pill-icon">⚔️</span>
               <div className="pill-content">
-                <strong>Real-Time 1v1 Multiplayer</strong>
-                <small>Ludo, Snake, Pong, Tic-Tac-Toe & Connect 4</small>
+                <strong>Real-Time & 2-Player Duels</strong>
+                <small>Chess, Pool, Ludo, Pong, Air Hockey & Connect 4</small>
               </div>
             </div>
             <div className="feature-pill">
               <span className="pill-icon">🕹️</span>
               <div className="pill-content">
-                <strong>Classic & Puzzle Hits</strong>
-                <small>Wordle, 2048, Brick Breaker, Piano Tiles</small>
+                <strong>Classic & Action Hits</strong>
+                <small>Slope, Block Puzzle, Fruit Slicer, Knife Hit, 2048</small>
               </div>
             </div>
             <div className="feature-pill">
               <span className="pill-icon">🏆</span>
               <div className="pill-content">
-                <strong>Global Leaderboards</strong>
-                <small>Track high scores and compete for #1 rank</small>
+                <strong>High Scores & Trophy Vault</strong>
+                <small>Track all-time records and unlock 25+ badges</small>
               </div>
             </div>
           </div>
 
           <div className="hero-footer-status">
             <div className="live-stat">
-              <span className="stat-num">12</span>
+              <span className="stat-num">25+</span>
               <span className="stat-label">Hit Games</span>
             </div>
             <div className="stat-divider"></div>
@@ -136,43 +152,107 @@ const AuthForms = ({ onLoginSuccess }) => {
             <div className="terminal-tag">CYBER ARCADE • AUTHENTICATION</div>
           </div>
 
-          {/* Tab Switcher */}
-          <div className="auth-tab-switch">
-            <button 
-              type="button"
-              className={`auth-tab-btn ${isLogin ? 'active' : ''}`}
-              onClick={() => { setIsLogin(true); setError(''); }}
-            >
-              <span>🔑</span> LOGIN
-            </button>
-            <button 
-              type="button"
-              className={`auth-tab-btn ${!isLogin ? 'active' : ''}`}
-              onClick={() => { setIsLogin(false); setError(''); }}
-            >
-              <span>✨</span> CREATE ACCOUNT
-            </button>
-          </div>
+          {/* Quick Resume Card for returning users */}
+          {savedUser && !showManualLogin ? (
+            <div className="quick-resume-card">
+              <div className="resume-avatar-ring">
+                <span className="resume-avatar-icon">👤</span>
+              </div>
 
-          {/* Form Heading */}
-          <div className="form-heading-area">
-            <h2 className="form-main-title">
-              {isLogin ? 'Welcome Back!' : 'Create New Account'}
-            </h2>
-            <p className="form-desc">
-              {isLogin 
-                ? 'Enter your username and password to start playing.' 
-                : 'Sign up in seconds to play games and save your high scores.'}
-            </p>
-          </div>
+              <div className="resume-text-area">
+                <span className="resume-badge-tag">READY TO PLAY</span>
+                <h2 className="resume-welcome-title">
+                  Welcome Back, <span className="resume-username-highlight">{savedUser.username}</span>!
+                </h2>
+                <p className="resume-subtitle">
+                  Your personalized high scores, trophies & history are loaded. Jump straight back into the arena!
+                </p>
+              </div>
 
-          {/* Error Banner */}
-          {error && (
-            <div className="auth-error-banner">
-              <span className="error-icon">⚠️</span>
-              <span>{error}</span>
+              <button 
+                type="button" 
+                className="btn-continue-arcade"
+                onClick={() => onLoginSuccess(savedUser)}
+              >
+                <span className="btn-glow-layer"></span>
+                <span className="btn-text">
+                  <span>⚡ CONTINUE AS {savedUser.username.toUpperCase()}</span>
+                  <span className="btn-arrow">➔</span>
+                </span>
+              </button>
+
+              <div className="resume-switch-actions">
+                <button 
+                  type="button" 
+                  className="btn-switch-account"
+                  onClick={() => setShowManualLogin(true)}
+                >
+                  <span>🔄</span> Switch Account / Enter Password
+                </button>
+                <button 
+                  type="button" 
+                  className="btn-forget-account"
+                  onClick={() => {
+                    localStorage.removeItem('games_user');
+                    localStorage.removeItem('games_token');
+                    setSavedUser(null);
+                    setShowManualLogin(true);
+                  }}
+                >
+                  Sign Out / Change User
+                </button>
+              </div>
             </div>
-          )}
+          ) : (
+            <>
+              {/* If user clicked Switch Account, show button to return to quick resume */}
+              {savedUser && showManualLogin && (
+                <button 
+                  type="button" 
+                  className="btn-back-resume"
+                  onClick={() => setShowManualLogin(false)}
+                >
+                  ← Return to {savedUser.username}'s Profile
+                </button>
+              )}
+
+              {/* Tab Switcher */}
+              <div className="auth-tab-switch">
+                <button 
+                  type="button"
+                  className={`auth-tab-btn ${isLogin ? 'active' : ''}`}
+                  onClick={() => { setIsLogin(true); setError(''); }}
+                >
+                  <span>🔑</span> LOGIN
+                </button>
+                <button 
+                  type="button"
+                  className={`auth-tab-btn ${!isLogin ? 'active' : ''}`}
+                  onClick={() => { setIsLogin(false); setError(''); }}
+                >
+                  <span>✨</span> CREATE ACCOUNT
+                </button>
+              </div>
+
+              {/* Form Heading */}
+              <div className="form-heading-area">
+                <h2 className="form-main-title">
+                  {isLogin ? 'Welcome Back!' : 'Create New Account'}
+                </h2>
+                <p className="form-desc">
+                  {isLogin 
+                    ? 'Enter your username and password to start playing.' 
+                    : 'Sign up in seconds to play games and save your high scores.'}
+                </p>
+              </div>
+
+              {/* Error Banner */}
+              {error && (
+                <div className="auth-error-banner">
+                  <span className="error-icon">⚠️</span>
+                  <span>{error}</span>
+                </div>
+              )}
 
           {/* Form Fields */}
           <form onSubmit={handleSubmit} className="auth-form-fields">
@@ -287,6 +367,8 @@ const AuthForms = ({ onLoginSuccess }) => {
               {isLogin ? "Create account" : "Login here"}
             </button>
           </div>
+            </>
+          )}
         </div>
       </div>
     </div>

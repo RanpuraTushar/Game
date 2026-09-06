@@ -130,6 +130,17 @@ export const submitGameScore = async (req, res) => {
     if (gameKey === 'PIANO_TILES' && score >= 100) checkAndUnlock('PIANO_TILES_100');
     if (gameKey === 'BUBBLE_SHOOTER' && score >= 300) checkAndUnlock('BUBBLE_CLEAR_BOARD');
 
+    // 4. Update Personal High Score in memDB
+    if (!memDB.user_high_scores) {
+      memDB.user_high_scores = {};
+    }
+    if (!memDB.user_high_scores[userId]) {
+      memDB.user_high_scores[userId] = {};
+    }
+    const currentHigh = memDB.user_high_scores[userId][gameKey] || 0;
+    const newHigh = Math.max(currentHigh, Number(score) || 0);
+    memDB.user_high_scores[userId][gameKey] = newHigh;
+
     // Also persist to MySQL if connected
     if (isDbConnected()) {
       await query(
@@ -142,10 +153,20 @@ export const submitGameScore = async (req, res) => {
       success: true,
       message: 'Score recorded successfully',
       score,
+      highScore: newHigh,
       unlockedAchievements
     });
   } catch (error) {
     console.error('[Score Submission Error]', error);
     res.status(500).json({ message: 'Error recording score' });
   }
+};
+
+// Get all personal high scores for a specific user
+export const getUserHighScores = async (req, res) => {
+  const { userId } = req.params;
+  const userScores = (memDB.user_high_scores && memDB.user_high_scores[userId])
+    ? memDB.user_high_scores[userId]
+    : {};
+  return res.json({ success: true, highScores: userScores });
 };

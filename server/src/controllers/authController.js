@@ -173,3 +173,44 @@ export const getMe = async (req, res) => {
     res.status(500).json({ message: 'Server error fetching profile' });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  const { id, username, email, avatar } = req.body;
+  const userId = Number(id || req.user?.id);
+
+  try {
+    if (!userId) {
+      return res.status(400).json({ message: 'User ID is required' });
+    }
+
+    // 1. Update in-memory user
+    let user = memDB.users.find(u => u.id === userId);
+    if (user) {
+      if (username && username.trim()) user.username = username.trim();
+      if (email && email.trim()) user.email = email.trim();
+      if (avatar) user.avatar = avatar;
+    }
+
+    // 2. Update MySQL if connected
+    if (isDbConnected()) {
+      await db.execute(
+        'UPDATE users SET username = ?, email = ? WHERE id = ?',
+        [username || user?.username, email || user?.email, userId]
+      );
+    }
+
+    return res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: {
+        id: userId,
+        username: username || user?.username,
+        email: email || user?.email,
+        avatar: avatar || user?.avatar || '👤'
+      }
+    });
+  } catch (error) {
+    console.error('[Update Profile Error]', error);
+    res.status(500).json({ message: 'Server error updating profile' });
+  }
+};

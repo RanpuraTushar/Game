@@ -1,4 +1,6 @@
 // client/src/services/api.js
+import { recordGameScore } from '../utils/gameActivity';
+
 const API_BASE = `http://${window.location.hostname}:3001/api`;
 
 export const api = {
@@ -24,8 +26,12 @@ export const api = {
     }
   },
 
-  // Submit score and check achievements
+  // Submit score, update local & server high score, and check achievements
   async submitScore(gameKey, score, isWin, user) {
+    // Record locally right away so user immediately sees their High Score
+    const userId = user?.id || 'guest';
+    recordGameScore(gameKey, score, userId);
+
     try {
       const res = await fetch(`${API_BASE}/games/score`, {
         method: 'POST',
@@ -36,6 +42,32 @@ export const api = {
     } catch (err) {
       console.error('Error submitting score:', err);
       return { success: false };
+    }
+  },
+
+  // Get user personal high scores across all games
+  async getUserHighScores(userId) {
+    try {
+      const res = await fetch(`${API_BASE}/games/highscores/${userId}`);
+      return await res.json();
+    } catch (err) {
+      console.error('Error fetching user high scores:', err);
+      return { success: false, highScores: {} };
+    }
+  },
+
+  // Update user profile info (username, email, avatar)
+  async updateProfile(profileData) {
+    try {
+      const res = await fetch(`${API_BASE}/auth/profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profileData)
+      });
+      return await res.json();
+    } catch (err) {
+      console.error('Error updating profile:', err);
+      return { success: false, message: 'Connection error updating profile' };
     }
   },
 

@@ -207,10 +207,20 @@ body {
   border-radius: 20px;
   font-size: 0.85rem;
   color: #fff;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.nav-user-profile-badge:hover {
+  border-color: var(--neon-blue);
+  background: rgba(0, 243, 255, 0.12);
+  box-shadow: 0 0 16px rgba(0, 243, 255, 0.35);
+  transform: translateY(-1px);
 }
 
 .user-icon-avatar {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
 }
 
 .user-name-label {
@@ -218,6 +228,25 @@ body {
   font-weight: 700;
   color: var(--neon-blue);
   letter-spacing: 0.8px;
+}
+
+.nav-edit-hint {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(0, 243, 255, 0.15);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  color: var(--neon-blue);
+  padding: 1px 6px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.nav-user-profile-badge:hover .nav-edit-hint {
+  background: var(--neon-blue);
+  color: #07070e;
+  box-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
 }
 
 /* ==========================================================================

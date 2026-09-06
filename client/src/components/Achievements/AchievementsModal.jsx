@@ -1,24 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
+import { ACHIEVEMENTS_DATA } from '../../../../shared/gameMetadata.js';
 import './AchievementsModal.css';
 
 const AchievementsModal = ({ user, onClose }) => {
-  const [achievements, setAchievements] = useState([]);
+  const [achievements, setAchievements] = useState(ACHIEVEMENTS_DATA || []);
   const [unlockedKeys, setUnlockedKeys] = useState(new Set());
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
+
     const fetchAchievements = async () => {
       setLoading(true);
-      const allRes = await api.getAchievements();
-      const userRes = await api.getUserAchievements(user?.id || 1);
+      try {
+        const [allRes, userRes] = await Promise.all([
+          api.getAchievements().catch(() => ({ achievements: ACHIEVEMENTS_DATA })),
+          api.getUserAchievements(user?.id || 1).catch(() => ({ unlocked: [] }))
+        ]);
 
-      if (isMounted) {
-        setAchievements(allRes.achievements || []);
-        const unlocked = new Set((userRes.unlocked || []).map(a => a.key));
-        setUnlockedKeys(unlocked);
-        setLoading(false);
+        if (isMounted) {
+          const list = (allRes?.achievements && allRes.achievements.length > 0)
+            ? allRes.achievements
+            : ACHIEVEMENTS_DATA;
+          setAchievements(list);
+
+          const unlockedArray = userRes?.unlocked || [];
+          const unlockedKeyList = userRes?.unlockedKeys || [];
+          const unlockedSet = new Set([
+            ...unlockedArray.map(a => (typeof a === 'string' ? a : a?.key)).filter(Boolean),
+            ...unlockedKeyList
+          ]);
+          setUnlockedKeys(unlockedSet);
+        }
+      } catch (err) {
+        console.error('Error loading achievements modal data:', err);
+        if (isMounted) {
+          setAchievements(ACHIEVEMENTS_DATA);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
@@ -45,24 +68,27 @@ const AchievementsModal = ({ user, onClose }) => {
         </div>
 
         <div className="achievements-grid-container">
-          {loading ? (
+          {loading && achievements.length === 0 ? (
             <div className="leaderboard-loading">LOADING TROPHY VAULT...</div>
           ) : (
             <div className="achievements-grid">
               {achievements.map((ach) => {
                 const isUnlocked = unlockedKeys.has(ach.key);
+                const desc = ach.description || ach.desc || 'Complete this challenge in the arcade arena!';
+                const gameTag = (ach.gameKey || ach.key?.split('_')[0] || 'ARCADE').replace(/_/g, ' ');
+
                 return (
                   <div key={ach.key} className={`achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`}>
                     <div className="ach-icon-box">
-                      {isUnlocked ? ach.icon : '🔒'}
+                      {isUnlocked ? (ach.icon || '🏆') : '🔒'}
                     </div>
                     <div className="ach-info">
                       <div className="ach-title-row">
                         <span className="ach-title">{ach.title}</span>
-                        <span className="ach-points">+{ach.points} pts</span>
+                        <span className="ach-points">+{ach.points || 100} pts</span>
                       </div>
-                      <p className="ach-desc">{ach.desc}</p>
-                      <span className="ach-game-tag">{ach.gameKey.replace(/_/g, ' ')}</span>
+                      <p className="ach-desc">{desc}</p>
+                      <span className="ach-game-tag">{gameTag}</span>
                     </div>
                   </div>
                 );

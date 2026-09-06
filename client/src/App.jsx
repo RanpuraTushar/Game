@@ -5,7 +5,9 @@ import Lobby from './components/Lobby/Lobby';
 import GameHub from './components/GameHub/GameHub';
 import LeaderboardModal from './components/Leaderboard/LeaderboardModal';
 import AchievementsModal from './components/Achievements/AchievementsModal';
+import ProfileModal from './components/Profile/ProfileModal';
 import { GAMES_LIST } from '../../shared/gameMetadata.js';
+import { recordGamePlay } from './utils/gameActivity';
 
 // ==========================================
 // 1. Board & Multiplayer Classics (8 Games)
@@ -57,6 +59,17 @@ import WordScrambleGame from './components/Game/educational/WordScrambleGame';
 import TypingTestGame from './components/Game/educational/TypingTestGame';
 import CodingPuzzleGame from './components/Game/educational/CodingPuzzleGame';
 
+// 8 New Arcade, Sports, Action, Rhythm & Puzzle Additions
+import CricketBattingGame from './components/Game/action/CricketBattingGame';
+import PenaltyShootoutGame from './components/Game/action/PenaltyShootoutGame';
+import CircuitRacerGame from './components/Game/action/CircuitRacerGame';
+import AdventurePlatformerGame from './components/Game/action/AdventurePlatformerGame';
+import BeatRhythmGame from './components/Game/action/BeatRhythmGame';
+import TriviaQuizGame from './components/Game/educational/TriviaQuizGame';
+import DoodleGuessGame from './components/Game/casual/DoodleGuessGame';
+import JigsawPuzzleGame from './components/Game/puzzle/JigsawPuzzleGame';
+import CrosswordGame from './components/Game/puzzle/CrosswordGame';
+
 // Connect to backend socket
 const socket = io(`http://${window.location.hostname}:3001`);
 
@@ -73,13 +86,14 @@ function App() {
   // Modals
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+
+  const handleUpdateUser = (updatedUser) => {
+    setUser(updatedUser);
+    localStorage.setItem('games_user', JSON.stringify(updatedUser));
+  };
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('games_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-
     function onConnect() {
       setIsConnected(true);
     }
@@ -107,9 +121,11 @@ function App() {
     setInGame(false);
     setActiveRoom(null);
     localStorage.removeItem('games_user');
+    localStorage.removeItem('games_token');
   };
 
   const handleSelectGame = (gameId) => {
+    recordGamePlay(gameId, user?.id || 'guest');
     setSelectedGame(gameId);
     if (!ONLINE_ROOM_GAMES.includes(gameId)) {
       setInGame(true);
@@ -151,7 +167,7 @@ function App() {
 
         <div className="nav-right-section">
           {selectedGame && (
-            <button 
+            <button
               className="btn-secondary nav-hub-return-btn"
               onClick={handleLeaveGame}
             >
@@ -159,7 +175,7 @@ function App() {
             </button>
           )}
 
-          <button 
+          <button
             className="btn-tertiary nav-pill-btn nav-btn-ranks"
             onClick={() => setShowLeaderboard(true)}
             title="Leaderboards & Ranks"
@@ -167,7 +183,7 @@ function App() {
             <span className="nav-icon">🏆</span>
             <span className="nav-btn-text">RANKS</span>
           </button>
-          <button 
+          <button
             className="btn-tertiary nav-pill-btn nav-btn-achieve"
             onClick={() => setShowAchievements(true)}
             title="Achievements & Badges"
@@ -175,12 +191,17 @@ function App() {
             <span className="nav-icon">✨</span>
             <span className="nav-btn-text">ACHIEVEMENTS</span>
           </button>
-          <div className="nav-user-profile-badge" title={`Logged in as ${user.username}`}>
-            <span className="user-icon-avatar">👤</span>
+          <button
+            className="nav-user-profile-badge"
+            onClick={() => setShowProfile(true)}
+            title={`Click to view & edit profile (${user.username})`}
+          >
+            <span className="user-icon-avatar">{user.avatar || '👤'}</span>
             <span className="user-name-label">{user.username}</span>
-          </div>
-          <button 
-            onClick={handleLogout} 
+            <span className="nav-edit-hint">EDIT</span>
+          </button>
+          <button
+            onClick={handleLogout}
             className="btn-primary nav-btn-logout"
             title="Logout"
           >
@@ -192,37 +213,48 @@ function App() {
 
       {/* Leaderboard Modal */}
       {showLeaderboard && (
-        <LeaderboardModal 
-          onClose={() => setShowLeaderboard(false)} 
+        <LeaderboardModal
+          onClose={() => setShowLeaderboard(false)}
           defaultGame={selectedGame || 'GLOBAL'}
         />
       )}
 
       {/* Achievements Modal */}
       {showAchievements && (
-        <AchievementsModal 
-          user={user} 
-          onClose={() => setShowAchievements(false)} 
+        <AchievementsModal
+          user={user}
+          onClose={() => setShowAchievements(false)}
+        />
+      )}
+
+      {/* User Profile & Edit Modal */}
+      {showProfile && (
+        <ProfileModal
+          user={user}
+          onClose={() => setShowProfile(false)}
+          onUpdateUser={handleUpdateUser}
         />
       )}
 
       {/* Main View Router */}
       {!selectedGame ? (
-        <GameHub 
+        <GameHub
+          user={user}
           onSelectGame={handleSelectGame}
           onOpenLeaderboard={() => setShowLeaderboard(true)}
           onOpenAchievements={() => setShowAchievements(true)}
+          onOpenProfile={() => setShowProfile(true)}
         />
       ) : isOnlineLobbyGame && !inGame ? (
-        <Lobby 
-          socket={socket} 
-          user={user} 
+        <Lobby
+          socket={socket}
+          user={user}
           selectedGame={selectedGame}
           onBack={handleLeaveGame}
           onGameStart={(room) => {
             setActiveRoom(room);
             setInGame(true);
-          }} 
+          }}
         />
       ) : (
         /* Curated Hit Games Router */
@@ -341,6 +373,35 @@ function App() {
           )}
           {selectedGame === 'CODING_PUZZLE' && (
             <CodingPuzzleGame user={user} onLeave={handleLeaveGame} />
+          )}
+
+          {/* New Expansion Games */}
+          {selectedGame === 'CRICKET_CHALLENGE' && (
+            <CricketBattingGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'PENALTY_SHOOTOUT' && (
+            <PenaltyShootoutGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'CIRCUIT_RACER' && (
+            <CircuitRacerGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'ADVENTURE_PLATFORMER' && (
+            <AdventurePlatformerGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'TRIVIA_QUIZ' && (
+            <TriviaQuizGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'DOODLE_GUESS' && (
+            <DoodleGuessGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'JIGSAW_PUZZLE' && (
+            <JigsawPuzzleGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'CROSSWORD_PUZZLE' && (
+            <CrosswordGame user={user} onLeave={handleLeaveGame} />
+          )}
+          {selectedGame === 'BEAT_RHYTHM' && (
+            <BeatRhythmGame user={user} onLeave={handleLeaveGame} />
           )}
         </main>
       )}

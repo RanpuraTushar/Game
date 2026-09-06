@@ -93,9 +93,71 @@
   margin: 0;
 }
 
-/* Random Roulette Button */
+/* Hero Quick Actions (Profile Card & Random Roulette) */
 .hero-quick-actions {
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn-user-profile-quick {
+  background: rgba(10, 15, 30, 0.85);
+  border: 1.5px solid rgba(0, 243, 255, 0.45);
+  border-radius: 14px;
+  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.15), inset 0 0 10px rgba(0, 243, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-user-profile-quick:hover {
+  border-color: #00f3ff;
+  background: rgba(0, 243, 255, 0.16);
+  box-shadow: 0 0 28px rgba(0, 243, 255, 0.4);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.hero-avatar-icon {
+  font-size: 1.6rem;
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  padding: 3px 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+
+.hero-user-name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #ffffff;
+  letter-spacing: 0.8px;
+}
+
+.hero-user-edit-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.68rem;
+  color: #00f3ff;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 
 .btn-random-roulette {
@@ -451,6 +513,231 @@
   margin-bottom: 20px;
 }
 
+/* ==========================================================================
+   Recently Played / Jump Back In Shelf
+   ========================================================================== */
+.hub-recent-shelf {
+  background: linear-gradient(135deg, rgba(16, 20, 42, 0.85), rgba(12, 14, 28, 0.8));
+  border: 1px solid rgba(0, 243, 255, 0.22);
+  border-radius: 16px;
+  padding: 18px 22px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.04);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  animation: fadeIn 0.35s ease-out;
+}
+
+.recent-shelf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.recent-shelf-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shelf-badge-icon {
+  font-size: 1.1rem;
+}
+
+.recent-shelf-title h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--neon-blue);
+  margin: 0;
+}
+
+.recent-shelf-subtitle {
+  font-size: 0.82rem;
+  color: #8c96b5;
+}
+
+.recent-shelf-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+}
+
+.recent-shelf-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.recent-shelf-track::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+.recent-shelf-track::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.3);
+  border-radius: 4px;
+}
+
+.recent-shelf-track::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-blue);
+}
+
+.recent-mini-card {
+  flex: 0 0 220px;
+  background: rgba(20, 24, 48, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  user-select: none;
+}
+
+.recent-mini-card:hover {
+  transform: translateY(-2px);
+  background: rgba(26, 32, 64, 0.9);
+  border-color: var(--neon-blue);
+  box-shadow: 0 6px 20px rgba(0, 243, 255, 0.2);
+}
+
+.recent-mini-icon-halo {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid var(--mini-color, #00f3ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+.recent-mini-icon {
+  font-size: 1.4rem;
+}
+
+.recent-mini-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.recent-mini-title {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+}
+
+.recent-mini-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.recent-best-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #ffd600;
+  background: rgba(255, 214, 0, 0.16);
+  border: 1px solid rgba(255, 214, 0, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.recent-count-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #ff9100;
+  background: rgba(255, 145, 0, 0.15);
+  border: 1px solid rgba(255, 145, 0, 0.3);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.recent-time-tag {
+  font-size: 0.72rem;
+  color: #8892b0;
+}
+
+.recent-play-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 243, 255, 0.15);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  color: var(--neon-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.recent-mini-card:hover .recent-play-btn {
+  background: var(--neon-blue);
+  color: #07070e;
+  box-shadow: 0 0 12px var(--neon-blue);
+}
+
+/* ==========================================================================
+   Play Badges & High Score Badges on Catalog Cards
+   ========================================================================== */
+.card-highscore-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  color: #ffd600;
+  background: linear-gradient(135deg, rgba(255, 214, 0, 0.18), rgba(255, 145, 0, 0.1));
+  border: 1px solid rgba(255, 214, 0, 0.4);
+  box-shadow: 0 0 10px rgba(255, 214, 0, 0.15);
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.card-played-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #ff9100;
+  background: rgba(255, 145, 0, 0.15);
+  border: 1px solid rgba(255, 145, 0, 0.4);
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.category-tab-btn.tab-highlight-fire {
+  border-color: rgba(255, 145, 0, 0.35);
+}
+
+.category-tab-btn.tab-highlight-fire.active,
+.category-tab-btn.tab-highlight-fire:hover {
+  border-color: #ff9100;
+  background: linear-gradient(135deg, rgba(255, 145, 0, 0.2), rgba(255, 0, 85, 0.15));
+  box-shadow: 0 0 16px rgba(255, 145, 0, 0.4);
+  color: #fff;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hub-hero-banner {
@@ -463,6 +750,10 @@
 
   .hub-search-container {
     width: 100%;
+  }
+
+  .recent-mini-card {
+    flex: 0 0 180px;
   }
 
   .games-cards-grid {

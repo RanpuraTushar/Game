@@ -1,0 +1,294 @@
+/* PenaltyShootoutGame.css - Stadium Penalty Arena */
+.penalty-game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.penalty-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: rgba(10, 20, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.penalty-title-group h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ffd600, #00ff66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.penalty-title-group p {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.shootout-scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(5, 12, 28, 0.9);
+  border: 1px solid rgba(0, 255, 102, 0.3);
+  padding: 8px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.1);
+}
+
+.team-score-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-name {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.team-goals {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #00f3ff;
+  text-shadow: 0 0 12px rgba(0, 243, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.team-pegs {
+  display: flex;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.score-peg {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #252e3e;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.score-peg.goal {
+  background: #00ff66;
+  box-shadow: 0 0 10px #00ff66;
+  border-color: #00ff66;
+  transform: scale(1.15);
+}
+
+.score-peg.miss {
+  background: #e63946;
+  box-shadow: 0 0 10px #e63946;
+  border-color: #e63946;
+  transform: scale(1.15);
+}
+
+.penalty-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 10;
+  background: radial-gradient(circle at 50% 30%, #0d2818 0%, #05130b 85%);
+  border: 2px solid rgba(0, 255, 102, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 255, 102, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
+.penalty-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.penalty-controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 12px;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.aim-power-meters {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  background: rgba(12, 22, 45, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  border-radius: 12px;
+  padding: 12px 18px;
+  align-items: center;
+}
+
+.meter-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.meter-lbl {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meter-track {
+  width: 100%;
+  height: 14px;
+  background: #182236;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.meter-fill-aim {
+  height: 100%;
+  background: linear-gradient(90deg, #00f3ff, #00ff66, #ff007f);
+  box-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+  transition: width 0.05s linear;
+}
+
+.meter-fill-power {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff66, #ffd600, #ff3366);
+  box-shadow: 0 0 8px rgba(255, 214, 0, 0.5);
+  transition: width 0.05s linear;
+}
+
+.curve-select-group {
+  display: flex;
+  gap: 6px;
+}
+
+.curve-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.curve-btn:hover {
+  background: rgba(0, 243, 255, 0.2);
+  border-color: #00f3ff;
+}
+
+.curve-btn.active {
+  background: #00f3ff;
+  color: #05130b;
+  font-weight: 800;
+  border-color: #00f3ff;
+  box-shadow: 0 0 12px rgba(0, 243, 255, 0.6);
+}
+
+.penalty-kick-btn {
+  background: linear-gradient(135deg, #ffd600, #ff007f);
+  border: none;
+  color: #05130b;
+  font-size: 1.25rem;
+  font-weight: 900;
+  padding: 16px 36px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 214, 0, 0.5);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.penalty-kick-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 35px rgba(255, 214, 0, 0.8);
+}
+
+.penalty-kick-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.96);
+}
+
+.penalty-kick-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+/* Modal Overlays */
+.penalty-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 10, 24, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  z-index: 10;
+  text-align: center;
+  animation: overlayFadeIn 0.25s ease-out;
+}
+
+/* Fallback & Helper classes */
+@media (max-width: 768px) {
+  .penalty-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+  }
+  .penalty-controls-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .aim-power-meters {
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .penalty-kick-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

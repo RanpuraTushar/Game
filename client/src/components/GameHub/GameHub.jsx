@@ -1,14 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GAMES_LIST, GAME_CATEGORIES } from '../../../../shared/gameMetadata.js';
+import { getGameActivity, getRecentGameIds, getMostPlayedGameIds, formatLastPlayed, getStorageKey } from '../../utils/gameActivity';
+import { api } from '../../services/api';
 import './GameHub.css';
 
-const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
+const GameHub = ({ user, onSelectGame, onOpenLeaderboard, onOpenAchievements, onOpenProfile }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('ALL');
   const [isSpinning, setIsSpinning] = useState(false);
+  const [activity, setActivity] = useState({});
+  const [recentGameIds, setRecentGameIds] = useState([]);
+  const [mostPlayedGameIds, setMostPlayedGameIds] = useState([]);
+
+  useEffect(() => {
+    const userId = user?.id || 'guest';
+    const act = getGameActivity(userId);
+    setActivity(act);
+    setRecentGameIds(getRecentGameIds(userId, 8));
+    setMostPlayedGameIds(getMostPlayedGameIds(userId, 8));
+
+    // Sync high scores from server if user is logged in
+    if (user?.id) {
+      api.getUserHighScores(user.id).then(res => {
+        if (res?.success && res?.highScores) {
+          let hasNewHigh = false;
+          const currentAct = { ...getGameActivity(userId) };
+
+          Object.entries(res.highScores).forEach(([gKey, sHigh]) => {
+            const numHigh = Number(sHigh) || 0;
+            const currentHigh = currentAct[gKey]?.highScore || 0;
+            if (numHigh > currentHigh) {
+              currentAct[gKey] = {
+                ...(currentAct[gKey] || { count: 1, lastPlayed: Date.now() }),
+                highScore: numHigh
+              };
+              hasNewHigh = true;
+            }
+          });
+
+          if (hasNewHigh) {
+            localStorage.setItem(getStorageKey(userId), JSON.stringify(currentAct));
+            setActivity(currentAct);
+          }
+        }
+      }).catch(() => {});
+    }
+  }, [user]);
 
   const categories = [
     { id: 'ALL', label: 'ALL GAMES', icon: '🎮' },
+    { id: 'MOST_PLAYED', label: '🔥 MOST PLAYED', icon: '🔥' },
+    { id: 'RECENT', label: '⏱️ RECENT', icon: '⏱️' },
     { id: 'BOARD', label: 'BOARD & CLASSICS', icon: '♟️' },
     { id: 'PUZZLE', label: 'PUZZLE & LOGIC', icon: '🧩' },
     { id: 'ACTION', label: 'ACTION & ARCADE', icon: '⚡' },
@@ -20,6 +62,10 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
     let matchesCategory = false;
     if (activeCategory === 'ALL') {
       matchesCategory = true;
+    } else if (activeCategory === 'MOST_PLAYED') {
+      matchesCategory = (activity[game.id]?.count || 0) > 0;
+    } else if (activeCategory === 'RECENT') {
+      matchesCategory = (activity[game.id]?.lastPlayed || 0) > 0;
     } else if (activeCategory === 'MULTIPLAYER') {
       matchesCategory = game.isMultiplayer === true || (game.maxPlayers && game.maxPlayers > 1);
     } else {
@@ -30,10 +76,28 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
                           game.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           (game.badge && game.badge.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
+  }).sort((a, b) => {
+    if (activeCategory === 'MOST_PLAYED') {
+      const countA = activity[a.id]?.count || 0;
+      const countB = activity[b.id]?.count || 0;
+      return countB - countA;
+    }
+    if (activeCategory === 'RECENT') {
+      const timeA = activity[a.id]?.lastPlayed || 0;
+      const timeB = activity[b.id]?.lastPlayed || 0;
+      return timeB - timeA;
+    }
+    return 0;
   });
 
   const getCategoryCount = (catId) => {
     if (catId === 'ALL') return GAMES_LIST.length;
+    if (catId === 'MOST_PLAYED') {
+      return GAMES_LIST.filter(g => (activity[g.id]?.count || 0) > 0).length;
+    }
+    if (catId === 'RECENT') {
+      return GAMES_LIST.filter(g => (activity[g.id]?.lastPlayed || 0) > 0).length;
+    }
     if (catId === 'MULTIPLAYER') {
       return GAMES_LIST.filter(g => g.isMultiplayer === true || (g.maxPlayers && g.maxPlayers > 1)).length;
     }
@@ -74,6 +138,18 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
 
         <div className="hero-quick-actions">
           <button 
+            className="btn-user-profile-quick"
+            onClick={onOpenProfile}
+            title="View and edit player profile, username & avatar"
+          >
+            <span className="hero-avatar-icon">{user?.avatar || '👤'}</span>
+            <div className="hero-user-info">
+              <span className="hero-user-name">{user?.username || 'Pilot'}</span>
+              <span className="hero-user-edit-tag">✏️ EDIT PROFILE</span>
+            </div>
+          </button>
+
+          <button 
             className={`btn-random-roulette ${isSpinning ? 'spinning' : ''}`}
             onClick={handleRandomSelect}
             title="Pick a random game to play!"
@@ -85,6 +161,56 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
           </button>
         </div>
       </section>
+
+      {/* Recently Played / Jump Back In Shelf */}
+      {recentGameIds.length > 0 && activeCategory === 'ALL' && !searchTerm && (
+        <section className="hub-recent-shelf">
+          <div className="recent-shelf-header">
+            <div className="recent-shelf-title">
+              <span className="shelf-badge-icon">⏱️</span>
+              <h3>JUMP BACK IN &bull; RECENTLY PLAYED</h3>
+            </div>
+            <span className="recent-shelf-subtitle">Pick up right where you left off</span>
+          </div>
+
+          <div className="recent-shelf-track">
+            {recentGameIds.map(id => {
+              const g = GAMES_LIST.find(game => game.id === id);
+              if (!g) return null;
+              const stats = activity[id];
+              return (
+                <div 
+                  key={g.id} 
+                  className="recent-mini-card"
+                  onClick={() => onSelectGame(g.id)}
+                  title={`Launch ${g.title}`}
+                >
+                  <div className="recent-mini-icon-halo" style={{ '--mini-color': g.color || '#00f3ff' }}>
+                    <span className="recent-mini-icon">{g.icon}</span>
+                  </div>
+                  <div className="recent-mini-info">
+                    <span className="recent-mini-title">{g.title}</span>
+                    <div className="recent-mini-meta">
+                      {stats?.highScore > 0 && (
+                        <span className="recent-best-tag" title={`High Score: ${stats.highScore.toLocaleString()}`}>
+                          🏆 {stats.highScore.toLocaleString()}
+                        </span>
+                      )}
+                      {stats?.count > 1 && (
+                        <span className="recent-count-tag">🔥 {stats.count} plays</span>
+                      )}
+                      <span className="recent-time-tag">{formatLastPlayed(stats?.lastPlayed)}</span>
+                    </div>
+                  </div>
+                  <button className="recent-play-btn" title={`Play ${g.title}`}>
+                    ▶
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Filter & Search Bar */}
       <section className="hub-controls-bar">
@@ -112,7 +238,7 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
             return (
               <button
                 key={cat.id}
-                className={`category-tab-btn ${isActive ? 'active' : ''}`}
+                className={`category-tab-btn ${isActive ? 'active' : ''} ${cat.id === 'MOST_PLAYED' ? 'tab-highlight-fire' : ''}`}
                 onClick={() => setActiveCategory(cat.id)}
               >
                 <span className="tab-icon">{cat.icon}</span>
@@ -128,11 +254,23 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
       <main className="hub-games-grid-section">
         {filteredGames.length === 0 ? (
           <div className="no-games-found">
-            <span className="empty-icon">🕹️</span>
-            <h3>NO GAMES FOUND</h3>
-            <p>Try searching for a different keyword or select another category filter.</p>
+            <span className="empty-icon">
+              {activeCategory === 'MOST_PLAYED' || activeCategory === 'RECENT' ? '🎮' : '🕹️'}
+            </span>
+            <h3>
+              {activeCategory === 'MOST_PLAYED' 
+                ? 'NO GAMES PLAYED YET' 
+                : activeCategory === 'RECENT'
+                ? 'NO RECENT GAMES FOUND'
+                : 'NO GAMES FOUND'}
+            </h3>
+            <p>
+              {activeCategory === 'MOST_PLAYED' || activeCategory === 'RECENT'
+                ? 'Start playing any game from the arcade and it will automatically appear here!'
+                : 'Try searching for a different keyword or select another category filter.'}
+            </p>
             <button className="btn-tertiary" onClick={() => { setSearchTerm(''); setActiveCategory('ALL'); }}>
-              RESET FILTERS
+              EXPLORE ALL GAMES
             </button>
           </div>
         ) : (
@@ -140,11 +278,12 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
             {filteredGames.map((game, index) => {
               const maxP = game.maxPlayers || 1;
               const isMulti = game.isMultiplayer || maxP > 1;
+              const stats = activity[game.id];
 
               return (
                 <div
                   key={game.id}
-                  className="game-catalog-card"
+                  className={`game-catalog-card ${stats?.count > 0 ? 'card-has-history' : ''}`}
                   onClick={() => onSelectGame(game.id)}
                   style={{ animationDelay: `${index * 30}ms` }}
                 >
@@ -154,6 +293,16 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
                     </div>
 
                     <div className="card-badges-wrapper">
+                      {stats?.highScore > 0 && (
+                        <span className="card-highscore-badge" title={`High Score: ${stats.highScore.toLocaleString()}`}>
+                          🏆 BEST: {stats.highScore.toLocaleString()}
+                        </span>
+                      )}
+                      {stats?.count > 0 && (
+                        <span className="card-played-badge" title={`You played this ${stats.count} times`}>
+                          🔥 {stats.count} {stats.count === 1 ? 'play' : 'plays'}
+                        </span>
+                      )}
                       {isMulti && (
                         <span className="card-players-badge">
                           {maxP > 2 ? `👑 1-${maxP}P` : '👥 1-2P'}
@@ -177,7 +326,7 @@ const GameHub = ({ onSelectGame, onOpenLeaderboard, onOpenAchievements }) => {
 
                   <div className="card-footer-action">
                     <button className="btn-play-card" style={{ '--btn-accent': game.color || '#00f3ff' }}>
-                      <span>PLAY NOW</span>
+                      <span>{stats?.count > 0 ? 'PLAY AGAIN' : 'PLAY NOW'}</span>
                       <span className="play-arrow">→</span>
                     </button>
                   </div>

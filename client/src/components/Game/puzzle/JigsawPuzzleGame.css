@@ -1,0 +1,181 @@
+/* JigsawPuzzleGame.css - Cyber Jigsaw Puzzle */
+.jigsaw-game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.jigsaw-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: rgba(10, 20, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.jigsaw-title-group h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00f3ff, #00ff66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jigsaw-workspace {
+  display: grid;
+  grid-template-columns: 480px 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+}
+
+.puzzle-board-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1;
+  background: rgba(5, 12, 28, 0.95);
+  border: 3px solid rgba(0, 243, 255, 0.4);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(0, 243, 255, 0.2), inset 0 0 25px rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+}
+
+.board-slot-grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.board-slot {
+  border: 1px dashed rgba(0, 243, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.board-slot:hover {
+  background: rgba(0, 243, 255, 0.1);
+}
+
+.board-slot.filled {
+  border-style: solid;
+  border-color: rgba(0, 255, 102, 0.45);
+}
+
+.puzzle-piece {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.puzzle-piece:hover {
+  transform: scale(1.08);
+  border-color: #00f3ff;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.puzzle-piece.active {
+  transform: scale(1.12);
+  border-color: #00ff66;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.6);
+}
+
+.pieces-tray {
+  background: rgba(10, 20, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tray-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #00f3ff;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.5px;
+}
+
+.tray-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.tray-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.tray-grid::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.tray-grid::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.3);
+  border-radius: 3px;
+}
+
+.jigsaw-controls-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+@media (max-width: 850px) {
+  .jigsaw-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+  .jigsaw-workspace {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .puzzle-board-frame {
+    width: 100%;
+    max-width: 360px;
+  }
+  .pieces-tray {
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+  }
+}

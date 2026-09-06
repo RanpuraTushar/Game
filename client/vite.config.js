@@ -6,5 +6,16 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+  },
+  build: {
+    chunkSizeWarningLimit: 1600,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          chess: ['chess.js'],
+        }
+      }
+    }
   }
 })

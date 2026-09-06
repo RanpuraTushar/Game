@@ -1,0 +1,180 @@
+/* AdventurePlatformerGame.css - Side-Scrolling Cyber Adventure */
+.platformer-game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px;
+  color: #fff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.platformer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: rgba(10, 20, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 14px;
+  padding: 12px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.platformer-title-group h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff007f, #00f3ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platformer-title-group p {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: #a0aec0;
+  font-weight: 500;
+}
+
+.platformer-hud-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(5, 12, 28, 0.9);
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+}
+
+.hp-hearts-display {
+  display: flex;
+  gap: 5px;
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 127, 0.6));
+}
+
+.platformer-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 10;
+  background: #050a14;
+  border: 2px solid rgba(0, 243, 255, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 243, 255, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+.platformer-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.platformer-touch-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+  margin-top: 12px;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.touch-dpad-horiz, .touch-action-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.plat-btn {
+  background: rgba(15, 25, 48, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: #00f3ff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 14px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.plat-btn:active {
+  background: #00f3ff;
+  color: #05130b;
+  transform: scale(0.95);
+  box-shadow: 0 0 15px #00f3ff;
+}
+
+.plat-btn.jump-btn {
+  background: linear-gradient(135deg, #00ff66, #00b4d8);
+  color: #05130b;
+  border: none;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+}
+
+.plat-btn.jump-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 28px rgba(0, 255, 102, 0.8);
+}
+
+.plat-btn.slash-btn {
+  background: linear-gradient(135deg, #ff007f, #e040fb);
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+}
+
+.plat-btn.slash-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 28px rgba(255, 0, 127, 0.8);
+}
+
+/* Modal Overlays */
+.platformer-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 10, 24, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  z-index: 10;
+  text-align: center;
+  animation: overlayFadeIn 0.25s ease-out;
+}
+
+@media (max-width: 768px) {
+  .platformer-header {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+  .platformer-touch-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .touch-dpad-horiz, .touch-action-btns {
+    width: 100%;
+    justify-content: center;
+  }
+}
