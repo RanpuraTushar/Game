@@ -283,8 +283,10 @@ export default function TriviaQuizGame({ user, onLeave }) {
     setGameState('GAMEOVER');
     soundFX.playWinFanfare();
     const sorted = [...players].sort((a, b) => b.score - a.score);
-    if (sorted[0]?.id === 0 && user?.id) {
-      api.submitScore(user.id, 'TRIVIA_QUIZ', sorted[0].score).catch(() => {});
+    const isWinner = sorted[0]?.id === 0;
+    const humanScore = players.find(p => p.id === 0)?.score || sorted[0].score;
+    if (user?.id) {
+      api.submitScore('TRIVIA_QUIZ', humanScore, isWinner, user).catch(() => {});
     }
   };
 

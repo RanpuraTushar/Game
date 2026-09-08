@@ -631,19 +631,24 @@ export const GAMES_LIST = [
 export const ACHIEVEMENTS_DATA = [
   // Board & Classics Achievements
   { key: 'CHESS_GRANDMASTER_WIN', gameKey: 'CHESS', title: 'Grandmaster Tactician', description: 'Win a full chess match against the AI or human player.', desc: 'Win a full chess match against the AI or human player.', points: 150, icon: '♟️' },
-  { key: 'POOL_8BALL_WIN', gameKey: '8_BALL_POOL', title: 'Pool Shark Master', description: 'Pocket the 8-ball and win an 8-Ball Pool match.', desc: 'Pocket the 8-ball and win an 8-Ball Pool match.', points: 150, icon: '🎱' },
+  { key: 'POOL_8BALL_WIN', gameKey: 'EIGHT_BALL_POOL', title: 'Pool Shark Master', description: 'Pocket the 8-ball and win an 8-Ball Pool match.', desc: 'Pocket the 8-ball and win an 8-Ball Pool match.', points: 150, icon: '🎱' },
   { key: 'UNO_MATCH_WIN', gameKey: 'UNO', title: 'UNO Champion', description: 'Play your final card and win a match of UNO!', desc: 'Play your final card and win a match of UNO!', points: 150, icon: '🃏' },
   { key: 'LUDO_ROYAL_VICTORY', gameKey: 'LUDO', title: 'Kingdom Crown', description: 'Lead all 4 tokens into the royal center home triangle in Ludo.', desc: 'Lead all 4 tokens into the royal center home triangle in Ludo.', points: 150, icon: '👑' },
-  { key: 'SNAKE_LADDER_WIN', gameKey: 'SNAKE_LADDERS', title: 'Ladder Climber', description: 'Reach tile 100 first in Snakes & Ladders 3D.', desc: 'Reach tile 100 first in Snakes & Ladders 3D.', points: 100, icon: '🎲' },
+  { key: 'SNAKE_LADDER_WIN', gameKey: 'SNAKE', title: 'Ladder Climber', description: 'Reach tile 100 first in Snakes & Ladders 3D.', desc: 'Reach tile 100 first in Snakes & Ladders 3D.', points: 100, icon: '🎲' },
   { key: 'TTT_FIRST_WIN', gameKey: 'TIC_TAC_TOE', title: 'Triple Threat', description: 'Win a Tic-Tac-Toe match with 3 in a row.', desc: 'Win a Tic-Tac-Toe match with 3 in a row.', points: 50, icon: '❌' },
   { key: 'C4_FIRST_WIN', gameKey: 'CONNECT_4', title: 'Gravity Master', description: 'Connect four colored tokens in a line.', desc: 'Connect four colored tokens in a line.', points: 75, icon: '🔴' },
   { key: 'CARROM_QUEEN_COVER', gameKey: 'CARROM', title: 'Carrom Monarch', description: 'Pocket the Queen and cover it with a carrom coin.', desc: 'Pocket the Queen and cover it with a carrom coin.', points: 100, icon: '🎯' },
+  { key: 'SOLITAIRE_FOUNDATION_KING', gameKey: 'SOLITAIRE', title: 'Patience Monarch', description: 'Complete a full Klondike Solitaire game into foundations.', desc: 'Complete a full Klondike Solitaire game into foundations.', points: 150, icon: '♠️' },
 
   // Puzzle Achievements
   { key: 'WORDLE_SOLVED', gameKey: 'WORDLE', title: 'Lexicon Prodigy', description: 'Deduce the secret 5-letter word in Wordle Nexus.', desc: 'Deduce the secret 5-letter word in Wordle Nexus.', points: 100, icon: '📝' },
   { key: '2048_VICTORY', gameKey: 'GAME_2048', title: 'Fusion Reactor', description: 'Merge tiles to create the 2048 neon block.', desc: 'Merge tiles to create the 2048 neon block.', points: 200, icon: '🔢' },
   { key: 'MINE_CLEAR_EASY', gameKey: 'MINESWEEPER', title: 'Bomb Technician', description: 'Clear a minefield without detonating any cyber mines.', desc: 'Clear a minefield without detonating any cyber mines.', points: 100, icon: '💣' },
   { key: 'BLOCK_MULTI_CLEAR', gameKey: 'BLOCK_PUZZLE', title: 'Jewel Overload', description: 'Score 300+ points placing blocks in Block Puzzle 10x10.', desc: 'Score 300+ points placing blocks in Block Puzzle 10x10.', points: 100, icon: '🧱' },
+  { key: 'SUDOKU_LOGIC_MASTER', gameKey: 'SUDOKU', title: 'Sudoku Savant', description: 'Solve a full 9x9 Cyber Sudoku puzzle.', desc: 'Solve a full 9x9 Cyber Sudoku puzzle.', points: 150, icon: '🔢' },
+  { key: 'MATCH3_SWEET_VICTORY', gameKey: 'MATCH_3', title: 'Candy Crusher', description: 'Reach target score and trigger cascades in Cyber Candy Match-3.', desc: 'Reach target score and trigger cascades in Cyber Candy Match-3.', points: 100, icon: '🍬' },
+  { key: 'TETRIS_LINE_MASTER', gameKey: 'TETRIS', title: 'Tetromino Architect', description: 'Clear lines and score points in Tetris.', desc: 'Clear lines and score points in Tetris.', points: 150, icon: '🕹️' },
+  { key: 'MEMORY_GRID_CLEAR', gameKey: 'MEMORY_MATCH', title: 'Neural Matrix', description: 'Match all card pairs and clear the holographic memory grid.', desc: 'Match all card pairs and clear the holographic memory grid.', points: 100, icon: '🧠' },
 
   // Action & CrazyGames Achievements
   { key: 'SNIPER_ROOFTOP_WIN', gameKey: 'ROOFTOP_SNIPERS', title: 'Rooftop Legend', description: 'Win a 2-Player or AI Rooftop Sniper duel.', desc: 'Win a 2-Player or AI Rooftop Sniper duel.', points: 150, icon: '🎯' },
@@ -659,13 +664,21 @@ export const ACHIEVEMENTS_DATA = [
   { key: 'BRICK_SCORE_500', gameKey: 'BRICK_BREAKER', title: 'Demolition Legend', description: 'Score 500+ points destroying neon bricks.', desc: 'Score 500+ points destroying neon bricks.', points: 100, icon: '🧱' },
   { key: 'PIANO_TILES_100', gameKey: 'PIANO_TILES', title: 'Virtuoso Maestro', description: 'Tap 100+ piano keys in Grand Piano & Beats.', desc: 'Tap 100+ piano keys in Grand Piano & Beats.', points: 100, icon: '🎹' },
   { key: 'BUBBLE_CLEAR_BOARD', gameKey: 'BUBBLE_SHOOTER', title: 'Orb Nova', description: 'Score 300+ points popping match-3 bubble orbs.', desc: 'Score 300+ points popping match-3 bubble orbs.', points: 100, icon: '🔮' },
+  { key: 'FLAPPY_SKY_HIGH', gameKey: 'FLAPPY_BIRD', title: 'Laser Aviator', description: 'Score 10+ points navigating pipes in Cyber Flappy Drone.', desc: 'Score 10+ points navigating pipes in Cyber Flappy Drone.', points: 100, icon: '🪶' },
+  { key: 'INVADERS_WAVE_CLEAR', gameKey: 'SPACE_INVADERS', title: 'Earth Defender', description: 'Clear alien waves and defend earth in Retro Space Invaders.', desc: 'Clear alien waves and defend earth in Retro Space Invaders.', points: 150, icon: '👾' },
+
+  // Educational Achievements
+  { key: 'MATH_BLITZ_GENIUS', gameKey: 'MATH_QUIZ', title: 'Calculus Prodigy', description: 'Score 500+ points in Speed Math Blitz arithmetic.', desc: 'Score 500+ points in Speed Math Blitz arithmetic.', points: 100, icon: '➕' },
+  { key: 'SCRAMBLE_LEXICON_ACE', gameKey: 'WORD_SCRAMBLE', title: 'Anagram Decoder', description: 'Unscramble all words in Cyber Word Scramble.', desc: 'Unscramble all words in Cyber Word Scramble.', points: 100, icon: '🔤' },
+  { key: 'TYPING_SPEED_DEMON', gameKey: 'TYPING_TEST', title: 'Cyber Typer 50+ WPM', description: 'Achieve 50+ WPM with high accuracy in Typing Speed Test.', desc: 'Achieve 50+ WPM with high accuracy in Typing Speed Test.', points: 150, icon: '⌨️' },
+  { key: 'CODE_QUEST_COMPLETER', gameKey: 'CODING_PUZZLE', title: 'Fullstack Cyber Coder', description: 'Solve all HTML, CSS, and JS code challenges.', desc: 'Solve all HTML, CSS, and JS code challenges.', points: 200, icon: '💻' },
+  { key: 'TRIVIA_BUZZER_GENIUS', gameKey: 'TRIVIA_QUIZ', title: 'Mastermind Champion', description: 'Win a full trivia quiz show with top score.', desc: 'Win a full trivia quiz show with top score.', points: 150, icon: '🎤' },
 
   // New Expansion Achievements
   { key: 'CRICKET_SIXER_BLITZ', gameKey: 'CRICKET_CHALLENGE', title: 'Maximum Sixer King', description: 'Hit 25+ runs in a cricket batting innings.', desc: 'Hit 25+ runs in a cricket batting innings.', points: 150, icon: '🏏' },
   { key: 'PENALTY_HERO_WIN', gameKey: 'PENALTY_SHOOTOUT', title: 'Golden Glove Striker', description: 'Win a 5-round penalty shootout duel.', desc: 'Win a 5-round penalty shootout duel.', points: 150, icon: '⚽' },
   { key: 'CIRCUIT_DRIFT_CHAMP', gameKey: 'CIRCUIT_RACER', title: 'Drift Grandmaster', description: 'Complete a 3-lap circuit race in 1st place.', desc: 'Complete a 3-lap circuit race in 1st place.', points: 150, icon: '🏎️' },
   { key: 'PLATFORMER_GOLIATH_DOWN', gameKey: 'ADVENTURE_PLATFORMER', title: 'Titan Slayer', description: 'Defeat Titan Goliath Mech Boss in the Cyber Citadel.', desc: 'Defeat Titan Goliath Mech Boss in the Cyber Citadel.', points: 200, icon: '🗡️' },
-  { key: 'TRIVIA_BUZZER_GENIUS', gameKey: 'TRIVIA_QUIZ', title: 'Mastermind Champion', description: 'Win a full trivia quiz show with top score.', desc: 'Win a full trivia quiz show with top score.', points: 150, icon: '🎤' },
   { key: 'DOODLE_GUESS_PRODIGY', gameKey: 'DOODLE_GUESS', title: 'Picasso Detective', description: 'Correctly guess secret drawings in record time.', desc: 'Correctly guess secret drawings in record time.', points: 100, icon: '🎲' },
   { key: 'JIGSAW_SNAP_SPEED', gameKey: 'JIGSAW_PUZZLE', title: 'Mosaic Virtuoso', description: 'Snap all pieces of a jigsaw puzzle into place.', desc: 'Snap all pieces of a jigsaw puzzle into place.', points: 100, icon: '🧩' },
   { key: 'CROSSWORD_SOLVED', gameKey: 'CROSSWORD_PUZZLE', title: 'Cyber Lexicographer', description: 'Fully decode and solve a cyber crossword puzzle.', desc: 'Fully decode and solve a cyber crossword puzzle.', points: 150, icon: '📰' },

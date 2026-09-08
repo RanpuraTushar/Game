@@ -89,9 +89,9 @@ export default function JigsawPuzzleGame({ user, onLeave }) {
     if (score > highScore) {
       setHighScore(score);
       localStorage.setItem('jigsaw_high_score', score.toString());
-      if (user?.id) {
-        api.submitScore(user.id, 'JIGSAW_PUZZLE', score).catch(() => {});
-      }
+    }
+    if (user?.id) {
+      api.submitScore('JIGSAW_PUZZLE', score, true, user).catch(() => {});
     }
   };
 

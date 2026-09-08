@@ -132,9 +132,9 @@ export default function CrosswordGame({ user, onLeave }) {
       if (score > highScore) {
         setHighScore(score);
         localStorage.setItem('crossword_high_score', score.toString());
-        if (user?.id) {
-          api.submitScore(user.id, 'CROSSWORD_PUZZLE', score).catch(() => {});
-        }
+      }
+      if (user?.id) {
+        api.submitScore('CROSSWORD_PUZZLE', score, true, user).catch(() => {});
       }
     } else {
       soundFX.playLoss();

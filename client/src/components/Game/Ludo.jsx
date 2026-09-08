@@ -102,7 +102,7 @@ const Ludo = ({ socket, room, user, onLeave }) => {
         }
       }
 
-      if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket.id) {
+      if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket?.id) {
         soundFX.playWinFanfare();
         if (user?.id) {
           api.submitScore('LUDO', 500, true, user).catch(() => {});
@@ -110,36 +110,36 @@ const Ludo = ({ socket, room, user, onLeave }) => {
       }
     };
 
-    socket.on('roomUpdated', handleRoomUpdated);
+    if (socket) socket.on('roomUpdated', handleRoomUpdated);
     return () => {
-      socket.off('roomUpdated', handleRoomUpdated);
+      if (socket) socket.off('roomUpdated', handleRoomUpdated);
       if (rollCycleInterval) clearInterval(rollCycleInterval);
       if (rollCompleteTimeout) clearTimeout(rollCompleteTimeout);
       if (popTimeout) clearTimeout(popTimeout);
     };
-  }, [socket]);
+  }, [socket, user]);
 
   const handleRollDice = () => {
     if (gameState.status !== 'PLAYING' || isRolling || gameState.waitingForTokenChoice) return;
-    if (gameState.currentTurn !== socket.id) return;
+    if (gameState.currentTurn !== socket?.id) return;
 
-    socket.emit('rollDiceLudo', { roomId: gameState.id });
+    socket?.emit('rollDiceLudo', { roomId: gameState.id });
   };
 
   const handleSelectToken = (tokenId) => {
     if (gameState.status !== 'PLAYING') return;
-    if (gameState.currentTurn !== socket.id) return;
+    if (gameState.currentTurn !== socket?.id) return;
     if (!gameState.movableTokens || !gameState.movableTokens.includes(tokenId)) return;
 
-    socket.emit('moveLudoToken', { roomId: gameState.id, tokenId });
+    socket?.emit('moveLudoToken', { roomId: gameState.id, tokenId });
   };
 
   const handleReset = () => {
-    socket.emit('resetGame', { roomId: gameState.id });
+    socket?.emit('resetGame', { roomId: gameState.id });
   };
 
   const handleLeave = () => {
-    socket.emit('leaveRoom');
+    socket?.emit('leaveRoom');
     onLeave();
   };
 

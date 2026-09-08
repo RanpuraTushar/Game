@@ -259,14 +259,15 @@ export default function CricketBattingGame({ user, onLeave }) {
 
   const handleGameOver = (finalRuns, target, wonEarly = false) => {
     setGameState('GAMEOVER');
+    const isWin = wonEarly || (target > 0 && finalRuns > target);
     if (finalRuns > highScore) {
       setHighScore(finalRuns);
       localStorage.setItem('cricket_high_score', finalRuns.toString());
-      if (user?.id) {
-        api.submitScore(user.id, 'CRICKET_CHALLENGE', finalRuns).catch(() => {});
-      }
     }
-    if (wonEarly || (target > 0 && finalRuns > target)) {
+    if (user?.id) {
+      api.submitScore('CRICKET_CHALLENGE', finalRuns, isWin, user).catch(() => {});
+    }
+    if (isWin) {
       soundFX.playWinFanfare();
     } else {
       soundFX.playLoss();

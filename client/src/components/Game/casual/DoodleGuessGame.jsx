@@ -37,6 +37,26 @@ const DRAWING_PRESETS = {
     { type: 'circle', x: 300, y: 260, r: 15 }, // bottom petal
     { type: 'circle', x: 240, y: 200, r: 15 }, // left petal
     { type: 'circle', x: 360, y: 200, r: 15 }  // right petal
+  ],
+  CLOCK: [
+    { type: 'circle', x: 300, y: 200, r: 60 },
+    { type: 'circle', x: 300, y: 200, r: 5 },
+    { type: 'line', x1: 300, y1: 200, x2: 300, y2: 155 },
+    { type: 'line', x1: 300, y1: 200, x2: 335, y2: 200 }
+  ],
+  DIAMOND: [
+    { type: 'poly', pts: [[240, 150], [360, 150], [390, 190], [300, 290], [210, 190]] },
+    { type: 'poly', pts: [[240, 150], [270, 190], [300, 150], [330, 190], [360, 150]] }
+  ],
+  GUITAR: [
+    { type: 'circle', x: 300, y: 260, r: 45 },
+    { type: 'circle', x: 300, y: 190, r: 35 },
+    { type: 'line', x1: 300, y1: 155, x2: 300, y2: 90 },
+    { type: 'circle', x: 300, y: 225, r: 12 }
+  ],
+  CASTLE: [
+    { type: 'poly', pts: [[220, 300], [220, 180], [250, 180], [250, 220], [350, 220], [350, 180], [380, 180], [380, 300]] },
+    { type: 'poly', pts: [[280, 300], [280, 250], [320, 250], [320, 300]] }
   ]
 };
 
@@ -73,7 +93,10 @@ export default function DoodleGuessGame({ user, onLeave }) {
 
   const startGame = (mode = 'DRAWER') => {
     soundFX.playClick();
-    const word = WORDS_POOL[Math.floor(Math.random() * WORDS_POOL.length)];
+    const presetKeys = Object.keys(DRAWING_PRESETS);
+    const word = mode === 'DRAWER'
+      ? WORDS_POOL[Math.floor(Math.random() * WORDS_POOL.length)]
+      : presetKeys[Math.floor(Math.random() * presetKeys.length)];
     setCurrentWord(word);
     setIsGuessed(false);
     setMessages([
@@ -255,9 +278,9 @@ export default function DoodleGuessGame({ user, onLeave }) {
       if (newScore > highScore) {
         setHighScore(newScore);
         localStorage.setItem('doodle_high_score', newScore.toString());
-        if (user?.id) {
-          api.submitScore(user.id, 'DOODLE_GUESS', newScore).catch(() => {});
-        }
+      }
+      if (user?.id) {
+        api.submitScore('DOODLE_GUESS', newScore, true, user).catch(() => {});
       }
       setTimeout(() => {
         setGameState('GAMEOVER');

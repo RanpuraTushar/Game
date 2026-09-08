@@ -242,7 +242,8 @@ const BubbleShooterGame = ({ user, onLeave }) => {
     if (cluster.length >= 3) {
       SoundEffects.playSafe();
       const points = cluster.length * 30;
-      setScore(sc => sc + points);
+      s.score = (s.score || 0) + points;
+      setScore(s.score);
 
       cluster.forEach(({ r, c }) => {
         const color = s.grid[r][c];
@@ -284,7 +285,8 @@ const BubbleShooterGame = ({ user, onLeave }) => {
     gameState.current.active = false;
     setGameWon(true);
     SoundEffects.playWin();
-    const res = await api.submitScore('BUBBLE_SHOOTER', score + 500, true, user);
+    const finalScore = (gameState.current.score || score) + 500;
+    const res = await api.submitScore('BUBBLE_SHOOTER', finalScore, true, user);
     if (res?.unlockedAchievements?.length > 0) setUnlockedBanner(res.unlockedAchievements[0]);
   };
 
@@ -292,7 +294,8 @@ const BubbleShooterGame = ({ user, onLeave }) => {
     gameState.current.active = false;
     setGameOver(true);
     SoundEffects.playLoss();
-    const res = await api.submitScore('BUBBLE_SHOOTER', score, false, user);
+    const finalScore = gameState.current.score || score;
+    const res = await api.submitScore('BUBBLE_SHOOTER', finalScore, false, user);
     if (res?.unlockedAchievements?.length > 0) setUnlockedBanner(res.unlockedAchievements[0]);
   };
 

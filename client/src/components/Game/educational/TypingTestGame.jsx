@@ -42,10 +42,11 @@ const TypingTestGame = ({ user, onLeave }) => {
   // Timer Tick
   useEffect(() => {
     let interval;
-    if (isActive && !isFinished && timeLeft > 0) {
+    if (isActive && !isFinished) {
       interval = setInterval(() => {
         setTimeLeft(t => {
           if (t <= 1) {
+            clearInterval(interval);
             finishTest();
             return 0;
           }
@@ -54,7 +55,7 @@ const TypingTestGame = ({ user, onLeave }) => {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [isActive, isFinished, timeLeft]);
+  }, [isActive, isFinished]);
 
   const finishTest = () => {
     setIsActive(false);

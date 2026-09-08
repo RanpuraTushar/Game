@@ -21,7 +21,7 @@ const CHALLENGES = [
     title: '2. Array Multiplier (JS)',
     language: 'JAVASCRIPT',
     description: 'Complete the function `doubleArray(arr)` so it returns a new array where every number is multiplied by 2.',
-    starterCode: `function doubleArray(arr) {\n  // Use arr.map() to multiply each item by 2\n  return arr.map(n => n * 2);\n}`,
+    starterCode: `function doubleArray(arr) {\n  // Complete function using arr.map()\n  \n}`,
     testSolution: (code) => {
       try {
         const fn = new Function(`${code}; return doubleArray([1, 2, 3, 4]);`);
@@ -38,7 +38,7 @@ const CHALLENGES = [
     title: '3. Palindrome Checker (JS)',
     language: 'JAVASCRIPT',
     description: 'Write a function `isPalindrome(str)` that returns true if the string reads the same forwards and backwards.',
-    starterCode: `function isPalindrome(str) {\n  // Return true if str equals its reversed version\n  const rev = str.split('').reverse().join('');\n  return str === rev;\n}`,
+    starterCode: `function isPalindrome(str) {\n  // Return true if str is a palindrome, false otherwise\n  \n}`,
     testSolution: (code) => {
       try {
         const fn = new Function(`${code}; return [isPalindrome('racecar'), isPalindrome('cyber')];`);
@@ -55,7 +55,7 @@ const CHALLENGES = [
     title: '4. Glowing Cyber Neon (CSS)',
     language: 'CSS',
     description: 'Add a 15px glowing cyan box-shadow to the button.',
-    starterCode: `.cyber-btn {\n  /* Add a 0 0 15px cyan glow */\n  box-shadow: 0 0 15px #00f3ff;\n}`,
+    starterCode: `.cyber-btn {\n  /* Add a 0 0 15px cyan (#00f3ff) glow */\n  \n}`,
     testSolution: (code) => {
       const clean = code.toLowerCase();
       return clean.includes('box-shadow:') && clean.includes('15px') && (clean.includes('#00f3ff') || clean.includes('cyan'));

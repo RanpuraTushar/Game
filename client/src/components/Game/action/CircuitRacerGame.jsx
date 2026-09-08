@@ -561,12 +561,13 @@ export default function CircuitRacerGame({ user, onLeave }) {
               setGameState('FINISHED');
               soundFX.playWinFanfare();
               const raceTotal = (Date.now() - eng.startTime) / 1000;
+              const earnedScore = Math.round(10000 / Math.max(raceTotal, 1));
               if (highScore === 0 || raceTotal < highScore) {
                 setHighScore(raceTotal);
                 localStorage.setItem('circuit_racer_best', raceTotal.toFixed(2));
-                if (user?.id) {
-                  api.submitScore(user.id, 'CIRCUIT_RACER', Math.round(10000 / raceTotal)).catch(() => {});
-                }
+              }
+              if (user?.id) {
+                api.submitScore('CIRCUIT_RACER', earnedScore, true, user).catch(() => {});
               }
             } else {
               p.currentLap++;

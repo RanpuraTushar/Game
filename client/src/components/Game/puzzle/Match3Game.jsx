@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SoundEffects from '../../../utils/SoundEffects';
 import { api } from '../../../services/api';
 import './Match3Game.css';
@@ -20,6 +20,7 @@ const Match3Game = ({ user, onLeave }) => {
   const [board, setBoard] = useState([]);
   const [selectedTile, setSelectedTile] = useState(null);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [movesLeft, setMovesLeft] = useState(INITIAL_MOVES);
   const [combo, setCombo] = useState(1);
   const [gameWon, setGameWon] = useState(false);
@@ -48,6 +49,7 @@ const Match3Game = ({ user, onLeave }) => {
     }
     setBoard(grid);
     setScore(0);
+    scoreRef.current = 0;
     setMovesLeft(INITIAL_MOVES);
     setCombo(1);
     setSelectedTile(null);
@@ -147,7 +149,8 @@ const Match3Game = ({ user, onLeave }) => {
 
     const uniqueMatches = Array.from(new Set(matchedIndices));
     const earnedPoints = uniqueMatches.length * 30 * currentCombo;
-    setScore(s => s + earnedPoints);
+    scoreRef.current += earnedPoints;
+    setScore(scoreRef.current);
     setCombo(currentCombo);
     SoundEffects.playCapture();
 
@@ -239,7 +242,7 @@ const Match3Game = ({ user, onLeave }) => {
       const wipedGrid = newGrid.map(t => t?.type === targetColor ? null : t);
       SoundEffects.playWin();
       await processMatchesAndCascade(wipedGrid, 2);
-      checkGameEnd(movesLeft - 1, score);
+      checkGameEnd(movesLeft - 1, scoreRef.current);
       setIsProcessing(false);
       return;
     }
@@ -251,7 +254,7 @@ const Match3Game = ({ user, onLeave }) => {
       setMovesLeft(newMoves);
       SoundEffects.playMove();
       await processMatchesAndCascade(newGrid, 1);
-      checkGameEnd(newMoves, score);
+      checkGameEnd(newMoves, scoreRef.current);
     } else {
       // Revert invalid swap
       await new Promise(res => setTimeout(res, 250));

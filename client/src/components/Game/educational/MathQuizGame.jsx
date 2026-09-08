@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SoundEffects from '../../../utils/SoundEffects';
 import { api } from '../../../services/api';
 import './MathQuizGame.css';
@@ -15,6 +15,7 @@ const MathQuizGame = ({ user, onLeave }) => {
   const [question, setQuestion] = useState(null);
   const [options, setOptions] = useState([]);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [streak, setStreak] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameState, setGameState] = useState('START'); // 'START', 'PLAYING', 'GAMEOVER'
@@ -66,6 +67,7 @@ const MathQuizGame = ({ user, onLeave }) => {
 
   const startGame = () => {
     setScore(0);
+    scoreRef.current = 0;
     setStreak(0);
     setTimeLeft(60);
     setTotalAnswered(0);
@@ -91,12 +93,12 @@ const MathQuizGame = ({ user, onLeave }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [gameState, score]);
+  }, [gameState]);
 
   const endGame = () => {
     setGameState('GAMEOVER');
     SoundEffects.playWin();
-    api.submitScore('MATH_QUIZ', score, score >= 500, user);
+    api.submitScore('MATH_QUIZ', scoreRef.current, scoreRef.current >= 500, user);
   };
 
   const handleSelectOption = (choice) => {
@@ -108,7 +110,8 @@ const MathQuizGame = ({ user, onLeave }) => {
     if (choice === question.answer) {
       // Correct
       const added = 50 + streak * 15;
-      setScore(s => s + added);
+      scoreRef.current += added;
+      setScore(scoreRef.current);
       setStreak(st => st + 1);
       setCorrectCount(c => c + 1);
       SoundEffects.playCapture();

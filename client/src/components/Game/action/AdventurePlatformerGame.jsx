@@ -269,9 +269,9 @@ export default function AdventurePlatformerGame({ user, onLeave }) {
     if (finalScore > highScore) {
       setHighScore(finalScore);
       localStorage.setItem('platformer_high_score', finalScore.toString());
-      if (user?.id) {
-        api.submitScore(user.id, 'ADVENTURE_PLATFORMER', finalScore).catch(() => {});
-      }
+    }
+    if (user?.id) {
+      api.submitScore('ADVENTURE_PLATFORMER', finalScore, true, user).catch(() => {});
     }
   };
 

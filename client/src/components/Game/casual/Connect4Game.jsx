@@ -18,13 +18,13 @@ const Connect4Game = ({ socket, room, user, onLeave }) => {
   const isPlayerRed = true; // Local human is RED in single player
 
   useEffect(() => {
-    if (!room) return;
+    if (!room || !socket) return;
 
     const handleRoomUpdated = (updatedRoom) => {
       if (updatedRoom.grid) setGrid(updatedRoom.grid);
       if (updatedRoom.winner) {
         setWinner(updatedRoom.winner);
-        if (updatedRoom.winner === socket.id) SoundEffects.playWin();
+        if (updatedRoom.winner === socket?.id) SoundEffects.playWin();
         else if (updatedRoom.winner !== 'DRAW') SoundEffects.playLoss();
       }
     };
@@ -38,7 +38,7 @@ const Connect4Game = ({ socket, room, user, onLeave }) => {
     if (winner || isBotThinking) return;
 
     if (isMultiplayer) {
-      socket.emit('makeConnect4Move', { roomId: room.id, col });
+      socket?.emit('makeConnect4Move', { roomId: room.id, col });
       SoundEffects.playTokenMove();
       return;
     }

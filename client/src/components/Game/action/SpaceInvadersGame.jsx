@@ -212,10 +212,11 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
           aliveAliens.forEach(a => {
             a.y += s.dropDistance;
             // Invasion reached ground
-            if (a.y + a.height >= s.player.y) {
+            if (a.y + a.height >= s.player.y && s.gameState !== 'GAMEOVER') {
               s.gameState = 'GAMEOVER';
               setGameState('GAMEOVER');
               SoundEffects.playLoss();
+              api.submitScore('SPACE_INVADERS', s.score, s.score >= 500, user);
             }
           });
         }

@@ -28,8 +28,8 @@ const PongGame = ({ socket, room, user, onLeave }) => {
   });
 
   const isMultiplayer = room && !room.isSinglePlayer;
-  const isPlayer1 = room ? room.players[0]?.socketId === socket.id : true;
-  const opponentName = gameMode === 'TWO_PLAYER' ? 'Player 2 (Pink)' : (room?.players?.find(p => p.socketId !== socket.id)?.username || 'AI Cyber Bot');
+  const isPlayer1 = room ? room.players[0]?.socketId === socket?.id : true;
+  const opponentName = gameMode === 'TWO_PLAYER' ? 'Player 2 (Pink)' : (room?.players?.find(p => p.socketId !== socket?.id)?.username || 'AI Cyber Bot');
 
   useEffect(() => {
     const handleKeyDown = (e) => {

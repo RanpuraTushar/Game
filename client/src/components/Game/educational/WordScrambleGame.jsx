@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SoundEffects from '../../../utils/SoundEffects';
 import { api } from '../../../services/api';
 import './WordScrambleGame.css';
@@ -21,6 +21,7 @@ const WordScrambleGame = ({ user, onLeave }) => {
   const [scrambledLetters, setScrambledLetters] = useState([]);
   const [placedLetters, setPlacedLetters] = useState([]);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0);
   const [streak, setStreak] = useState(0);
   const [timer, setTimer] = useState(40);
   const [showClue, setShowClue] = useState(false);
@@ -73,7 +74,7 @@ const WordScrambleGame = ({ user, onLeave }) => {
     } else {
       setGameWon(true);
       SoundEffects.playWin();
-      api.submitScore('WORD_SCRAMBLE', score, true, user);
+      api.submitScore('WORD_SCRAMBLE', scoreRef.current, true, user);
     }
   };
 
@@ -111,7 +112,8 @@ const WordScrambleGame = ({ user, onLeave }) => {
       // Success!
       SoundEffects.playCapture();
       const points = 100 + streak * 25 + timer * 2;
-      setScore(s => s + points);
+      scoreRef.current += points;
+      setScore(scoreRef.current);
       setStreak(st => st + 1);
 
       setTimeout(() => {

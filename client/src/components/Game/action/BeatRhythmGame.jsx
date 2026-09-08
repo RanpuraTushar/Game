@@ -118,6 +118,9 @@ export default function BeatRhythmGame({ user, onLeave }) {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return;
       const ctx = new AudioContext();
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
       audioSynthRef.current.ctx = ctx;
 
       const beatDuration = 60000 / bpm;
@@ -347,9 +350,9 @@ export default function BeatRhythmGame({ user, onLeave }) {
           if (score > highScore) {
             setHighScore(score);
             localStorage.setItem('rhythm_high_score', score.toString());
-            if (user?.id) {
-              api.submitScore(user.id, 'BEAT_RHYTHM', score).catch(() => {});
-            }
+          }
+          if (user?.id) {
+            api.submitScore('BEAT_RHYTHM', score, true, user).catch(() => {});
           }
         }
       }

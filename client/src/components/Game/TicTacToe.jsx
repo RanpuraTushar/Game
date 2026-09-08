@@ -61,22 +61,22 @@ const TicTacToe = ({ socket, room, user, onLeave }) => {
 
   const handleCellClick = (index) => {
     if (gameState.status !== 'PLAYING') return;
-    if (gameState.currentTurn !== socket.id) return;
-    if (gameState.grid[index] !== null) return;
+    if (gameState.currentTurn !== socket?.id) return;
+    if (!gameState.grid || gameState.grid[index] !== null) return;
     
-    socket.emit('makeMove', { roomId: gameState.id, index });
+    socket?.emit('makeMove', { roomId: gameState.id, index });
   };
 
   const handleReset = () => {
-    socket.emit('resetGame', { roomId: gameState.id });
+    socket?.emit('resetGame', { roomId: gameState.id });
   };
 
   const handleLeave = () => {
-    socket.emit('leaveRoom');
+    socket?.emit('leaveRoom');
     onLeave();
   };
 
-  if (!gameState || !gameState.players) {
+  if (!gameState || !gameState.players || !gameState.grid) {
     return (
       <div className="glass-panel" style={{ maxWidth: '440px', margin: '40px auto', padding: '40px', textAlign: 'center' }}>
         <h2 className="neon-text" style={{ fontSize: '1.8rem', marginBottom: '15px' }}>CONNECTING TO ARENA...</h2>
@@ -87,10 +87,10 @@ const TicTacToe = ({ socket, room, user, onLeave }) => {
   }
 
   // Find local player symbol
-  const me = gameState.players.find(p => p.socketId === socket.id);
-  const opponent = gameState.players.find(p => p.socketId !== socket.id);
+  const me = gameState.players.find(p => p.socketId === socket?.id);
+  const opponent = gameState.players.find(p => p.socketId !== socket?.id);
 
-  const isMyTurn = gameState.currentTurn === socket.id;
+  const isMyTurn = gameState.currentTurn === socket?.id;
 
   return (
     <div className="tictactoe-container">
@@ -179,7 +179,7 @@ const TicTacToe = ({ socket, room, user, onLeave }) => {
 
         {/* Grid */}
         <div className="tictactoe-grid">
-          {gameState.grid.map((cell, index) => {
+          {(gameState.grid || Array(9).fill(null)).map((cell, index) => {
             const isClickable = isMyTurn && !cell && gameState.status === 'PLAYING';
             return (
               <div 

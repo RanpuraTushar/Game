@@ -225,15 +225,16 @@ export default function PenaltyShootoutGame({ user, onLeave }) {
 
   const handleMatchEnd = () => {
     setGameState('GAMEOVER');
-    if (playerGoals > cpuGoals) {
+    const isWin = playerGoals > cpuGoals;
+    if (playerGoals > highScore) {
+      setHighScore(playerGoals);
+      localStorage.setItem('penalty_high_score', playerGoals.toString());
+    }
+    if (user?.id) {
+      api.submitScore('PENALTY_SHOOTOUT', playerGoals * 100, isWin, user).catch(() => {});
+    }
+    if (isWin) {
       soundFX.playWinFanfare();
-      if (playerGoals > highScore) {
-        setHighScore(playerGoals);
-        localStorage.setItem('penalty_high_score', playerGoals.toString());
-        if (user?.id) {
-          api.submitScore(user.id, 'PENALTY_SHOOTOUT', playerGoals * 100).catch(() => {});
-        }
-      }
     } else {
       soundFX.playLoss();
     }

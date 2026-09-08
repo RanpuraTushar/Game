@@ -75,7 +75,7 @@ const Snake = ({ socket, room, user, onLeave }) => {
         setDisplayPositions(newPositions);
       }
 
-      if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket.id) {
+      if (updatedRoom.status === 'FINISHED' && updatedRoom.winner === socket?.id) {
         soundFX.playWinFanfare();
         if (user?.id) {
           api.submitScore('SNAKE', 200, true, user).catch(() => {});
@@ -83,14 +83,14 @@ const Snake = ({ socket, room, user, onLeave }) => {
       }
     };
 
-    socket.on('roomUpdated', handleRoomUpdated);
+    if (socket) socket.on('roomUpdated', handleRoomUpdated);
     return () => {
-      socket.off('roomUpdated', handleRoomUpdated);
+      if (socket) socket.off('roomUpdated', handleRoomUpdated);
       if (animationRef.current) clearTimeout(animationRef.current);
       if (rollCycleRef.current) clearInterval(rollCycleRef.current);
       if (rollTimerRef.current) clearTimeout(rollTimerRef.current);
     };
-  }, [socket]);
+  }, [socket, user]);
 
   const animatePawnSteps = (socketId, startPos, targetPos, finalPos, eventType) => {
     setIsAnimatingMove(true);
@@ -127,22 +127,22 @@ const Snake = ({ socket, room, user, onLeave }) => {
 
   const handleRollDice = () => {
     if (gameState.status !== 'PLAYING' || isRolling || isAnimatingMove) return;
-    if (gameState.currentTurn !== socket.id) return;
+    if (gameState.currentTurn !== socket?.id) return;
 
-    socket.emit('rollDice', { roomId: gameState.id });
+    socket?.emit('rollDice', { roomId: gameState.id });
   };
 
   const handleReset = () => {
-    socket.emit('resetGame', { roomId: gameState.id });
+    socket?.emit('resetGame', { roomId: gameState.id });
   };
 
   const handleLeave = () => {
-    socket.emit('leaveRoom');
+    socket?.emit('leaveRoom');
     onLeave();
   };
 
-  const isMyTurn = gameState.currentTurn === socket.id;
-  const me = gameState.players?.find(p => p.socketId === socket.id);
+  const isMyTurn = gameState.currentTurn === socket?.id;
+  const me = gameState.players?.find(p => p.socketId === socket?.id);
 
   // Convert cell number to percentage coords (0-100)
   const getCellCoords = (cellNum) => {
@@ -321,7 +321,7 @@ const Snake = ({ socket, room, user, onLeave }) => {
                 style={{ borderTop: `4px solid ${pColor}` }}
               >
                 <div className="p-name" style={{ color: pColor }}>
-                  {p.username} {p.socketId === socket.id ? '(You)' : ''}
+                  {p.username} {p.socketId === socket?.id ? '(You)' : ''}
                 </div>
                 <div className="p-pos">Tile {pos}</div>
               </div>
@@ -628,7 +628,7 @@ const Snake = ({ socket, room, user, onLeave }) => {
           {gameState.status === 'FINISHED' && (
             <div className="finish-overlay">
               <h1 className="neon-text win-text" style={{ fontSize: '2.5rem', marginBottom: '15px' }}>
-                {gameState.winner === socket.id ? '🏆 YOU WON!' : 'GAME OVER'}
+                {gameState.winner === socket?.id ? '🏆 YOU WON!' : 'GAME OVER'}
               </h1>
               <p style={{ fontSize: '1.2rem', color: '#00f3ff', marginBottom: '25px' }}>
                 Winner: {gameState.players?.find(p => p.socketId === gameState.winner)?.username || 'Winner'}
