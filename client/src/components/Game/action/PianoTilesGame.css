@@ -671,3 +671,54 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 480px) {
+  .real-piano-nexus {
+    padding: 6px 6px 20px 6px;
+    gap: 8px;
+  }
+
+  .piano-top-panel {
+    padding: 8px 12px;
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .piano-main-title {
+    font-size: 1.1rem;
+  }
+
+  .piano-tab-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .piano-mode-tab {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .arcade-beats-stage {
+    height: 260px;
+    touch-action: none;
+  }
+
+  .key-white {
+    min-width: 18px;
+  }
+
+  .key-black {
+    width: 13px;
+    margin-left: -6.5px;
+    margin-right: -6.5px;
+  }
+
+  .game-over-card {
+    padding: 20px 14px;
+    margin: 12px;
+  }
+}

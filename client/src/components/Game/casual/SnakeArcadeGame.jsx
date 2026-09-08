@@ -148,6 +148,36 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
     return () => clearTimeout(timerId);
   }, [gameOver, isPaused, highScore]);
 
+  const handleDirection = (dirName) => {
+    const s = state.current;
+    if (dirName === 'UP' && s.dir.y === 0) s.nextDir = { x: 0, y: -1 };
+    else if (dirName === 'DOWN' && s.dir.y === 0) s.nextDir = { x: 0, y: 1 };
+    else if (dirName === 'LEFT' && s.dir.x === 0) s.nextDir = { x: -1, y: 0 };
+    else if (dirName === 'RIGHT' && s.dir.x === 0) s.nextDir = { x: 1, y: 0 };
+  };
+
+  const touchStartRef = useRef(null);
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches[0]) {
+      touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  };
+  const handleTouchEnd = (e) => {
+    if (!touchStartRef.current || !e.changedTouches || !e.changedTouches[0]) return;
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+    if (Math.max(absDx, absDy) > 20) {
+      if (absDx > absDy) {
+        handleDirection(dx > 0 ? 'RIGHT' : 'LEFT');
+      } else {
+        handleDirection(dy > 0 ? 'DOWN' : 'UP');
+      }
+    }
+    touchStartRef.current = null;
+  };
+
   return (
     <div className="snake-arcade-container glass-panel">
       <div className="snake-arcade-header">
@@ -166,11 +196,26 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
         </div>
       )}
 
-      <div className="snake-canvas-wrap">
+      <div
+        className="snake-canvas-wrap"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <canvas ref={canvasRef} width={420} height={420} className="snake-canvas" />
       </div>
 
-      <p className="snake-hint">💡 Use <strong>Arrow Keys</strong> or <strong>WASD</strong> to slither.</p>
+      {/* Mobile Virtual D-Pad */}
+      <div className="snake-mobile-dpad">
+        <button className="snake-dpad-btn up" onClick={() => handleDirection('UP')}>▲</button>
+        <div className="dpad-middle-row">
+          <button className="snake-dpad-btn left" onClick={() => handleDirection('LEFT')}>◀</button>
+          <div className="dpad-center-dot"></div>
+          <button className="snake-dpad-btn right" onClick={() => handleDirection('RIGHT')}>▶</button>
+        </div>
+        <button className="snake-dpad-btn down" onClick={() => handleDirection('DOWN')}>▼</button>
+      </div>
+
+      <p className="snake-hint">💡 Swipe on board, use <strong>D-Pad</strong>, or <strong>Arrow Keys</strong>.</p>
 
       {gameOver && (
         <div className="finish-overlay">

@@ -819,6 +819,100 @@
   }
 }
 
+@media (max-width: 480px) {
+  .uno-container {
+    padding: 8px 4px;
+    border-radius: 14px;
+  }
+
+  .uno-header {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .uno-rules-toggles {
+    gap: 4px;
+  }
+
+  .rule-toggle-btn {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+
+  .uno-status-bar {
+    padding: 6px 8px;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .current-color-badge {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+  }
+
+  .uno-turn-text {
+    font-size: 0.7rem;
+  }
+
+  .cards-counter {
+    font-size: 0.68rem;
+  }
+
+  .uno-arena-table {
+    min-height: 180px;
+    padding: 4px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+
+  .orbit-direction-ring {
+    width: 130px;
+    height: 130px;
+  }
+
+  .uno-center-felt {
+    gap: 8px;
+  }
+
+  .uno-card {
+    width: 50px;
+    height: 74px;
+    border-width: 2px;
+    border-radius: 7px;
+  }
+
+  .c-center-oval {
+    width: 34px;
+    height: 50px;
+    font-size: 1.05rem;
+  }
+
+  .c-corner {
+    font-size: 0.58rem;
+  }
+
+  .uno-logo-oval {
+    width: 36px;
+    height: 36px;
+    font-size: 0.68rem;
+  }
+
+  .player-cards-fan {
+    gap: 2px;
+    padding: 4px 2px;
+    min-height: 85px;
+  }
+
+  .player-hand-section {
+    padding: 8px 6px;
+    border-radius: 12px;
+  }
+
+  .prompt-card {
+    padding: 16px 12px;
+  }
+}
+
 /* Interactive Player Penalty / Skip Overlay */
 .uno-interactive-prompt-overlay {
   position: absolute;

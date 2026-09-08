@@ -154,3 +154,44 @@
 .key-btn.correct { background: #00e676; color: #000; border-color: #00e676; }
 .key-btn.present { background: #ffd600; color: #000; border-color: #ffd600; }
 .key-btn.absent { background: #0c0e1a; color: #4b5563; border-color: #171c38; }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .wordle-container {
+    padding: 12px 6px;
+    margin: 5px auto;
+    border-radius: 12px;
+  }
+  .wordle-grid {
+    gap: 5px;
+    margin-bottom: 14px;
+  }
+  .wordle-row {
+    gap: 5px;
+  }
+  .wordle-cell {
+    width: clamp(38px, 11.5vw, 48px);
+    height: clamp(38px, 11.5vw, 48px);
+    font-size: clamp(1.2rem, 4vw, 1.45rem);
+    border-radius: 6px;
+  }
+  .wordle-keyboard {
+    gap: 4px;
+    max-width: 100%;
+  }
+  .keyboard-row {
+    gap: 3px;
+  }
+  .key-btn {
+    padding: 9px 4px;
+    min-width: 26px;
+    font-size: 0.72rem;
+    border-radius: 4px;
+  }
+  .key-btn.wide-key {
+    padding: 9px 6px;
+    font-size: 0.62rem;
+    min-width: 38px;
+  }
+}
+

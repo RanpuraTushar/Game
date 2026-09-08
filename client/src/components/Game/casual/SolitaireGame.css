@@ -208,3 +208,55 @@
     top: 18px !important;
   }
 }
+
+@media (max-width: 480px) {
+  .solitaire-master-container {
+    padding: 6px 2px;
+    border-radius: 14px;
+  }
+
+  .solitaire-top-bar {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .solitaire-top-bar button {
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+
+  .solitaire-dash-stats {
+    font-size: 0.72rem;
+    gap: 4px;
+  }
+
+  .card-slot, .card-face, .tableau-column, .tableau-card-wrap {
+    width: clamp(36px, 11vw, 42px);
+    height: clamp(52px, 15.5vw, 62px);
+    border-radius: 6px;
+  }
+
+  .solitaire-tableaus-row {
+    gap: 2px;
+  }
+
+  .stock-waste-group, .foundations-group {
+    gap: 3px;
+  }
+
+  .card-face {
+    padding: 2px 3px;
+  }
+
+  .card-lbl {
+    font-size: 0.6rem;
+  }
+
+  .card-big-sym {
+    font-size: 0.85rem;
+  }
+
+  .card-face.card-back {
+    font-size: 0.75rem;
+  }
+}

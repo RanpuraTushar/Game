@@ -72,25 +72,33 @@ const PongGame = ({ socket, room, user, onLeave }) => {
     };
 
     const handleTouchMove = (e) => {
-      if (e.touches.length > 0) {
+      if (e.touches && e.touches.length > 0) {
         const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / (rect.width || 1);
+        const scaleY = canvas.height / (rect.height || 1);
         for (let i = 0; i < e.touches.length; i++) {
           const touch = e.touches[i];
-          const touchX = touch.clientX - rect.left;
-          const touchY = touch.clientY - rect.top;
+          const touchX = (touch.clientX - rect.left) * scaleX;
+          const touchY = (touch.clientY - rect.top) * scaleY;
           const clampedY = Math.max(35, Math.min(canvas.height - 35, touchY));
 
-          if (touchX < canvas.width / 2) {
-            gameState.current.p1Y = clampedY;
+          if (gameMode === 'TWO_PLAYER') {
+            if (touchX < canvas.width / 2) {
+              gameState.current.p1Y = clampedY;
+            } else {
+              gameState.current.p2Y = clampedY;
+            }
           } else {
-            gameState.current.p2Y = clampedY;
+            if (isPlayer1) gameState.current.p1Y = clampedY;
+            else gameState.current.p2Y = clampedY;
           }
         }
       }
     };
 
     canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchstart', handleTouchMove, { passive: true });
 
     // Main 60fps Game Loop
     const gameLoop = () => {
@@ -239,6 +247,7 @@ const PongGame = ({ socket, room, user, onLeave }) => {
       cancelAnimationFrame(animationFrameId);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchstart', handleTouchMove);
     };
   }, [gameOver, isMultiplayer, isPlayer1, gameMode]);
 

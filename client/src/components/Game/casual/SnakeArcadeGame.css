@@ -31,15 +31,89 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
 }
 
 .snake-canvas {
   display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  aspect-ratio: 1 / 1;
   background: #0a0a14;
 }
 
 .snake-hint {
-  margin-top: 12px;
+  margin-top: 10px;
   color: #777;
   font-size: 0.85rem;
 }
+
+/* Mobile Virtual D-Pad */
+.snake-mobile-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.dpad-middle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dpad-center-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(0, 255, 102, 0.4);
+}
+
+.snake-dpad-btn {
+  width: 52px;
+  height: 48px;
+  background: rgba(14, 24, 18, 0.85);
+  border: 1.5px solid #00ff66;
+  color: #00ff66;
+  font-size: 1.3rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
+  transition: all 0.15s ease;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.snake-dpad-btn:active {
+  background: #00ff66;
+  color: #000;
+  transform: scale(0.92);
+}
+
+@media (min-width: 769px) {
+  .snake-mobile-dpad {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .snake-arcade-container {
+    padding: 10px 8px;
+    margin: 5px auto;
+    border-radius: 14px;
+  }
+  .snake-stats-bar {
+    gap: 8px;
+    padding: 4px 8px;
+    font-size: 0.82rem;
+  }
+}
+

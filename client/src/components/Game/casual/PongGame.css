@@ -61,12 +61,20 @@
   border-radius: 8px;
   box-shadow: 0 0 25px rgba(0, 243, 255, 0.25);
   overflow: hidden;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .pong-canvas {
   display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  aspect-ratio: 640 / 400;
   background: #0a0a14;
   cursor: ns-resize;
+  touch-action: none;
 }
 
 .pong-hint {
@@ -74,3 +82,27 @@
   color: #777;
   font-size: 0.85rem;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .pong-container {
+    padding: 10px 8px;
+    margin: 5px auto;
+    border-radius: 14px;
+  }
+  .pong-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .pong-scoreboard {
+    gap: 10px;
+  }
+  .p-score {
+    font-size: 1.6rem;
+  }
+  .vs-divider {
+    font-size: 1.3rem;
+  }
+}
+

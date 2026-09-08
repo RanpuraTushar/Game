@@ -91,6 +91,7 @@
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.95);
   border: 2px solid rgba(0, 243, 255, 0.3);
+  touch-action: none;
 }
 
 .snipers-canvas {
@@ -134,3 +135,24 @@
   align-items: center;
   gap: 8px;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .snipers-container {
+    padding: 10px 8px;
+    margin: 5px auto;
+    border-radius: 14px;
+  }
+  .snipers-scoreboard {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+  .score-num {
+    font-size: 1.3rem;
+  }
+  .snipers-controls-bar {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+}
+

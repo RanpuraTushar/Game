@@ -62,13 +62,15 @@
   position: relative;
   width: 100%;
   max-width: 760px;
-  height: 480px;
+  aspect-ratio: 760 / 480;
+  height: auto;
   border-radius: 14px;
   overflow: hidden;
   border: 2px solid rgba(255, 145, 0, 0.4);
   box-shadow: 0 0 30px rgba(255, 145, 0, 0.2);
   background: #140d07;
   cursor: crosshair;
+  touch-action: none;
 }
 
 .slicer-canvas {
@@ -124,3 +126,29 @@
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 0 30px rgba(255, 0, 85, 0.7);
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .fruit-slicer-container {
+    padding: 8px;
+  }
+  .slicer-wrapper {
+    padding: 10px 8px;
+    border-radius: 14px;
+  }
+  .slicer-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .slicer-hud {
+    gap: 8px;
+  }
+  .hud-pill {
+    padding: 4px 10px;
+    border-radius: 8px;
+  }
+  .slicer-title {
+    font-size: 1.6rem;
+  }
+}
+

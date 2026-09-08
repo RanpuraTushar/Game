@@ -675,3 +675,59 @@
     font-size: 0.95rem;
   }
 }
+
+@media (max-width: 480px) {
+  .pool-master-arena {
+    padding: 8px 6px;
+    border-radius: 14px;
+    margin: 4px auto;
+  }
+
+  .pool-top-nav {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .mode-pill-btn {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+  }
+
+  .diff-lbl {
+    display: none;
+  }
+
+  .diff-btn {
+    padding: 2px 6px;
+    font-size: 0.62rem;
+  }
+
+  .felt-btn {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pool-pro-scoreboard {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .pro-player-card {
+    padding: 4px 6px;
+  }
+
+  .p-name {
+    font-size: 0.72rem;
+  }
+
+  .tune-arrow-btn {
+    width: 42px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .strike-pro-btn {
+    padding: 10px 14px;
+    font-size: 0.88rem;
+  }
+}

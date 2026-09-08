@@ -85,6 +85,14 @@ const TankBattleGame = ({ user, onLeave }) => {
     };
   }, [gameMode, gameOver]);
 
+  const handleTouchKey = (code, isDown) => {
+    stateRef.current.keys[code] = isDown;
+  };
+
+  const handleTouchFire = (player) => {
+    fireCannon(player);
+  };
+
   // Main 60fps Game Loop
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -481,6 +489,154 @@ const TankBattleGame = ({ user, onLeave }) => {
       {/* 2D Arena Canvas */}
       <div className="tank-canvas-wrap">
         <canvas ref={canvasRef} width={ARENA_WIDTH} height={ARENA_HEIGHT} className="tank-canvas" />
+      </div>
+
+      {/* Mobile Touch Tank Controls */}
+      <div className="tank-mobile-controls">
+        {gameMode === 'TWO_PLAYER' ? (
+          <div className="tank-duel-touch-grid">
+            {/* P1 Controls */}
+            <div className="tank-touch-player p1-panel">
+              <span className="tank-touch-title" style={{ color: '#00f3ff' }}>🔵 P1</span>
+              <div className="tank-dpad-compact">
+                <button
+                  type="button"
+                  className="tank-dbtn up"
+                  onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyW', true); }}
+                  onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyW', false); }}
+                  onMouseDown={() => handleTouchKey('KeyW', true)}
+                  onMouseUp={() => handleTouchKey('KeyW', false)}
+                >▲</button>
+                <div className="tank-dpad-row">
+                  <button
+                    type="button"
+                    className="tank-dbtn left"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyA', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyA', false); }}
+                    onMouseDown={() => handleTouchKey('KeyA', true)}
+                    onMouseUp={() => handleTouchKey('KeyA', false)}
+                  >◀</button>
+                  <button
+                    type="button"
+                    className="tank-dbtn down"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyS', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyS', false); }}
+                    onMouseDown={() => handleTouchKey('KeyS', true)}
+                    onMouseUp={() => handleTouchKey('KeyS', false)}
+                  >▼</button>
+                  <button
+                    type="button"
+                    className="tank-dbtn right"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyD', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyD', false); }}
+                    onMouseDown={() => handleTouchKey('KeyD', true)}
+                    onMouseUp={() => handleTouchKey('KeyD', false)}
+                  >▶</button>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="tank-fire-btn p1-fire"
+                onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchFire('P1'); }}
+                onClick={() => handleTouchFire('P1')}
+              >🔥 FIRE</button>
+            </div>
+
+            {/* P2 Controls */}
+            <div className="tank-touch-player p2-panel">
+              <span className="tank-touch-title" style={{ color: '#ff007f' }}>🔴 P2</span>
+              <div className="tank-dpad-compact">
+                <button
+                  type="button"
+                  className="tank-dbtn up"
+                  onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowUp', true); }}
+                  onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowUp', false); }}
+                  onMouseDown={() => handleTouchKey('ArrowUp', true)}
+                  onMouseUp={() => handleTouchKey('ArrowUp', false)}
+                >▲</button>
+                <div className="tank-dpad-row">
+                  <button
+                    type="button"
+                    className="tank-dbtn left"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowLeft', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowLeft', false); }}
+                    onMouseDown={() => handleTouchKey('ArrowLeft', true)}
+                    onMouseUp={() => handleTouchKey('ArrowLeft', false)}
+                  >◀</button>
+                  <button
+                    type="button"
+                    className="tank-dbtn down"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowDown', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowDown', false); }}
+                    onMouseDown={() => handleTouchKey('ArrowDown', true)}
+                    onMouseUp={() => handleTouchKey('ArrowDown', false)}
+                  >▼</button>
+                  <button
+                    type="button"
+                    className="tank-dbtn right"
+                    onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowRight', true); }}
+                    onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('ArrowRight', false); }}
+                    onMouseDown={() => handleTouchKey('ArrowRight', true)}
+                    onMouseUp={() => handleTouchKey('ArrowRight', false)}
+                  >▶</button>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="tank-fire-btn p2-fire"
+                onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchFire('P2'); }}
+                onClick={() => handleTouchFire('P2')}
+              >🔥 FIRE</button>
+            </div>
+          </div>
+        ) : (
+          <div className="tank-single-touch-flex">
+            <div className="tank-dpad-compact">
+              <button
+                type="button"
+                className="tank-dbtn up"
+                onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyW', true); }}
+                onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyW', false); }}
+                onMouseDown={() => handleTouchKey('KeyW', true)}
+                onMouseUp={() => handleTouchKey('KeyW', false)}
+              >▲</button>
+              <div className="tank-dpad-row">
+                <button
+                  type="button"
+                  className="tank-dbtn left"
+                  onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyA', true); }}
+                  onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyA', false); }}
+                  onMouseDown={() => handleTouchKey('KeyA', true)}
+                  onMouseUp={() => handleTouchKey('KeyA', false)}
+                >◀</button>
+                <button
+                  type="button"
+                  className="tank-dbtn down"
+                  onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyS', true); }}
+                  onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyS', false); }}
+                  onMouseDown={() => handleTouchKey('KeyS', true)}
+                  onMouseUp={() => handleTouchKey('KeyS', false)}
+                >▼</button>
+                <button
+                  type="button"
+                  className="tank-dbtn right"
+                  onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyD', true); }}
+                  onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); handleTouchKey('KeyD', false); }}
+                  onMouseDown={() => handleTouchKey('KeyD', true)}
+                  onMouseUp={() => handleTouchKey('KeyD', false)}
+                >▶</button>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="tank-fire-btn single-fire"
+              onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); handleTouchFire('P1'); }}
+              onClick={() => handleTouchFire('P1')}
+            >
+              🔥 FIRE CANNON
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Controls Reference */}

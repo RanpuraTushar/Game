@@ -189,6 +189,36 @@ const Game2048 = ({ user, onLeave }) => {
     return colors[val] || '#ff00ff';
   };
 
+  const touchStartRef = useRef(null);
+
+  const handleTouchStart = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      };
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!touchStartRef.current || !e.changedTouches || e.changedTouches.length === 0) return;
+    const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) > 20) {
+      if (absDx > absDy) {
+        if (dx > 0) move('RIGHT');
+        else move('LEFT');
+      } else {
+        if (dy > 0) move('DOWN');
+        else move('UP');
+      }
+    }
+    touchStartRef.current = null;
+  };
+
   return (
     <div className="game-2048-container glass-panel">
       {/* Top Header */}
@@ -198,23 +228,23 @@ const Game2048 = ({ user, onLeave }) => {
         {/* Mode Selector */}
         <div className="game-mode-toggle-group">
           <button 
-            className={`mode-pill-btn ${gameMode === 'SOLO' ? 'active' : ''}`}
+            className={`mode-pill ${gameMode === 'SOLO' ? 'active' : ''}`}
             onClick={() => setGameMode('SOLO')}
           >
-            👤 SOLO
+            SOLO
           </button>
           <button 
-            className={`mode-pill-btn ${gameMode === 'TWO_PLAYER' ? 'active' : ''}`}
+            className={`mode-pill ${gameMode === 'TWO_PLAYER' ? 'active' : ''}`}
             onClick={() => setGameMode('TWO_PLAYER')}
           >
-            👥 2-PLAYER CLASH
+            2-PLAYER
           </button>
         </div>
 
-        <button className="btn-tertiary" onClick={startNewGame}>↺ RESTART</button>
+        <button className="btn-tertiary" onClick={startNewGame}>RESET</button>
       </div>
 
-      {/* Status Bar */}
+      {/* Stats Bar */}
       <div className="status-2048-bar">
         {gameMode === 'SOLO' ? (
           <div className="scores-row">
@@ -258,7 +288,11 @@ const Game2048 = ({ user, onLeave }) => {
       </div>
 
       {/* 4x4 Grid Matrix */}
-      <div className="grid-2048">
+      <div
+        className="grid-2048"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {grid.map((val, idx) => (
           <div
             key={idx}
@@ -273,7 +307,7 @@ const Game2048 = ({ user, onLeave }) => {
         ))}
       </div>
 
-      <p className="hint-2048">💡 Slide with <strong>Arrow Keys</strong>, <strong>W/A/S/D</strong>, or touch buttons.</p>
+      <p className="hint-2048">💡 Swipe on board or use <strong>Arrow Keys</strong> / touch buttons.</p>
 
       {/* Game Over / Victory Overlay */}
       {gameOver && (

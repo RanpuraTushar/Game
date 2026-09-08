@@ -76,13 +76,15 @@
   position: relative;
   width: 100%;
   max-width: 700px;
-  height: 480px;
+  aspect-ratio: 700 / 480;
+  height: auto;
   border-radius: 14px;
   overflow: hidden;
   border: 3px solid rgba(0, 243, 255, 0.5);
   box-shadow: 0 0 30px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 0, 0, 0.8);
   background: #060919;
   cursor: none;
+  touch-action: none;
 }
 
 .hockey-canvas {
@@ -162,3 +164,34 @@
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 0 30px rgba(255, 0, 127, 0.7);
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .air-hockey-container {
+    padding: 8px;
+  }
+  .hockey-wrapper {
+    padding: 10px 8px;
+    border-radius: 14px;
+  }
+  .hockey-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hockey-scoreboard {
+    gap: 14px;
+    padding: 6px 14px;
+  }
+  .player-score {
+    font-size: 1.5rem;
+  }
+  .hockey-title {
+    font-size: 1.5rem;
+  }
+  .mode-selector {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+

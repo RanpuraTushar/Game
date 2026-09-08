@@ -64,6 +64,7 @@
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.95);
   border: 2px solid rgba(0, 243, 255, 0.3);
+  touch-action: none;
 }
 
 .slope-canvas {
@@ -88,3 +89,65 @@
   color: #d8dcee;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* Mobile Touch Controls */
+.slope-mobile-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  gap: 16px;
+  margin-bottom: 14px;
+  user-select: none;
+}
+
+.slope-touch-btn {
+  flex: 1;
+  max-width: 200px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  border: 1.5px solid #00f3ff;
+  background: rgba(12, 16, 36, 0.88);
+  color: #00f3ff;
+  box-shadow: 0 0 14px rgba(0, 243, 255, 0.25);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 0.1s ease;
+}
+
+.slope-touch-btn:active {
+  background: #00f3ff;
+  color: #000;
+  transform: scale(0.94);
+}
+
+@media (min-width: 769px) {
+  .slope-mobile-controls {
+    display: none;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .slope-container {
+    padding: 10px 8px;
+    margin: 5px auto;
+    border-radius: 14px;
+  }
+  .slope-hud-metrics {
+    gap: 8px;
+    padding: 6px 12px;
+  }
+  .hud-box strong {
+    font-size: 0.95rem;
+  }
+  .slope-touch-btn {
+    padding: 12px 14px;
+    font-size: 0.82rem;
+  }
+}
+

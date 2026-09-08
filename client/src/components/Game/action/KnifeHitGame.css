@@ -55,13 +55,15 @@
   position: relative;
   width: 100%;
   max-width: 540px;
-  height: 520px;
+  aspect-ratio: 540 / 520;
+  height: auto;
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid rgba(157, 0, 255, 0.4);
   box-shadow: 0 0 30px rgba(157, 0, 255, 0.25);
   background: #0d0515;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .knife-canvas {
@@ -134,3 +136,39 @@
   font-size: 1.1rem;
   transition: opacity 0.2s ease;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .knife-hit-container {
+    padding: 8px;
+  }
+  .knife-wrapper {
+    padding: 10px 8px;
+    border-radius: 14px;
+  }
+  .knife-header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .knife-hud {
+    gap: 6px;
+  }
+  .knife-hud-badge {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
+  .knife-title {
+    font-size: 1.6rem;
+  }
+  .quiver-bar {
+    left: 10px;
+    bottom: 10px;
+    padding: 4px 8px;
+    gap: 4px;
+  }
+  .quiver-icon {
+    font-size: 0.9rem;
+  }
+}
+

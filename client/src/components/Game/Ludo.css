@@ -475,3 +475,68 @@
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .ludo-container {
+    padding: 6px;
+  }
+  .ludo-panel {
+    padding: 10px 6px;
+    border-radius: 14px;
+  }
+  .ludo-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .ludo-players-grid {
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .ludo-player-card {
+    padding: 4px 6px;
+  }
+  .ludo-player-card .lp-name {
+    font-size: 0.72rem;
+  }
+  .ludo-player-card .lp-tokens {
+    font-size: 0.65rem;
+  }
+  .ludo-board-wrapper {
+    border-width: 3px;
+    border-radius: 10px;
+  }
+  .ludo-token-piece {
+    width: 17px;
+    height: 22px;
+  }
+  .safe-star {
+    font-size: 0.9rem;
+  }
+  .center-triangle-red {
+    border-top-width: clamp(26px, 8.5vw, 34px);
+    border-left-width: clamp(26px, 8.5vw, 34px);
+    border-right-width: clamp(26px, 8.5vw, 34px);
+  }
+  .center-triangle-green {
+    border-right-width: clamp(26px, 8.5vw, 34px);
+    border-top-width: clamp(26px, 8.5vw, 34px);
+    border-bottom-width: clamp(26px, 8.5vw, 34px);
+  }
+  .center-triangle-yellow {
+    border-bottom-width: clamp(26px, 8.5vw, 34px);
+    border-left-width: clamp(26px, 8.5vw, 34px);
+    border-right-width: clamp(26px, 8.5vw, 34px);
+  }
+  .center-triangle-blue {
+    border-left-width: clamp(26px, 8.5vw, 34px);
+    border-top-width: clamp(26px, 8.5vw, 34px);
+    border-bottom-width: clamp(26px, 8.5vw, 34px);
+  }
+  .ludo-controls-bar {
+    gap: 12px;
+    margin-top: 10px;
+  }
+}
+

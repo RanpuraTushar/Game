@@ -94,12 +94,14 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 0 40px rgba(224, 64, 251, 0.2), inset 0 0 30px rgba(0, 0, 0, 0.6);
+  touch-action: none;
 }
 
 .circuit-canvas {
   width: 100%;
   height: 100%;
   display: block;
+  touch-action: none;
 }
 
 .circuit-touch-controls {
@@ -128,6 +130,7 @@
   border-radius: 12px;
   cursor: pointer;
   user-select: none;
+  touch-action: manipulation;
   transition: all 0.12s ease;
   white-space: nowrap;
 }
@@ -243,5 +246,51 @@
   .touch-dpad, .touch-actions {
     width: 100%;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .circuit-racer-container {
+    padding: 6px;
+  }
+
+  .circuit-header {
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .circuit-title-group h2 {
+    font-size: 1.1rem;
+  }
+
+  .race-hud-stats {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .hud-lbl {
+    font-size: 0.55rem;
+  }
+
+  .hud-val {
+    font-size: 1.05rem;
+  }
+
+  .racer-ctrl-btn {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .track-picker-grid {
+    gap: 8px;
+    margin: 10px 0 16px;
+  }
+
+  .track-card {
+    padding: 10px;
   }
 }

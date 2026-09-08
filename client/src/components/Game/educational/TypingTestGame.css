@@ -178,3 +178,48 @@
     font-size: 1.6rem;
   }
 }
+
+@media (max-width: 480px) {
+  .typing-master-container {
+    padding: 8px 6px;
+    border-radius: 14px;
+    margin: 4px auto;
+  }
+
+  .typing-top-bar {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .typing-stats-banner {
+    font-size: 0.74rem;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .wpm-glow {
+    font-size: 1rem;
+  }
+
+  .typing-passage-box {
+    font-size: 0.92rem;
+    padding: 10px;
+    min-height: 130px;
+    line-height: 1.5;
+  }
+
+  .typing-score-grid {
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
+  }
+
+  .score-stat {
+    padding: 8px 12px;
+    align-items: center;
+  }
+
+  .stat-num {
+    font-size: 1.3rem;
+  }
+}

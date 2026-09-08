@@ -84,6 +84,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 16px;
+  touch-action: none;
 }
 
 .tank-canvas {
@@ -94,6 +95,136 @@
   border-radius: 14px;
   border: 2px solid rgba(0, 243, 255, 0.4);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  touch-action: none;
+}
+
+/* Mobile Virtual Controls */
+.tank-mobile-controls {
+  width: 100%;
+  margin-bottom: 14px;
+  user-select: none;
+}
+
+@media (min-width: 769px) {
+  .tank-mobile-controls {
+    display: none;
+  }
+}
+
+.tank-single-touch-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tank-duel-touch-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.tank-touch-player {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tank-touch-player.p1-panel { border-color: rgba(0, 243, 255, 0.3); }
+.tank-touch-player.p2-panel { border-color: rgba(255, 0, 127, 0.3); }
+
+.tank-touch-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.tank-dpad-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.tank-dpad-row {
+  display: flex;
+  gap: 4px;
+}
+
+.tank-dbtn {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  transition: background 0.1s, transform 0.1s;
+}
+
+.tank-dbtn:active {
+  background: rgba(0, 243, 255, 0.35);
+  border-color: #00f3ff;
+  transform: scale(0.94);
+}
+
+.tank-fire-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  transition: transform 0.1s;
+}
+
+.tank-fire-btn:active {
+  transform: scale(0.95);
+}
+
+.tank-fire-btn.single-fire {
+  flex: 1;
+  max-width: 180px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 65, 108, 0.4);
+}
+
+.tank-fire-btn.p1-fire {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.8rem;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+}
+
+.tank-fire-btn.p2-fire {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.8rem;
+  background: linear-gradient(135deg, #f857a6, #ff5858);
+  color: #fff;
 }
 
 .tank-controls-legend {
@@ -109,4 +240,54 @@
   font-size: 0.85rem;
   color: #d8dcee;
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 480px) {
+  .tank-container {
+    padding: 12px 8px;
+    border-radius: 16px;
+    margin: 4px auto;
+  }
+
+  .tank-header {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .tank-header .mode-pill-btn {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+  }
+
+  .tank-status-bar {
+    padding: 8px 10px;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .tank-player-score {
+    font-size: 0.72rem;
+  }
+
+  .tank-hp-bar {
+    width: 75px;
+    height: 6px;
+  }
+
+  .tank-target-badge {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+
+  .tank-controls-legend {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .tank-dbtn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.95rem;
+  }
 }

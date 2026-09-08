@@ -145,3 +145,34 @@
   color: #8f98b6;
   text-align: center;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .minesweeper-container {
+    padding: 12px 6px;
+    margin: 5px auto;
+    border-radius: 12px;
+  }
+  .minefield-grid {
+    padding: 6px;
+    gap: 3px;
+    border-radius: 10px;
+  }
+  .minefield-row {
+    gap: 3px;
+  }
+  .mine-cell {
+    width: clamp(28px, 9.2vw, 40px);
+    height: clamp(28px, 9.2vw, 40px);
+    font-size: clamp(0.9rem, 3.5vw, 1.15rem);
+    border-radius: 4px;
+  }
+  .digital-counter {
+    font-size: 1.15rem;
+    padding: 2px 6px;
+  }
+  .face-btn {
+    font-size: 1.3rem;
+  }
+}
+

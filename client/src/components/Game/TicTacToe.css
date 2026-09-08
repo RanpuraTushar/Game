@@ -239,3 +239,48 @@
   z-index: 20;
   animation: fadeIn 0.4s ease-out;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .tictactoe-container {
+    padding: 10px;
+  }
+  .tictactoe-panel {
+    padding: 18px 12px;
+    border-radius: 14px;
+  }
+  .tictactoe-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+  }
+  .tictactoe-room-badge {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+  }
+  .room-copy-action-box {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .room-code-text {
+    font-size: 1.25rem;
+    letter-spacing: 1.5px;
+  }
+  .copy-button-badge {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+  }
+  .tictactoe-scoreboard {
+    padding: 8px 12px;
+    margin-bottom: 16px;
+  }
+  .tictactoe-grid {
+    max-width: 280px;
+    grid-template-rows: repeat(3, clamp(72px, 22vw, 90px));
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .tictactoe-cell {
+    font-size: clamp(2rem, 8vw, 2.7rem);
+    border-radius: 10px;
+  }
+}

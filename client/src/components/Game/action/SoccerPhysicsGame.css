@@ -91,6 +91,9 @@
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.95);
   border: 2px solid rgba(0, 243, 255, 0.3);
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
 }
 
 .soccer-canvas {
@@ -98,6 +101,7 @@
   height: auto;
   aspect-ratio: 800 / 460;
   display: block;
+  touch-action: none;
 }
 
 .goal-banner-overlay {
@@ -111,6 +115,61 @@
   padding: 12px 32px;
   border-radius: 16px;
   animation: bounceToast 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* On-Screen Mobile Jump & Kick Controls */
+.soccer-mobile-controls {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 769px) {
+  .soccer-mobile-controls {
+    display: none;
+  }
+}
+
+.soccer-m-split {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.soccer-touch-btn {
+  flex: 1;
+  padding: 14px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.soccer-touch-btn:active {
+  transform: scale(0.96);
+}
+
+.soccer-touch-btn.p1-btn {
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.25), rgba(0, 150, 255, 0.35));
+  border-color: #00f3ff;
+  color: #00f3ff;
+  box-shadow: 0 4px 20px rgba(0, 243, 255, 0.3);
+}
+
+.soccer-touch-btn.p2-btn {
+  background: linear-gradient(135deg, rgba(255, 0, 127, 0.25), rgba(255, 0, 60, 0.35));
+  border-color: #ff007f;
+  color: #ff007f;
+  box-shadow: 0 4px 20px rgba(255, 0, 127, 0.3);
+}
+
+.soccer-touch-btn.full-btn {
+  width: 100%;
+  display: block;
 }
 
 /* 1-Button Controls Bar */
@@ -133,4 +192,54 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+@media (max-width: 480px) {
+  .soccer-container {
+    padding: 12px 8px;
+    border-radius: 16px;
+    margin: 4px auto;
+  }
+
+  .soccer-header {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .soccer-header .mode-pill-btn {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+  }
+
+  .soccer-scoreboard {
+    padding: 8px 10px;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .team-score {
+    font-size: 0.72rem;
+  }
+
+  .score-digits {
+    font-size: 1.35rem;
+  }
+
+  .stadium-name {
+    display: none;
+  }
+
+  .soccer-controls-bar {
+    font-size: 0.74rem;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .goal-banner-overlay {
+    padding: 8px 18px;
+  }
+
+  .goal-banner-overlay h2 {
+    font-size: 1.4rem !important;
+  }
 }

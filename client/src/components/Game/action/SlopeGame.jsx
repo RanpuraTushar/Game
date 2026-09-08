@@ -540,6 +540,30 @@ const SlopeGame = ({ user, onLeave }) => {
         )}
       </div>
 
+      {/* Mobile Touch Steer Controls */}
+      {gameState === 'PLAYING' && (
+        <div className="slope-mobile-controls">
+          <button
+            className="slope-touch-btn left"
+            onTouchStart={() => { stateRef.current.keys['ArrowLeft'] = true; }}
+            onTouchEnd={() => { stateRef.current.keys['ArrowLeft'] = false; }}
+            onMouseDown={() => { stateRef.current.keys['ArrowLeft'] = true; }}
+            onMouseUp={() => { stateRef.current.keys['ArrowLeft'] = false; }}
+          >
+            ◀ STEER LEFT
+          </button>
+          <button
+            className="slope-touch-btn right"
+            onTouchStart={() => { stateRef.current.keys['ArrowRight'] = true; }}
+            onTouchEnd={() => { stateRef.current.keys['ArrowRight'] = false; }}
+            onMouseDown={() => { stateRef.current.keys['ArrowRight'] = true; }}
+            onMouseUp={() => { stateRef.current.keys['ArrowRight'] = false; }}
+          >
+            STEER RIGHT ▶
+          </button>
+        </div>
+      )}
+
       {/* Controls Reference */}
       <div className="slope-controls-bar">
         <span>🎮 <strong>STEER BALL:</strong> <strong>A</strong> / <strong>D</strong> Keys or <strong>◀ / ▶</strong> Arrow Keys</span>

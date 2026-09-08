@@ -136,3 +136,36 @@
   0% { transform: scale(1); filter: brightness(1); }
   100% { transform: scale(1.18); filter: brightness(1.5); }
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .connect4-container {
+    padding: 12px 6px;
+    margin: 5px auto;
+    border-radius: 12px;
+  }
+  .c4-board {
+    padding: 10px 6px;
+    gap: 6px;
+    border-radius: 12px;
+  }
+  .c4-drop-row {
+    gap: 5px;
+  }
+  .drop-arrow-btn {
+    font-size: 1.1rem;
+    padding: 2px 0;
+  }
+  .c4-grid {
+    gap: 5px;
+  }
+  .c4-slot {
+    width: clamp(34px, 10.5vw, 48px);
+    height: clamp(34px, 10.5vw, 48px);
+  }
+  .c4-disc {
+    width: clamp(28px, 8.8vw, 40px);
+    height: clamp(28px, 8.8vw, 40px);
+  }
+}
+

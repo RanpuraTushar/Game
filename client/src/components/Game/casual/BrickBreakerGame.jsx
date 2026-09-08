@@ -60,14 +60,27 @@ const BrickBreakerGame = ({ user, onLeave }) => {
     const ctx = canvas.getContext('2d');
     let animId;
 
-    const handleMouseMove = (e) => {
+    const updatePaddlePosition = (clientX) => {
       const rect = canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
+      const scaleX = canvas.width / (rect.width || 1);
+      const mouseX = (clientX - rect.left) * scaleX;
       const s = state.current;
       s.paddleX = Math.max(0, Math.min(canvas.width - s.paddleWidth, mouseX - s.paddleWidth / 2));
     };
 
+    const handleMouseMove = (e) => {
+      updatePaddlePosition(e.clientX);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        updatePaddlePosition(e.touches[0].clientX);
+      }
+    };
+
     canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchstart', handleTouchMove, { passive: true });
 
     const loop = () => {
       const s = state.current;
@@ -210,6 +223,8 @@ const BrickBreakerGame = ({ user, onLeave }) => {
     return () => {
       cancelAnimationFrame(animId);
       canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchstart', handleTouchMove);
     };
   }, [gameOver, gameWon]);
 

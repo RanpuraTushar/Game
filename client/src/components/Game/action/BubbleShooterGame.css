@@ -29,4 +29,18 @@
   cursor: crosshair;
   max-width: 100%;
   height: auto;
+  touch-action: none;
 }
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .bubble-shooter-container {
+    padding: 10px 8px;
+    margin: 5px auto;
+    border-radius: 14px;
+  }
+  .bs-score {
+    font-size: 0.95rem;
+  }
+}
+

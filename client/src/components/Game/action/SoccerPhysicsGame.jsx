@@ -98,6 +98,42 @@ const SoccerPhysicsGame = ({ user, onLeave }) => {
     });
   };
 
+  const handleP1Jump = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    const s = stateRef.current;
+    if (s.roundPause || gameOver) return;
+    jumpAndKickTeam(s.p1Goalie, s.p1Striker, 1);
+    SoundEffects.playClick();
+  };
+
+  const handleP2Jump = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    const s = stateRef.current;
+    if (s.roundPause || gameOver) return;
+    if (gameMode === 'TWO_PLAYER') {
+      jumpAndKickTeam(s.p2Goalie, s.p2Striker, -1);
+      SoundEffects.playClick();
+    }
+  };
+
+  const handleCanvasTouch = (e) => {
+    if (gameOver || stateRef.current.roundPause) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches ? e.touches[0] : e;
+    const touchX = touch.clientX - rect.left;
+    if (gameMode === 'TWO_PLAYER') {
+      if (touchX < rect.width / 2) {
+        handleP1Jump();
+      } else {
+        handleP2Jump();
+      }
+    } else {
+      handleP1Jump();
+    }
+  };
+
   // Main 60FPS Game Loop
   useEffect(() => {
     let animId;
@@ -494,7 +530,11 @@ const SoccerPhysicsGame = ({ user, onLeave }) => {
       )}
 
       {/* 2D Stadium Canvas */}
-      <div className="soccer-canvas-wrap">
+      <div 
+        className="soccer-canvas-wrap"
+        onClick={handleCanvasTouch}
+        onTouchStart={handleCanvasTouch}
+      >
         <canvas ref={canvasRef} width={ARENA_WIDTH} height={ARENA_HEIGHT} className="soccer-canvas" />
 
         {goalScoredBanner && !gameOver && (
@@ -503,6 +543,39 @@ const SoccerPhysicsGame = ({ user, onLeave }) => {
               {goalScoredBanner}
             </h2>
           </div>
+        )}
+      </div>
+
+      {/* Mobile Touch Jump & Kick Controls */}
+      <div className="soccer-mobile-controls">
+        {gameMode === 'TWO_PLAYER' ? (
+          <div className="soccer-m-split">
+            <button 
+              type="button" 
+              className="soccer-touch-btn p1-btn"
+              onTouchStart={handleP1Jump}
+              onClick={handleP1Jump}
+            >
+              🔵 P1 JUMP
+            </button>
+            <button 
+              type="button" 
+              className="soccer-touch-btn p2-btn"
+              onTouchStart={handleP2Jump}
+              onClick={handleP2Jump}
+            >
+              🔴 P2 JUMP
+            </button>
+          </div>
+        ) : (
+          <button 
+            type="button" 
+            className="soccer-touch-btn p1-btn full-btn"
+            onTouchStart={handleP1Jump}
+            onClick={handleP1Jump}
+          >
+            ⚽ TAP TO JUMP & KICK
+          </button>
         )}
       </div>
 

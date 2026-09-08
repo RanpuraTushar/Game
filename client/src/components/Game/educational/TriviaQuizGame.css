@@ -283,3 +283,57 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .trivia-game-container {
+    padding: 6px;
+  }
+
+  .trivia-header {
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .trivia-title-group h2 {
+    font-size: 1.1rem;
+  }
+
+  .trivia-players-strip {
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .player-podium-card {
+    padding: 6px 4px;
+    border-radius: 8px;
+  }
+
+  .p-avatar {
+    font-size: 1.2rem;
+  }
+
+  .p-name {
+    font-size: 0.72rem;
+  }
+
+  .p-score {
+    font-size: 0.95rem;
+  }
+
+  .p-buzzer-key {
+    display: none;
+  }
+
+  .trivia-main-card {
+    padding: 14px 10px;
+    border-radius: 12px;
+  }
+
+  .giant-buzzer-btn {
+    width: 96px;
+    height: 96px;
+    font-size: 1rem;
+    border-width: 4px;
+  }
+}

@@ -815,44 +815,379 @@
 }
 
 /* ==========================================================================
-   Responsive Adaptations
+   Responsive Adaptations & Mobile UX Excellence
    ========================================================================== */
 @media (max-width: 900px) {
+  .cyber-auth-wrapper {
+    padding: 16px 12px;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
   .cyber-auth-card {
     grid-template-columns: 1fr;
-    max-width: 520px;
+    max-width: 480px;
+    border-radius: 20px;
   }
 
   .auth-hero-panel {
-    padding: 30px 24px;
+    padding: 24px 20px 16px;
     border-right: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    align-items: center;
+    text-align: center;
   }
 
   .hero-brand-section {
-    margin: 16px 0;
+    margin: 10px 0 6px;
   }
 
   .hero-title {
-    font-size: 1.7rem;
+    font-size: 1.65rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.85rem;
+    max-width: 380px;
+    margin: 0 auto;
   }
 
   .hero-feature-pills {
     display: none; /* Keep mobile view compact */
   }
 
+  .hero-footer-status {
+    display: none; /* Keep form visible without scrolling */
+  }
+
   .auth-form-panel {
-    padding: 30px 24px;
+    padding: 26px 24px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .cyber-auth-wrapper {
-    padding: 10px;
+    padding: 12px 10px;
+    overflow-x: hidden;
   }
 
-  .hero-footer-status {
+  .auth-ambient-glow {
+    opacity: 0.25;
+    filter: blur(50px);
+  }
+
+  .auth-glow-1 {
+    width: 200px;
+    height: 200px;
+    top: -30px;
+    left: -20px;
+  }
+
+  .auth-glow-2 {
+    width: 220px;
+    height: 220px;
+    bottom: -30px;
+    right: -20px;
+  }
+
+  .auth-glow-3 {
+    width: 160px;
+    height: 160px;
+  }
+
+  .cyber-auth-card {
+    max-width: 100%;
+    border-radius: 18px;
+    background: rgba(10, 10, 22, 0.94);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 243, 255, 0.12);
+  }
+
+  /* Compact Sleek Hero Header for Mobile */
+  .auth-hero-panel {
+    padding: 16px 16px 12px 16px;
+    background: linear-gradient(180deg, rgba(14, 18, 38, 0.96) 0%, rgba(8, 10, 20, 0.92) 100%);
+    gap: 6px;
+  }
+
+  .hero-top-badge {
+    padding: 3px 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.8px;
+    border-radius: 14px;
+  }
+
+  .hero-brand-section {
+    margin: 4px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .hero-logo-icon {
+    font-size: 2rem;
+    margin-bottom: 0;
+    filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.7));
+  }
+
+  .hero-title {
+    font-size: 1.45rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+    color: #9da6c5;
+    line-height: 1.35;
+    max-width: 300px;
+  }
+
+  /* Interactive Form Panel */
+  .auth-form-panel {
+    padding: 18px 16px 22px 16px;
+    background: rgba(8, 8, 18, 0.75);
+  }
+
+  .terminal-header {
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+
+  .terminal-tag {
+    font-size: 0.62rem;
+  }
+
+  /* Tab Segmented Switch */
+  .auth-tab-switch {
+    margin-bottom: 16px;
+    padding: 3px;
+    border-radius: 10px;
+    background: rgba(14, 16, 32, 0.9);
+    gap: 4px;
+  }
+
+  .auth-tab-btn {
+    padding: 10px 8px;
+    font-size: 0.78rem;
+    letter-spacing: 0.6px;
+    min-height: 42px;
+    border-radius: 8px;
+  }
+
+  .form-heading-area {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  .form-main-title {
+    font-size: 1.25rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+  }
+
+  .form-desc {
+    font-size: 0.82rem;
+    color: #8c96b8;
+    line-height: 1.35;
+  }
+
+  .auth-error-banner {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    margin-bottom: 14px;
+  }
+
+  .auth-form-fields {
+    gap: 14px;
+  }
+
+  .input-group {
+    gap: 5px;
+  }
+
+  .input-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.8px;
+  }
+
+  /* iOS Auto-Zoom Fix & High Tap Targets */
+  .cyber-form-input {
+    font-size: 16px !important;
+    padding: 12px 14px;
+    min-height: 48px;
+    border-radius: 10px;
+    background: rgba(14, 14, 28, 0.9);
+  }
+
+  .password-input-wrapper {
+    position: relative;
+  }
+
+  .password-toggle-btn {
+    width: 44px;
+    height: 44px;
+    right: 3px;
+    font-size: 1.15rem;
+    border-radius: 8px;
+  }
+
+  .form-actions-area {
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .cyber-submit-btn {
+    padding: 13px 18px;
+    font-size: 0.95rem;
+    min-height: 50px;
+    border-radius: 11px;
+    box-shadow: 0 4px 20px rgba(0, 243, 255, 0.45);
+  }
+
+  .cyber-submit-btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .quick-pilot-btn {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    min-height: 44px;
+    border-radius: 10px;
+    border-color: rgba(255, 0, 127, 0.38);
+    background: rgba(255, 0, 127, 0.09);
+    color: #ff3399;
+    font-weight: 800;
+  }
+
+  .quick-pilot-btn:active {
+    transform: scale(0.98);
+    background: rgba(255, 0, 127, 0.2);
+  }
+
+  .auth-bottom-switch {
+    margin-top: 16px;
+    padding-top: 14px;
+    font-size: 0.84rem;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .switch-link-btn {
+    font-size: 0.88rem;
+    padding: 4px;
+  }
+
+  /* Quick Resume Card Mobile Styling */
+  .quick-resume-card {
+    padding: 14px 6px 10px;
+    gap: 14px;
+  }
+
+  .resume-avatar-ring {
+    width: 62px;
+    height: 62px;
+    border-width: 2px;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.45);
+  }
+
+  .resume-avatar-icon {
+    font-size: 1.85rem;
+  }
+
+  .resume-badge-tag {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+  }
+
+  .resume-welcome-title {
+    font-size: 1.25rem;
+    margin-top: 2px;
+  }
+
+  .resume-subtitle {
+    font-size: 0.82rem;
+    max-width: 280px;
+    line-height: 1.35;
+  }
+
+  .btn-continue-arcade {
+    width: 100%;
+    max-width: 100%;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+    min-height: 50px;
+    border-radius: 11px;
+  }
+
+  .btn-continue-arcade:active {
+    transform: scale(0.98);
+  }
+
+  .resume-switch-actions {
+    max-width: 100%;
+    gap: 8px;
+  }
+
+  .btn-switch-account {
+    padding: 11px 16px;
+    font-size: 0.88rem;
+    min-height: 44px;
+    border-radius: 10px;
+  }
+
+  .btn-forget-account {
+    padding: 6px;
+    font-size: 0.78rem;
+  }
+
+  .btn-back-resume {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .cyber-auth-wrapper {
+    padding: 8px 6px;
+  }
+
+  .cyber-auth-card {
+    border-radius: 14px;
+  }
+
+  .auth-hero-panel {
+    padding: 12px 12px 10px 12px;
+  }
+
+  .hero-title {
+    font-size: 1.3rem;
+  }
+
+  .hero-logo-icon {
+    font-size: 1.7rem;
+  }
+
+  .auth-form-panel {
+    padding: 14px 12px 18px 12px;
+  }
+
+  .form-main-title {
+    font-size: 1.15rem;
+  }
+
+  .auth-tab-btn {
+    font-size: 0.72rem;
+    padding: 8px 4px;
+    gap: 4px;
+  }
+
+  .cyber-submit-btn {
+    font-size: 0.88rem;
   }
 }

@@ -194,5 +194,43 @@
 @media (max-width: 500px) {
   .coder-master-container {
     padding: 12px 8px;
+    border-radius: 16px;
+    margin: 4px auto;
+  }
+
+  .coder-top-bar {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .challenge-prompt-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+  }
+
+  .challenge-title {
+    font-size: 0.95rem;
+  }
+
+  .challenge-desc {
+    font-size: 0.84rem;
+  }
+
+  .code-textarea {
+    font-size: 0.88rem;
+    padding: 10px;
+    line-height: 1.45;
+  }
+
+  .coder-actions-bar {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .run-test-btn, .next-task-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    text-align: center;
   }
 }
