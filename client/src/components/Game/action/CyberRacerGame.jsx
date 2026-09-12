@@ -54,6 +54,21 @@ const CAR_SELECTION = [
   }
 ];
 
+const HIGHWAY_ZONES = [
+  { zone: 1, name: 'CRUISING', minDistance: 0, maxTraffic: 5, mult: 1.0, color: '#00ff66' },
+  { zone: 2, name: 'HIGHWAY RUSH', minDistance: 400, maxTraffic: 6, mult: 1.25, color: '#00f3ff' },
+  { zone: 3, name: 'CYBER GRIDLOCK', minDistance: 1200, maxTraffic: 7, mult: 1.5, color: '#ffd600' },
+  { zone: 4, name: 'OVERDRIVE', minDistance: 2500, maxTraffic: 8, mult: 2.0, color: '#ff9100' },
+  { zone: 5, name: 'CHAOS ASPHALT', minDistance: 4500, maxTraffic: 9, mult: 2.5, color: '#ff0055' }
+];
+
+const getZoneForDistance = (dist) => {
+  for (let i = HIGHWAY_ZONES.length - 1; i >= 0; i--) {
+    if (dist >= HIGHWAY_ZONES[i].minDistance) return HIGHWAY_ZONES[i];
+  }
+  return HIGHWAY_ZONES[0];
+};
+
 const CyberRacerGame = ({ user, onLeave }) => {
   const canvasRef = useRef(null);
   const [gameState, setGameState] = useState('MENU'); // MENU, PLAYING, GAMEOVER
@@ -67,6 +82,8 @@ const CyberRacerGame = ({ user, onLeave }) => {
   const [nitro, setNitro] = useState(100);
   const [timeLeft, setTimeLeft] = useState(45);
   const [highScore, setHighScore] = useState(0);
+  const [currentZone, setCurrentZone] = useState(HIGHWAY_ZONES[0]);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
 
   const stateRef = useRef({
@@ -101,6 +118,7 @@ const CyberRacerGame = ({ user, onLeave }) => {
     score: 0,
     coins: 0,
     distance: 0,
+    zone: 1,
     lastTime: 0,
     active: true
   });
@@ -325,7 +343,17 @@ const CyberRacerGame = ({ user, onLeave }) => {
     const dominantSpeed = Math.max(p1.alive ? p1.speed : 0, p2.alive ? p2.speed : 0);
     s.roadOffset += dominantSpeed * dt * 9;
     s.distance += (dominantSpeed * dt) / 10;
-    s.score += Math.floor((dominantSpeed / 35) * (p1.nitroActive || p2.nitroActive ? 2 : 1));
+
+    const activeZone = getZoneForDistance(s.distance);
+    if (activeZone.zone > s.zone) {
+      s.zone = activeZone.zone;
+      setCurrentZone(activeZone);
+      SoundEffects.playTrophy();
+      setLevelUpBanner({ zone: activeZone.zone, name: activeZone.name, mult: activeZone.mult });
+      setTimeout(() => setLevelUpBanner(null), 3200);
+    }
+
+    s.score += Math.floor((dominantSpeed / 35) * (p1.nitroActive || p2.nitroActive ? 2 : 1) * activeZone.mult);
 
     // Road Curvature
     s.roadCurve = Math.sin(time * 0.0006) * 0.45;
@@ -391,7 +419,8 @@ const CyberRacerGame = ({ user, onLeave }) => {
       }
     }
 
-    if (s.traffic.length < 5) {
+    const currentMaxTraffic = getZoneForDistance(s.distance).maxTraffic;
+    if (s.traffic.length < currentMaxTraffic) {
       spawnTrafficCar(800 + Math.random() * 300);
     }
 
@@ -927,6 +956,12 @@ const CyberRacerGame = ({ user, onLeave }) => {
         <button className="btn-tertiary" onClick={() => setGameState('MENU')}>🚗 GARAGE</button>
       </div>
 
+      {levelUpBanner && (
+        <div className="racer-levelup-toast">
+          ⚡ ENTERING ZONE {levelUpBanner.zone}: {levelUpBanner.name}! TRAFFIC DENSITY &amp; SPEED UP (+{levelUpBanner.mult}x SCORE)
+        </div>
+      )}
+
       {unlockedBanner && (
         <div className="achievement-toast">
           <span>🏆 UNLOCKED: <strong>{unlockedBanner.title}</strong> (+{unlockedBanner.points} pts)</span>
@@ -936,6 +971,13 @@ const CyberRacerGame = ({ user, onLeave }) => {
       {/* In-Game HUD Dashboard */}
       {gameState === 'PLAYING' && (
         <div className="racer-hud-bar">
+          <div className="hud-metric">
+            <span className="hud-lbl">ZONE:</span>
+            <span className="hud-val zone-badge" style={{ color: currentZone.color, borderColor: currentZone.color }}>
+              Z{currentZone.zone} &bull; {currentZone.name} ({currentZone.mult}x)
+            </span>
+          </div>
+
           <div className="hud-metric">
             <span className="hud-lbl">SPEED:</span>
             <span className="hud-val speed" style={{ color: '#00f3ff' }}>{speed} KM/H</span>

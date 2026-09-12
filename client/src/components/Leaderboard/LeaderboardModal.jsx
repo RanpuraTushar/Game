@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { api } from '../../services/api';
+import { GAMES_LIST } from '../../../../shared/gameMetadata.js';
+import { soundEffects } from '../../utils/SoundEffects';
 import './LeaderboardModal.css';
 
 const LeaderboardModal = ({ onClose, defaultGame = 'GLOBAL' }) => {
   const [tab, setTab] = useState(defaultGame);
+  const [tabSearch, setTabSearch] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const gameTabs = [
-    { key: 'GLOBAL', label: '🏆 Global Top' },
-    { key: 'TIC_TAC_TOE', label: '❌ Tic-Tac-Toe' },
-    { key: 'SNAKE_GAME', label: '🐍 Snake' },
-    { key: 'PONG', label: '🏓 Pong' },
-    { key: 'CONNECT_4', label: '🔴 Connect-4' },
-    { key: 'GAME_2048', label: '🔢 2048' },
-    { key: 'FLAPPY_BIRD', label: '🐤 Flappy Bird' },
-    { key: 'BRICK_BREAKER', label: '🧱 Brick Breaker' },
-    { key: 'WHACK_A_MOLE', label: '🔨 Whack Mole' },
-    { key: 'SIMON_SAYS', label: '💡 Simon Says' },
-    { key: 'MEMORY_MATCH', label: '🃏 Memory' }
-  ];
+  // Dynamic tabs: Global Champions + All Arcade Games from Metadata
+  const allGameTabs = useMemo(() => {
+    const list = [
+      { key: 'GLOBAL', label: '🏆 Global Top', icon: '🏆' }
+    ];
+    GAMES_LIST.forEach(g => {
+      list.push({
+        key: g.id,
+        label: `${g.icon} ${g.title}`,
+        icon: g.icon,
+        title: g.title
+      });
+    });
+    return list;
+  }, []);
+
+  const visibleTabs = useMemo(() => {
+    if (!tabSearch) return allGameTabs;
+    const q = tabSearch.toLowerCase();
+    return allGameTabs.filter(t => t.label.toLowerCase().includes(q) || t.key.toLowerCase().includes(q));
+  }, [allGameTabs, tabSearch]);
+
+  const activeGameInfo = useMemo(() => {
+    if (tab === 'GLOBAL') return { title: 'Global Hall of Fame', icon: '🏆' };
+    const found = GAMES_LIST.find(g => g.id === tab);
+    return found || { title: tab, icon: '🎮' };
+  }, [tab]);
 
   useEffect(() => {
     let isMounted = true;
@@ -27,12 +44,16 @@ const LeaderboardModal = ({ onClose, defaultGame = 'GLOBAL' }) => {
 
     const fetchData = async () => {
       let data = [];
-      if (tab === 'GLOBAL') {
-        const res = await api.getGlobalLeaderboard();
-        data = res.leaderboard || [];
-      } else {
-        const res = await api.getGameLeaderboard(tab);
-        data = res.leaderboard || [];
+      try {
+        if (tab === 'GLOBAL') {
+          const res = await api.getGlobalLeaderboard();
+          data = res.leaderboard || [];
+        } else {
+          const res = await api.getGameLeaderboard(tab);
+          data = res.leaderboard || [];
+        }
+      } catch (err) {
+        data = [];
       }
       if (isMounted) {
         setLeaderboard(data);
@@ -44,21 +65,52 @@ const LeaderboardModal = ({ onClose, defaultGame = 'GLOBAL' }) => {
     return () => { isMounted = false; };
   }, [tab]);
 
+  const handleSelectTab = (key) => {
+    soundEffects.playClick();
+    setTab(key);
+  };
+
+  const handleClose = () => {
+    soundEffects.playClick();
+    onClose();
+  };
+
   return (
-    <div className="modal-backdrop" onClick={onClose}>
+    <div className="modal-backdrop" onClick={handleClose}>
       <div className="modal-card glass-panel" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h2 className="neon-text" style={{ color: '#00f3ff' }}>ARCADE LEADERBOARDS</h2>
-          <button className="modal-close-btn" onClick={onClose}>✕</button>
+          <div className="modal-title-wrap">
+            <span className="modal-title-icon">{activeGameInfo.icon}</span>
+            <div>
+              <h2 className="neon-text" style={{ color: '#00f3ff' }}>ARCADE LEADERBOARDS</h2>
+              <span className="modal-subtitle">{activeGameInfo.title}</span>
+            </div>
+          </div>
+          <button className="modal-close-btn" onClick={handleClose}>✕</button>
         </div>
 
-        {/* Tab Filters */}
+        {/* Tab Search & Quick Filter */}
+        <div className="leaderboard-tab-search-bar">
+          <span className="tab-search-icon">🔎</span>
+          <input
+            type="text"
+            placeholder="Search game leaderboard..."
+            value={tabSearch}
+            onChange={(e) => setTabSearch(e.target.value)}
+            className="tab-search-input"
+          />
+          {tabSearch && (
+            <button className="tab-search-clear" onClick={() => setTabSearch('')}>✕</button>
+          )}
+        </div>
+
+        {/* Dynamic Tab Filters */}
         <div className="leaderboard-tabs-bar">
-          {gameTabs.map(t => (
+          {visibleTabs.map(t => (
             <button
               key={t.key}
               className={`leaderboard-tab ${tab === t.key ? 'active' : ''}`}
-              onClick={() => setTab(t.key)}
+              onClick={() => handleSelectTab(t.key)}
             >
               {t.label}
             </button>
@@ -84,14 +136,19 @@ const LeaderboardModal = ({ onClose, defaultGame = 'GLOBAL' }) => {
               <tbody>
                 {leaderboard.map((entry, idx) => {
                   const rankMedal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`;
+                  const tierClass = idx === 0 ? 'top-tier gold-rank' : idx === 1 ? 'top-tier silver-rank' : idx === 2 ? 'top-tier bronze-rank' : '';
                   return (
-                    <tr key={idx} className={idx < 3 ? 'top-tier' : ''}>
-                      <td className="rank-cell">{rankMedal}</td>
+                    <tr key={idx} className={tierClass}>
+                      <td className="rank-cell">
+                        <span className="rank-badge">{rankMedal}</span>
+                      </td>
                       <td className="player-cell">
                         <span className="player-name">{entry.username}</span>
                       </td>
                       <td className="score-cell">
-                        <span className="score-badge">{tab === 'GLOBAL' ? (entry.total_points || 0).toLocaleString() : (entry.score || 0).toLocaleString()}</span>
+                        <span className="score-badge">
+                          {tab === 'GLOBAL' ? (entry.total_points || 0).toLocaleString() : (entry.score || 0).toLocaleString()}
+                        </span>
                       </td>
                       <td className="title-cell">
                         <span className="rank-title">{entry.rank_title || 'Record Holder'}</span>

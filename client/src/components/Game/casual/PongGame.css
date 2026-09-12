@@ -48,6 +48,22 @@
   font-weight: bold;
 }
 
+.pong-header-right-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pong-intensity-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  border: 1px solid;
+  background: rgba(0, 0, 0, 0.55);
+  padding: 3px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
 .target-badge {
   font-size: 0.75rem;
   color: #ffea00;

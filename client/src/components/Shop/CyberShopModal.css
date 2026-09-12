@@ -1,0 +1,495 @@
+/* CyberShopModal.css - Virtual Economy & Cosmetics Store */
+
+.cyber-shop-card {
+  width: 95%;
+  max-width: 900px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 12, 24, 0.95);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 243, 255, 0.2);
+  overflow: hidden;
+  padding: 24px;
+}
+
+/* Header */
+.shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shop-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.shop-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.shop-brand h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+
+.shop-subtitle {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.shop-balance-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 215, 0, 0.1);
+  border: 1.5px solid rgba(255, 215, 0, 0.4);
+  padding: 8px 18px;
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.coin-glow-icon {
+  font-size: 1.3rem;
+}
+
+.coin-amount {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffd700;
+  letter-spacing: 1px;
+}
+
+.coin-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ecc94b;
+  letter-spacing: 1px;
+}
+
+.btn-close-modal {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #a0aec0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-close-modal:hover {
+  background: rgba(255, 0, 80, 0.2);
+  border-color: #ff0050;
+  color: #ffffff;
+}
+
+/* Daily Reward Strip */
+.daily-reward-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(255, 0, 127, 0.12) 0%, rgba(176, 38, 255, 0.12) 100%);
+  border: 1px solid rgba(255, 0, 127, 0.35);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 18px;
+}
+
+.daily-reward-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gift-icon {
+  font-size: 1.8rem;
+}
+
+.daily-title {
+  display: block;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #ff007f;
+  letter-spacing: 1px;
+}
+
+.daily-desc {
+  font-size: 0.78rem;
+  color: #cbd5e0;
+}
+
+.btn-claim-daily {
+  background: linear-gradient(135deg, #ff007f 0%, #b026ff 100%);
+  color: #ffffff;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-claim-daily:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.7);
+}
+
+.btn-claim-daily.claimed {
+  background: rgba(255, 255, 255, 0.08);
+  color: #718096;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  cursor: default;
+}
+
+/* Feedback message */
+.shop-msg-banner {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  text-align: center;
+  animation: fadeIn 0.25s ease;
+}
+
+.shop-msg-banner.success {
+  background: rgba(0, 230, 118, 0.15);
+  border: 1px solid rgba(0, 230, 118, 0.4);
+  color: #00e676;
+}
+
+.shop-msg-banner.error {
+  background: rgba(255, 51, 102, 0.15);
+  border: 1px solid rgba(255, 51, 102, 0.4);
+  color: #ff3366;
+}
+
+/* Live Avatar Preview Stage */
+.live-avatar-preview-stage {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+}
+
+.preview-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #718096;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.preview-character-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.preview-avatar-halo {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.preview-avatar-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.preview-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preview-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-username {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+
+.preview-title-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1.5px solid;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.5px;
+}
+
+.preview-rank-tag {
+  font-size: 0.74rem;
+  color: #00f3ff;
+  font-weight: 600;
+}
+
+/* Category Tabs */
+.shop-category-tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.shop-tab-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.shop-tab-btn.active {
+  background: rgba(0, 243, 255, 0.15);
+  border-color: #00f3ff;
+  color: #00f3ff;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.25);
+}
+
+/* Items Grid */
+.shop-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  max-height: 420px;
+  padding-right: 6px;
+}
+
+.shop-item-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.shop-item-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.shop-item-card.item-is-equipped {
+  border-color: #00f3ff;
+  background: rgba(0, 243, 255, 0.06);
+}
+
+.item-visual-demo {
+  margin-bottom: 12px;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-avatar-frame {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.demo-avatar-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.demo-title-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1.5px solid;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.item-info {
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.item-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+}
+
+.item-desc {
+  font-size: 0.75rem;
+  color: #718096;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.item-action-footer {
+  width: 100%;
+}
+
+.btn-item-action {
+  width: 100%;
+  padding: 9px;
+  border-radius: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-buy {
+  background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+  color: #050510;
+  border: none;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.3);
+}
+
+.btn-buy:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.btn-buy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-equip {
+  background: rgba(0, 243, 255, 0.1);
+  border: 1px solid #00f3ff;
+  color: #00f3ff;
+}
+
+.btn-equip:hover {
+  background: #00f3ff;
+  color: #050510;
+}
+
+.btn-equipped {
+  background: rgba(0, 230, 118, 0.15);
+  border: 1px solid #00e676;
+  color: #00e676;
+  cursor: default;
+}
+
+/* Animated Cosmetic Frame CSS Classes */
+.frame-pulse-cyan {
+  border: 2.5px solid #00f3ff;
+  box-shadow: 0 0 16px #00f3ff;
+  animation: frameCyan 2.5s infinite alternate;
+}
+
+@keyframes frameCyan {
+  0% { box-shadow: 0 0 8px #00f3ff; }
+  100% { box-shadow: 0 0 20px #00f3ff, 0 0 35px rgba(0, 243, 255, 0.5); }
+}
+
+.frame-pulse-gold {
+  border: 2.5px solid #ffd700;
+  box-shadow: 0 0 18px #ffd700;
+  animation: frameGold 2.5s infinite alternate;
+}
+
+@keyframes frameGold {
+  0% { box-shadow: 0 0 10px #ffd700; }
+  100% { box-shadow: 0 0 24px #ffd700, 0 0 40px rgba(255, 215, 0, 0.5); }
+}
+
+.frame-pulse-crimson {
+  border: 2.5px solid #ff0055;
+  box-shadow: 0 0 18px #ff0055;
+  animation: frameCrimson 2.5s infinite alternate;
+}
+
+@keyframes frameCrimson {
+  0% { box-shadow: 0 0 10px #ff0055; }
+  100% { box-shadow: 0 0 24px #ff0055, 0 0 40px rgba(255, 0, 85, 0.5); }
+}
+
+.frame-pulse-emerald {
+  border: 2.5px dashed #00ff88;
+  box-shadow: 0 0 18px #00ff88;
+  animation: frameEmerald 3s infinite linear;
+}
+
+@keyframes frameEmerald {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.frame-pulse-hologram {
+  border: 2.5px solid #b026ff;
+  animation: frameHolo 4s infinite linear;
+}
+
+@keyframes frameHolo {
+  0% { box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff; }
+  50% { box-shadow: 0 0 25px #00f3ff, 0 0 40px #ff007f; }
+  100% { box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff; }
+}

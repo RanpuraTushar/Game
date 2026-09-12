@@ -42,6 +42,41 @@
   box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
 }
 
+.flappy-diff-pill {
+  font-weight: 800;
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  background: rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.5px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.flappy-levelup-toast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(10, 14, 28, 0.95);
+  border: 1.5px solid;
+  border-radius: 20px;
+  padding: 6px 18px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.35);
+  animation: popIn 0.3s ease;
+}
+
+.flappy-levelup-toast span {
+  font-size: 0.88rem;
+  color: #fff;
+}
+
+.flappy-levelup-toast small {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
 .flappy-canvas-wrap {
   position: relative;
   width: 100%;

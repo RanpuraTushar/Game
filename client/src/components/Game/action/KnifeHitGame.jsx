@@ -12,21 +12,40 @@ const KNIFE_SPEED = 24;
 const MIN_KNIFE_DISTANCE_DEG = 14;
 
 const STAGES = [
-  { stage: 1, name: 'Woodland Log', totalKnives: 7, wheelColor: '#8d6e63', speed: 0.028, apples: 2, boss: false },
-  { stage: 2, name: 'Oak Core', totalKnives: 8, wheelColor: '#6d4c41', speed: -0.035, apples: 3, boss: false },
-  { stage: 3, name: 'Iron Trunk', totalKnives: 9, wheelColor: '#546e7a', speed: 0.042, apples: 2, boss: false },
-  { stage: 4, name: 'BOSS: Neon Shield', totalKnives: 11, wheelColor: '#9d00ff', speed: 0.052, apples: 4, boss: true },
-  { stage: 5, name: 'BOSS: Cyber Nexus', totalKnives: 14, wheelColor: '#00f3ff', speed: 0.062, apples: 5, boss: true }
+  { stage: 1, name: 'Woodland Log', totalKnives: 7, wheelColor: '#8d6e63', speed: 0.028, apples: 2, boss: false, multiplier: 1.0 },
+  { stage: 2, name: 'Oak Core', totalKnives: 8, wheelColor: '#6d4c41', speed: -0.035, apples: 3, boss: false, multiplier: 1.25 },
+  { stage: 3, name: 'Iron Trunk', totalKnives: 9, wheelColor: '#546e7a', speed: 0.042, apples: 2, boss: false, multiplier: 1.5 },
+  { stage: 4, name: 'BOSS: Neon Shield', totalKnives: 11, wheelColor: '#9d00ff', speed: 0.052, apples: 4, boss: true, multiplier: 2.0 },
+  { stage: 5, name: 'BOSS: Cyber Nexus', totalKnives: 13, wheelColor: '#00f3ff', speed: 0.062, apples: 5, boss: true, multiplier: 2.5 }
 ];
+
+const getStageConfig = (stageIdx) => {
+  if (stageIdx < STAGES.length) return STAGES[stageIdx];
+  const cycle = stageIdx - STAGES.length + 1;
+  const isBoss = stageIdx % 4 === 3;
+  const colors = ['#8d6e63', '#6d4c41', '#546e7a', '#9d00ff', '#00f3ff', '#ff0055', '#ffd600'];
+  const baseSpeed = 0.045 + Math.min(0.045, cycle * 0.005);
+  return {
+    stage: stageIdx + 1,
+    name: isBoss ? `BOSS: Overlord ${cycle}` : `Cyber Core ${stageIdx + 1}`,
+    totalKnives: Math.min(15, 8 + Math.floor(cycle / 2)),
+    wheelColor: colors[stageIdx % colors.length],
+    speed: (stageIdx % 2 === 0 ? 1 : -1) * baseSpeed,
+    apples: Math.min(6, 2 + Math.floor(cycle / 3)),
+    boss: isBoss,
+    multiplier: Math.min(3.5, 1.0 + cycle * 0.25)
+  };
+};
 
 const KnifeHitGame = ({ user, onLeave }) => {
   const canvasRef = useRef(null);
-  const [gameState, setGameState] = useState('MENU'); // MENU, PLAYING, GAMEOVER, VICTORY
+  const [gameState, setGameState] = useState('MENU'); // MENU, PLAYING, GAMEOVER
   const [currentStageIdx, setCurrentStageIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [apples, setApples] = useState(0);
   const [knivesLeft, setKnivesLeft] = useState(7);
   const [highScore, setHighScore] = useState(0);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const stateRef = useRef({
     wheelAngle: 0,
@@ -56,8 +75,7 @@ const KnifeHitGame = ({ user, onLeave }) => {
       SoundEffects.playMove();
     } catch (e) {}
 
-    const stageConfig = STAGES[Math.min(stageIdx, STAGES.length - 1)];
-
+    const stageConfig = getStageConfig(stageIdx);
     const s = stateRef.current;
 
     s.stageIdx = stageIdx;
@@ -77,11 +95,11 @@ const KnifeHitGame = ({ user, onLeave }) => {
       s.applesOnWheel.push((i * (2 * Math.PI)) / stageConfig.apples + 0.3);
     }
 
-    // Pre-stuck knives on later stages
+    // Pre-stuck knives on later stages: scales with stage index
     if (stageIdx > 0) {
-      const initialStuck = Math.min(stageIdx + 1, 4);
+      const initialStuck = Math.min(Math.floor(stageIdx * 0.7) + 1, 5);
       for (let i = 0; i < initialStuck; i++) {
-        s.stuckKnives.push((i * (2 * Math.PI)) / initialStuck + 0.15);
+        s.stuckKnives.push((i * (2 * Math.PI)) / initialStuck + 0.18);
       }
     }
 
@@ -90,6 +108,11 @@ const KnifeHitGame = ({ user, onLeave }) => {
       s.apples = 0;
       setScore(0);
       setApples(0);
+      setLevelUpBanner(null);
+    } else {
+      SoundEffects.playTrophy();
+      setLevelUpBanner(stageConfig);
+      setTimeout(() => setLevelUpBanner(null), 2800);
     }
 
     setCurrentStageIdx(stageIdx);
@@ -134,8 +157,11 @@ const KnifeHitGame = ({ user, onLeave }) => {
       state.lastTime = time;
 
       if (gameState === 'PLAYING' && !state.gameOver) {
-        // Dynamic Wheel Speed variation
-        state.wheelAngle += state.wheelSpeed;
+        const stageConfig = getStageConfig(state.stageIdx);
+
+        // Dynamic Wheel Speed variation with wobble on higher stages
+        const wobbleFactor = state.stageIdx >= 2 ? (1 + 0.35 * Math.sin(time * 0.003)) : 1.0;
+        state.wheelAngle += state.wheelSpeed * wobbleFactor;
 
         // Flying Knife Update
         if (state.flyingKnife) {
@@ -160,40 +186,55 @@ const KnifeHitGame = ({ user, onLeave }) => {
             }
 
             if (collidedWithKnife) {
-              // CLANG! Rebound & Game Over
+              // FAIL: DEFLECTED!
               SoundEffects.playLoss();
-              state.screenShake = 15;
+              state.gameOver = true;
               state.failedKnife = {
                 x: WHEEL_CENTER_X,
-                y: state.flyingKnife.y,
-                vx: (Math.random() - 0.5) * 8,
-                vy: 12,
-                rot: 0.2
+                y: WHEEL_CENTER_Y + WHEEL_RADIUS,
+                vx: (Math.random() - 0.5) * 6,
+                vy: 8,
+                rot: 0
               };
               state.flyingKnife = null;
-              state.gameOver = true;
+              state.screenShake = 15;
               handleGameOver(state.score);
             } else {
-              // SUCCESS STICK!
+              // SUCCESS: Knife Stuck!
               SoundEffects.playCapture();
-              state.screenShake = 6;
               state.stuckKnives.push(hitAngle);
               state.flyingKnife = null;
-              state.score += 10;
+              state.score += Math.round(10 * stageConfig.multiplier);
               setScore(state.score);
+              state.screenShake = 4;
 
-              // Check if sliced apple
-              for (let i = state.applesOnWheel.length - 1; i >= 0; i--) {
-                const aAngle = state.applesOnWheel[i];
+              // Check if Apple was hit
+              for (let aIdx = state.applesOnWheel.length - 1; aIdx >= 0; aIdx--) {
+                const aAngle = state.applesOnWheel[aIdx];
                 const diff = Math.abs(angleDifference(hitAngle, aAngle));
-                if ((diff * 180) / Math.PI < 18) {
-                  // Sliced Apple!
-                  state.applesOnWheel.splice(i, 1);
+                const diffDeg = (diff * 180) / Math.PI;
+
+                if (diffDeg < 18) {
+                  // Apple Sliced!
+                  SoundEffects.playSafe();
+                  state.applesOnWheel.splice(aIdx, 1);
                   state.apples += 1;
-                  state.score += 50;
+                  state.score += Math.round(25 * stageConfig.multiplier);
                   setApples(state.apples);
                   setScore(state.score);
-                  SoundEffects.playWin();
+
+                  // Apple splash particles
+                  for (let i = 0; i < 12; i++) {
+                    state.particles.push({
+                      x: WHEEL_CENTER_X,
+                      y: WHEEL_CENTER_Y + WHEEL_RADIUS,
+                      vx: (Math.random() - 0.5) * 10,
+                      vy: (Math.random() - 0.5) * 10,
+                      color: '#ff1744',
+                      size: 3 + Math.random() * 4,
+                      alpha: 1.0
+                    });
+                  }
                 }
               }
 
@@ -210,17 +251,14 @@ const KnifeHitGame = ({ user, onLeave }) => {
                 });
               }
 
-              // Check Stage Cleared
+              // Check Stage Cleared: Infinite procedural progression
               if (state.knivesLeft === 0) {
-                // Next Stage!
                 SoundEffects.playWin();
-                if (state.stageIdx + 1 < STAGES.length) {
-                  setTimeout(() => {
-                    startStage(state.stageIdx + 1, true);
-                  }, 600);
-                } else {
-                  setGameState('VICTORY');
-                }
+                state.score += Math.round(50 * stageConfig.multiplier);
+                setScore(state.score);
+                setTimeout(() => {
+                  startStage(state.stageIdx + 1, true);
+                }, 600);
               }
             }
           }
@@ -401,19 +439,29 @@ const KnifeHitGame = ({ user, onLeave }) => {
     ctx.restore();
   };
 
+  const currentStage = getStageConfig(currentStageIdx);
+
   return (
     <div className="knife-hit-container">
       <div className="knife-wrapper">
+        {/* Level Up Banner */}
+        {levelUpBanner && (
+          <div className="knife-levelup-toast" style={{ borderColor: levelUpBanner.wheelColor }}>
+            <span>🎯 ADVANCING TO: <strong>{levelUpBanner.name}</strong></span>
+            <small>Faster wobble rotation • {levelUpBanner.multiplier}x bonus active</small>
+          </div>
+        )}
+
         {/* Header HUD */}
         <div className="knife-header">
           <button className="btn-tertiary" onClick={onLeave}>
             ← EXIT TO HUB
           </button>
           <div className="knife-hud">
-            <div className="knife-hud-badge">
-              <span style={{ color: '#aaa', fontSize: '0.8rem' }}>STAGE</span>
-              <strong style={{ color: '#00f3ff' }}>
-                {STAGES[currentStageIdx]?.name || `Stage ${currentStageIdx + 1}`}
+            <div className="knife-hud-badge knife-diff-badge" style={{ borderColor: currentStage.wheelColor }}>
+              <span style={{ color: '#aaa', fontSize: '0.75rem' }}>STAGE</span>
+              <strong style={{ color: currentStage.wheelColor }}>
+                {currentStage.name} <span style={{ fontSize: '0.8rem', color: '#00f3ff' }}>({currentStage.multiplier}x)</span>
               </strong>
             </div>
             <div className="knife-hud-badge">
@@ -425,7 +473,7 @@ const KnifeHitGame = ({ user, onLeave }) => {
               <strong style={{ color: '#ff1744' }}>🍎 {apples}</strong>
             </div>
           </div>
-          <div style={{ width: '80px' }}></div>
+          <div style={{ width: '60px' }}></div>
         </div>
 
         {/* Canvas Area */}
@@ -444,7 +492,7 @@ const KnifeHitGame = ({ user, onLeave }) => {
 
           {/* Quiver Indicator */}
           <div className="quiver-bar">
-            {[...Array(STAGES[currentStageIdx]?.totalKnives || 7)].map((_, i) => (
+            {[...Array(currentStage.totalKnives || 7)].map((_, i) => (
               <span
                 key={i}
                 className="quiver-icon"
@@ -462,6 +510,9 @@ const KnifeHitGame = ({ user, onLeave }) => {
               <p style={{ color: '#ccc', maxWidth: '400px' }}>
                 Tap screen or press SPACE to launch knives into the rotating wheel. Do NOT hit existing knives!
               </p>
+              <div className="knife-diff-hint">
+                🔥 <b>Progressive Stages</b>: Wheels accelerate, wobble, and reverse direction unpredictably!
+              </div>
               <button
                 className="knife-btn-play"
                 onClick={(e) => {
@@ -477,9 +528,11 @@ const KnifeHitGame = ({ user, onLeave }) => {
           {gameState === 'GAMEOVER' && (
             <div className="knife-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="knife-title" style={{ color: '#ff0055' }}>KNIFE DEFLECTED! 💥</h1>
-              <p style={{ fontSize: '1.2rem', color: '#fff' }}>
-                Final Score: <strong style={{ color: '#ffd600' }}>{score}</strong>
-              </p>
+              <div className="knife-go-stats">
+                <p>Stage Reached: <strong style={{ color: currentStage.wheelColor }}>{currentStage.name}</strong></p>
+                <p>Final Score: <strong style={{ color: '#ffd600' }}>{score}</strong></p>
+                <p>Bonus Multiplier: <strong style={{ color: '#00f3ff' }}>{currentStage.multiplier}x</strong></p>
+              </div>
               <button
                 className="knife-btn-play"
                 onClick={(e) => {

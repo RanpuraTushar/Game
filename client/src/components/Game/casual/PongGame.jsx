@@ -114,11 +114,12 @@ const PongGame = ({ socket, room, user, onLeave }) => {
         if (s.keys['ArrowUp']) s.p2Y = Math.max(35, s.p2Y - 6);
         if (s.keys['ArrowDown']) s.p2Y = Math.min(h - 35, s.p2Y + 6);
       } else if (!isMultiplayer) {
-        // AI Paddle Logic
+        // AI Paddle Logic: Progressive tracking speed and precision as player scores
         const targetY = s.ballY;
-        const aiSpeed = 3.6;
-        if (s.p2Y < targetY - 12) s.p2Y += aiSpeed;
-        else if (s.p2Y > targetY + 12) s.p2Y -= aiSpeed;
+        const currentDiffLevel = Math.min(5, Math.floor(score.p1 / 2) + 1);
+        const aiSpeed = Math.min(6.2, 3.4 + currentDiffLevel * 0.55);
+        if (s.p2Y < targetY - 10) s.p2Y += aiSpeed;
+        else if (s.p2Y > targetY + 10) s.p2Y -= aiSpeed;
       }
 
       // Ball Movement
@@ -142,7 +143,7 @@ const PongGame = ({ socket, room, user, onLeave }) => {
           s.ballVx = Math.abs(s.ballVx);
           const deltaY = s.ballY - s.p1Y;
           s.ballVy = deltaY * 0.18;
-          s.ballVx = Math.min(9.5, s.ballVx + 0.25);
+          s.ballVx = Math.min(10.5, s.ballVx + 0.3);
           s.rallyCount += 1;
           SoundEffects.playTokenStep();
         }
@@ -154,7 +155,7 @@ const PongGame = ({ socket, room, user, onLeave }) => {
           s.ballVx = -Math.abs(s.ballVx);
           const deltaY = s.ballY - s.p2Y;
           s.ballVy = deltaY * 0.18;
-          s.ballVx = Math.max(-9.5, s.ballVx - 0.25);
+          s.ballVx = Math.max(-10.5, s.ballVx - 0.3);
           s.rallyCount += 1;
           SoundEffects.playTokenStep();
         }
@@ -222,8 +223,11 @@ const PongGame = ({ socket, room, user, onLeave }) => {
       const s = gameState.current;
       s.ballX = canvas.width / 2;
       s.ballY = canvas.height / 2;
-      s.ballVx = 4.5 * direction;
-      s.ballVy = (Math.random() - 0.5) * 4;
+      const currentDiffLevel = Math.min(5, Math.floor(score.p1 / 2) + 1);
+      const startSpeed = 4.2 + (currentDiffLevel - 1) * 0.6;
+      s.ballVx = startSpeed * direction;
+      s.ballVy = (Math.random() - 0.5) * (4 + currentDiffLevel * 0.4);
+      s.rallyCount = 0;
       SoundEffects.playSafe();
     };
 
@@ -275,7 +279,20 @@ const PongGame = ({ socket, room, user, onLeave }) => {
           </div>
         )}
 
-        <div className="target-badge">FIRST TO 7</div>
+        <div className="pong-header-right-group">
+          {!isMultiplayer && (
+            <div
+              className="pong-intensity-pill"
+              style={{
+                borderColor: ['#00e676', '#00f3ff', '#ffd600', '#ff9100', '#ff0055'][Math.min(4, Math.floor(score.p1 / 2))],
+                color: ['#00e676', '#00f3ff', '#ffd600', '#ff9100', '#ff0055'][Math.min(4, Math.floor(score.p1 / 2))]
+              }}
+            >
+              AI: L{Math.min(5, Math.floor(score.p1 / 2) + 1)} • {['NOVICE', 'RAPID', 'CHALLENGER', 'HYPER', 'OVERDRIVE'][Math.min(4, Math.floor(score.p1 / 2))]}
+            </div>
+          )}
+          <div className="target-badge">FIRST TO 7</div>
+        </div>
       </div>
 
       {/* Scoreboard */}

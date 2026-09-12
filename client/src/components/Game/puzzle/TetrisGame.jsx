@@ -33,6 +33,7 @@ const TetrisGame = ({ user, onLeave }) => {
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const stateRef = useRef({
     board: createEmptyBoard(),
@@ -172,16 +173,25 @@ const TetrisGame = ({ user, onLeave }) => {
     }
 
     if (cleared > 0) {
-      const points = [0, 100, 300, 500, 800][cleared] * s.level;
-      s.score += points;
+      const oldLevel = s.level;
       s.lines += cleared;
-      s.level = Math.floor(s.lines / 10) + 1;
+      const newLevel = Math.floor(s.lines / 6) + 1;
+      s.level = newLevel;
+
+      const points = [0, 100, 300, 500, 800][cleared] * newLevel;
+      s.score += points;
 
       setScore(s.score);
       setLines(s.lines);
-      setLevel(s.level);
+      setLevel(newLevel);
 
-      SoundEffects.playCapture();
+      if (newLevel > oldLevel) {
+        SoundEffects.playTrophy();
+        setLevelUpBanner({ level: newLevel });
+        setTimeout(() => setLevelUpBanner(null), 2800);
+      } else {
+        SoundEffects.playCapture();
+      }
     } else {
       SoundEffects.playMove();
     }
@@ -344,6 +354,12 @@ const TetrisGame = ({ user, onLeave }) => {
         <h2 className="tetris-title neon-text">CYBER TETRIS</h2>
         <button className="btn-tertiary" onClick={startNewGame}>↺ RESTART</button>
       </div>
+
+      {levelUpBanner && (
+        <div className="tetris-levelup-toast">
+          ⚡ LEVEL {levelUpBanner.level}! GRAVITY ACCELERATED &bull; {levelUpBanner.level}x SCORE
+        </div>
+      )}
 
       <div className="tetris-stage-layout">
         {/* Left: Hold Piece & Stats */}

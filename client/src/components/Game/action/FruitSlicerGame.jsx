@@ -15,6 +15,23 @@ const FRUITS = [
   { name: 'STRAWBERRY', color: '#ff1744', innerColor: '#ff8a80', radius: 22, points: 25, icon: '🍓' }
 ];
 
+const SLICER_DIFFICULTY_LEVELS = [
+  { level: 1, name: 'APPRENTICE', minScore: 0, spawnRate: 2.2, minFruits: 1, maxFruits: 2, bombChance: 0.10, speedMult: 1.0, color: '#00e676', multiplier: 1.0 },
+  { level: 2, name: 'NINJA', minScore: 160, spawnRate: 1.8, minFruits: 2, maxFruits: 3, bombChance: 0.18, speedMult: 1.15, color: '#00f3ff', multiplier: 1.25 },
+  { level: 3, name: 'SAMURAI', minScore: 450, spawnRate: 1.5, minFruits: 2, maxFruits: 4, bombChance: 0.25, speedMult: 1.28, color: '#ffd600', multiplier: 1.5 },
+  { level: 4, name: 'SHADOW BLADE', minScore: 900, spawnRate: 1.2, minFruits: 3, maxFruits: 5, bombChance: 0.32, speedMult: 1.40, color: '#ff9100', multiplier: 2.0 },
+  { level: 5, name: 'CHAOS RONIN', minScore: 1600, spawnRate: 0.95, minFruits: 4, maxFruits: 6, bombChance: 0.38, speedMult: 1.55, color: '#ff0055', multiplier: 2.5 }
+];
+
+const getSlicerDifficulty = (score) => {
+  for (let i = SLICER_DIFFICULTY_LEVELS.length - 1; i >= 0; i--) {
+    if (score >= SLICER_DIFFICULTY_LEVELS[i].minScore) {
+      return SLICER_DIFFICULTY_LEVELS[i];
+    }
+  }
+  return SLICER_DIFFICULTY_LEVELS[0];
+};
+
 const FruitSlicerGame = ({ user, onLeave }) => {
   const canvasRef = useRef(null);
   const [gameState, setGameState] = useState('MENU'); // MENU, PLAYING, GAMEOVER
@@ -22,6 +39,7 @@ const FruitSlicerGame = ({ user, onLeave }) => {
   const [lives, setLives] = useState(3);
   const [highScore, setHighScore] = useState(0);
   const [comboText, setComboText] = useState(null);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const stateRef = useRef({
     fruits: [],
@@ -51,7 +69,6 @@ const FruitSlicerGame = ({ user, onLeave }) => {
     } catch (e) {}
 
     stateRef.current = {
-
       fruits: [],
       halves: [],
       particles: [],
@@ -69,16 +86,19 @@ const FruitSlicerGame = ({ user, onLeave }) => {
 
     setScore(0);
     setLives(3);
+    setLevelUpBanner(null);
     setGameState('PLAYING');
   };
 
   const spawnWave = () => {
-    const count = 1 + Math.floor(Math.random() * 3);
+    const curDiff = getSlicerDifficulty(stateRef.current.score);
+    const count = curDiff.minFruits + Math.floor(Math.random() * (curDiff.maxFruits - curDiff.minFruits + 1));
+
     for (let i = 0; i < count; i++) {
-      const isBomb = Math.random() < 0.18;
+      const isBomb = Math.random() < curDiff.bombChance;
       const x = 120 + Math.random() * (CANVAS_WIDTH - 240);
-      const vx = (CANVAS_WIDTH / 2 - x) * 0.015 + (Math.random() - 0.5) * 4;
-      const vy = -(11 + Math.random() * 4.5);
+      const vx = ((CANVAS_WIDTH / 2 - x) * 0.015 + (Math.random() - 0.5) * 4) * curDiff.speedMult;
+      const vy = -(11 + Math.random() * 4.5) * curDiff.speedMult;
 
       if (isBomb) {
         stateRef.current.fruits.push({
@@ -88,7 +108,7 @@ const FruitSlicerGame = ({ user, onLeave }) => {
           vx,
           vy,
           rotation: 0,
-          vRot: (Math.random() - 0.5) * 0.1,
+          vRot: (Math.random() - 0.5) * 0.15,
           radius: 26
         });
       } else {
@@ -101,7 +121,7 @@ const FruitSlicerGame = ({ user, onLeave }) => {
           vx,
           vy,
           rotation: 0,
-          vRot: (Math.random() - 0.5) * 0.12
+          vRot: (Math.random() - 0.5) * 0.16
         });
       }
     }
@@ -170,17 +190,27 @@ const FruitSlicerGame = ({ user, onLeave }) => {
           sliceFruit(f);
           state.fruits.splice(i, 1);
 
-          state.score += f.points;
+          const prevDiff = getSlicerDifficulty(state.score);
+          state.score += Math.round(f.points * prevDiff.multiplier);
           state.currentCombo += 1;
-          state.comboTimer = 0.4; // 400ms combo window
+          state.comboTimer = 0.45; // 450ms combo window
 
           if (state.currentCombo >= 3) {
-            setComboText(`${state.currentCombo}x COMBO! +${state.currentCombo * 10}`);
-            state.score += state.currentCombo * 10;
+            const comboBonus = Math.round(state.currentCombo * 12 * prevDiff.multiplier);
+            setComboText(`${state.currentCombo}x COMBO! +${comboBonus}`);
+            state.score += comboBonus;
             setTimeout(() => setComboText(null), 800);
           }
 
           setScore(state.score);
+
+          // Check Level Up!
+          const nextDiff = getSlicerDifficulty(state.score);
+          if (nextDiff.level > prevDiff.level) {
+            SoundEffects.playTrophy();
+            setLevelUpBanner(nextDiff);
+            setTimeout(() => setLevelUpBanner(null), 3000);
+          }
         }
       }
     }
@@ -261,8 +291,9 @@ const FruitSlicerGame = ({ user, onLeave }) => {
 
       if (gameState === 'PLAYING' && !state.gameOver) {
         // Spawn timer
+        const curDiff = getSlicerDifficulty(state.score);
         state.spawnTimer += dt;
-        if (state.spawnTimer > 2.2) {
+        if (state.spawnTimer > curDiff.spawnRate) {
           state.spawnTimer = 0;
           spawnWave();
         }
@@ -452,9 +483,19 @@ const FruitSlicerGame = ({ user, onLeave }) => {
     }
   };
 
+  const currentDiff = getSlicerDifficulty(score);
+
   return (
     <div className="fruit-slicer-container">
       <div className="slicer-wrapper">
+        {/* Floating Level Up Banner */}
+        {levelUpBanner && (
+          <div className="slicer-levelup-banner" style={{ borderColor: levelUpBanner.color }}>
+            <span>⚡ LEVEL UP: <strong>{levelUpBanner.name} (L{levelUpBanner.level})</strong></span>
+            <small>Faster waves • {levelUpBanner.multiplier}x bonus active</small>
+          </div>
+        )}
+
         {/* Header HUD */}
         <div className="slicer-header">
           <button className="btn-tertiary" onClick={onLeave}>
@@ -464,6 +505,12 @@ const FruitSlicerGame = ({ user, onLeave }) => {
             <div className="hud-pill">
               <span style={{ color: '#aaa', fontSize: '0.8rem' }}>SCORE</span>
               <strong style={{ fontSize: '1.4rem', color: '#ff9100' }}>{score}</strong>
+            </div>
+            <div className="hud-pill slicer-diff-pill" style={{ borderColor: currentDiff.color }}>
+              <span style={{ color: '#aaa', fontSize: '0.75rem' }}>DIFFICULTY</span>
+              <strong style={{ fontSize: '0.95rem', color: currentDiff.color }}>
+                L{currentDiff.level} • {currentDiff.name} ({currentDiff.multiplier}x)
+              </strong>
             </div>
             <div className="hud-pill">
               <span style={{ color: '#aaa', fontSize: '0.8rem' }}>LIVES</span>
@@ -476,7 +523,7 @@ const FruitSlicerGame = ({ user, onLeave }) => {
               </div>
             </div>
           </div>
-          <div style={{ width: '80px' }}></div>
+          <div style={{ width: '60px' }}></div>
         </div>
 
         {/* Canvas Area */}
@@ -521,6 +568,9 @@ const FruitSlicerGame = ({ user, onLeave }) => {
               <p style={{ color: '#ccc', maxWidth: '420px', lineHeight: 1.6 }}>
                 Swipe your blade across flying fruits to slice them. Create massive combos and avoid deadly explosive bombs!
               </p>
+              <div className="slicer-diff-hint">
+                🔥 <b>Progressive Difficulty</b>: Waves get faster and bombs increase with score!
+              </div>
               <button
                 className="slicer-btn-play"
                 onClick={(e) => {
@@ -536,9 +586,11 @@ const FruitSlicerGame = ({ user, onLeave }) => {
           {gameState === 'GAMEOVER' && (
             <div className="slicer-overlay" onClick={(e) => e.stopPropagation()}>
               <h1 className="slicer-title" style={{ color: '#ff1744' }}>GAME OVER</h1>
-              <p style={{ fontSize: '1.2rem', color: '#fff' }}>
-                Final Score: <strong style={{ color: '#ff9100' }}>{score}</strong>
-              </p>
+              <div className="slicer-go-stats">
+                <p>Rank: <strong style={{ color: currentDiff.color }}>L{currentDiff.level} ({currentDiff.name})</strong></p>
+                <p>Final Score: <strong style={{ color: '#ff9100' }}>{score}</strong></p>
+                <p>Multiplier Bonus: <strong style={{ color: '#ffd600' }}>{currentDiff.multiplier}x</strong></p>
+              </div>
               {score >= highScore && score > 0 && (
                 <div style={{ color: '#ffd600', fontWeight: 'bold' }}>
                   🏆 NEW HIGH SCORE!

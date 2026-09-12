@@ -173,6 +173,20 @@ export const GAMES_LIST = [
     controls: 'Click piece from tray and click grid slot to place it',
     badge: 'Classic 10x10'
   },
+  {
+    id: 'WATERMELON_MERGE',
+    title: 'Suika Watermelon Merge',
+    description: 'The worldwide viral fruit merge sensation! Drop juicy fruits, merge matching pairs with bouncy 2D physics, trigger combo chains, and create the legendary Giant Watermelon.',
+    category: GAME_CATEGORIES.PUZZLE,
+    isMultiplayer: false,
+    minPlayers: 1,
+    maxPlayers: 1,
+    icon: '🍉',
+    color: '#00e676',
+    controls: 'Desktop: Mouse move to aim & click to drop (or Left/Right + Space) | Mobile: Drag finger & release to drop',
+    badge: 'Trending Viral Hit'
+  },
+
 
   // ==========================================
   // 3. FAST-PACED ACTION & ARCADE (13 Games)

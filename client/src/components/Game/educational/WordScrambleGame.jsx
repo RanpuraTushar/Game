@@ -3,32 +3,93 @@ import SoundEffects from '../../../utils/SoundEffects';
 import { api } from '../../../services/api';
 import './WordScrambleGame.css';
 
-const WORD_BANK = [
-  { word: 'CYBER', clue: 'Relating to computers, information technology, and VR', category: 'TECH' },
-  { word: 'ARCADE', clue: 'A venue with coin-operated video games', category: 'GAMING' },
-  { word: 'PYTHON', clue: 'Popular programming language named after a comedy group', category: 'CODING' },
-  { word: 'GALAXY', clue: 'A huge system of stars, stellar remnants, and gas', category: 'SPACE' },
-  { word: 'ROBOT', clue: 'Autonomous electro-mechanical cyber machine', category: 'TECH' },
-  { word: 'ALGORITHM', clue: 'Step-by-step procedure for solving a problem', category: 'CODING' },
-  { word: 'NEBULA', clue: 'An interstellar cloud of dust, hydrogen, and helium', category: 'SPACE' },
-  { word: 'DATABASE', clue: 'Organized collection of structured information', category: 'TECH' },
-  { word: 'QUANTUM', clue: 'Minimum amount of any physical entity in an interaction', category: 'SCIENCE' },
-  { word: 'MATRIX', clue: 'Rectangular array of numbers or simulated cyber reality', category: 'TECH' }
+const SCRAMBLE_TIERS = [
+  {
+    level: 1,
+    name: 'NOVICE',
+    time: 40,
+    mult: 1.0,
+    color: '#00ff66',
+    words: [
+      { word: 'BYTE', clue: '8 bits of digital computer storage', category: 'TECH' },
+      { word: 'CODE', clue: 'Instructions written for computer software', category: 'CODING' },
+      { word: 'ROBOT', clue: 'Autonomous electro-mechanical cyber machine', category: 'TECH' },
+      { word: 'PIXEL', clue: 'Smallest illuminated dot on a digital screen', category: 'GAMING' }
+    ]
+  },
+  {
+    level: 2,
+    name: 'SCHOLAR',
+    time: 32,
+    mult: 1.25,
+    color: '#00f3ff',
+    words: [
+      { word: 'CYBER', clue: 'Relating to computers, information technology, and VR', category: 'TECH' },
+      { word: 'ARCADE', clue: 'A venue with coin-operated video games', category: 'GAMING' },
+      { word: 'PYTHON', clue: 'Popular programming language named after a comedy group', category: 'CODING' },
+      { word: 'GALAXY', clue: 'A huge system of stars, stellar remnants, and gas', category: 'SPACE' }
+    ]
+  },
+  {
+    level: 3,
+    name: 'CIPHER',
+    time: 25,
+    mult: 1.5,
+    color: '#ffd600',
+    words: [
+      { word: 'QUANTUM', clue: 'Minimum amount of any physical entity in an interaction', category: 'SCIENCE' },
+      { word: 'NETWORK', clue: 'Interconnected group of computers sharing data', category: 'TECH' },
+      { word: 'SILICON', clue: 'Chemical element used to forge microchips', category: 'SCIENCE' },
+      { word: 'GRAVITY', clue: 'Universal force attracting masses together', category: 'PHYSICS' }
+    ]
+  },
+  {
+    level: 4,
+    name: 'MASTER',
+    time: 20,
+    mult: 2.0,
+    color: '#ff9100',
+    words: [
+      { word: 'DATABASE', clue: 'Organized collection of structured information', category: 'TECH' },
+      { word: 'FIREWALL', clue: 'Security system monitoring network traffic', category: 'SECURITY' },
+      { word: 'TERMINAL', clue: 'Text-based interface to control a computer', category: 'CODING' },
+      { word: 'HARDWARE', clue: 'Physical electronic components of a machine', category: 'TECH' }
+    ]
+  },
+  {
+    level: 5,
+    name: 'GENIUS',
+    time: 16,
+    mult: 2.5,
+    color: '#ff0055',
+    words: [
+      { word: 'ALGORITHM', clue: 'Step-by-step procedure for solving a computational problem', category: 'CODING' },
+      { word: 'ENCRYPTION', clue: 'Encoding information to prevent cyber interception', category: 'SECURITY' },
+      { word: 'BLOCKCHAIN', clue: 'Decentralized distributed digital ledger', category: 'CRYPTO' },
+      { word: 'SUPERNOVA', clue: 'Cataclysmic nuclear explosion of a dying massive star', category: 'SPACE' }
+    ]
+  }
 ];
 
 const WordScrambleGame = ({ user, onLeave }) => {
-  const [currentWordIdx, setCurrentWordIdx] = useState(0);
+  const [tierIdx, setTierIdx] = useState(0);
+  const [wordIdxInTier, setWordIdxInTier] = useState(0);
   const [scrambledLetters, setScrambledLetters] = useState([]);
   const [placedLetters, setPlacedLetters] = useState([]);
   const [score, setScore] = useState(0);
   const scoreRef = useRef(0);
   const [streak, setStreak] = useState(0);
-  const [timer, setTimer] = useState(40);
+  const [timer, setTimer] = useState(SCRAMBLE_TIERS[0].time);
   const [showClue, setShowClue] = useState(false);
   const [gameWon, setGameWon] = useState(false);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
-  const loadWord = (idx) => {
-    const item = WORD_BANK[idx];
+  const curTier = SCRAMBLE_TIERS[tierIdx] || SCRAMBLE_TIERS[0];
+  const curItem = curTier.words[wordIdxInTier] || curTier.words[0];
+
+  const loadWord = (tIdx, wIdx) => {
+    const tier = SCRAMBLE_TIERS[tIdx];
+    const item = tier.words[wIdx];
     const letters = item.word.split('');
     let shuffled;
     do {
@@ -38,11 +99,11 @@ const WordScrambleGame = ({ user, onLeave }) => {
     setScrambledLetters(shuffled.map((char, id) => ({ id, char, used: false })));
     setPlacedLetters([]);
     setShowClue(false);
-    setTimer(40);
+    setTimer(tier.time);
   };
 
   useEffect(() => {
-    loadWord(0);
+    loadWord(0, 0);
   }, []);
 
   // Timer Tick
@@ -51,15 +112,14 @@ const WordScrambleGame = ({ user, onLeave }) => {
     const interval = setInterval(() => {
       setTimer(t => {
         if (t <= 1) {
-          // Time out for word
           handleTimeOut();
-          return 40;
+          return curTier.time;
         }
         return t - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [currentWordIdx, gameWon]);
+  }, [tierIdx, wordIdxInTier, gameWon]);
 
   const handleTimeOut = () => {
     SoundEffects.playLoss();
@@ -68,13 +128,31 @@ const WordScrambleGame = ({ user, onLeave }) => {
   };
 
   const advanceNextWord = () => {
-    if (currentWordIdx + 1 < WORD_BANK.length) {
-      setCurrentWordIdx(i => i + 1);
-      loadWord(currentWordIdx + 1);
+    const tier = SCRAMBLE_TIERS[tierIdx];
+    if (wordIdxInTier + 1 < tier.words.length) {
+      setWordIdxInTier(w => w + 1);
+      loadWord(tierIdx, wordIdxInTier + 1);
     } else {
-      setGameWon(true);
-      SoundEffects.playWin();
-      api.submitScore('WORD_SCRAMBLE', scoreRef.current, true, user);
+      // Completed current tier!
+      if (tierIdx + 1 < SCRAMBLE_TIERS.length) {
+        const nextTierIdx = tierIdx + 1;
+        const nextTier = SCRAMBLE_TIERS[nextTierIdx];
+        setTierIdx(nextTierIdx);
+        setWordIdxInTier(0);
+        SoundEffects.playTrophy();
+        setLevelUpBanner({
+          level: nextTier.level,
+          name: nextTier.name,
+          time: nextTier.time,
+          mult: nextTier.mult
+        });
+        setTimeout(() => setLevelUpBanner(null), 3000);
+        loadWord(nextTierIdx, 0);
+      } else {
+        setGameWon(true);
+        SoundEffects.playWin();
+        api.submitScore('WORD_SCRAMBLE', scoreRef.current, true, user);
+      }
     }
   };
 
@@ -90,7 +168,7 @@ const WordScrambleGame = ({ user, onLeave }) => {
     setPlacedLetters(newPlaced);
 
     // Auto validate if full length
-    if (newPlaced.length === WORD_BANK[currentWordIdx].word.length) {
+    if (newPlaced.length === curItem.word.length) {
       validateWord(newPlaced);
     }
   };
@@ -106,12 +184,12 @@ const WordScrambleGame = ({ user, onLeave }) => {
 
   const validateWord = (placed) => {
     const constructed = placed.map(p => p.char).join('');
-    const target = WORD_BANK[currentWordIdx].word;
+    const target = curItem.word;
 
     if (constructed === target) {
       // Success!
       SoundEffects.playCapture();
-      const points = 100 + streak * 25 + timer * 2;
+      const points = Math.round((100 + streak * 25 + timer * 2) * curTier.mult);
       scoreRef.current += points;
       setScore(scoreRef.current);
       setStreak(st => st + 1);
@@ -148,30 +226,40 @@ const WordScrambleGame = ({ user, onLeave }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [scrambledLetters, placedLetters, currentWordIdx]);
-
-  const currentItem = WORD_BANK[currentWordIdx];
+  }, [scrambledLetters, placedLetters, tierIdx, wordIdxInTier]);
 
   return (
     <div className="scramble-master-container glass-panel">
       <div className="scramble-top-bar">
         <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>
         <div className="scramble-meta-badge">
-          WORD {currentWordIdx + 1} / {WORD_BANK.length} &bull; CATEGORY: <strong>{currentItem.category}</strong>
+          WORD {wordIdxInTier + 1} / {curTier.words.length} &bull; CATEGORY: <strong>{curItem.category}</strong>
         </div>
+        <button className="btn-tertiary" onClick={() => { setTierIdx(0); setWordIdxInTier(0); setScore(0); scoreRef.current = 0; loadWord(0, 0); }}>
+          ↺ RESET
+        </button>
       </div>
+
+      {levelUpBanner && (
+        <div className="scramble-levelup-toast">
+          🔤 LEVEL {levelUpBanner.level}: {levelUpBanner.name}! WORDS LONGER &amp; TIMER FASTER (+{levelUpBanner.mult}x SCORE)
+        </div>
+      )}
 
       <div className="scramble-stats-bar">
         <span>SCORE: <strong>{score}</strong></span> &bull;
         <span>TIME: <strong className={timer <= 10 ? 'red-time' : ''}>{timer}s</strong></span> &bull;
-        <span>STREAK: <strong>{streak}🔥</strong></span>
+        <span>STREAK: <strong>{streak}🔥</strong></span> &bull;
+        <span className="scramble-tier-pill" style={{ color: curTier.color, borderColor: curTier.color }}>
+          LVL {curTier.level} &bull; {curTier.name} ({curTier.mult}x)
+        </span>
       </div>
 
       {!gameWon ? (
         <div className="scramble-play-area">
           {/* Answer Target Slots */}
           <div className="answer-slots-row">
-            {Array.from({ length: currentItem.word.length }).map((_, idx) => {
+            {Array.from({ length: curItem.word.length }).map((_, idx) => {
               const placed = placedLetters[idx];
               return (
                 <div
@@ -188,7 +276,7 @@ const WordScrambleGame = ({ user, onLeave }) => {
           {/* Clue Box */}
           <div className="clue-container">
             {showClue ? (
-              <p className="clue-text">💡 {currentItem.clue}</p>
+              <p className="clue-text">💡 {curItem.clue}</p>
             ) : (
               <button className="btn-tertiary clue-reveal-btn" onClick={() => setShowClue(true)}>
                 💡 NEED A CLUE? (-20 pts)
@@ -212,10 +300,10 @@ const WordScrambleGame = ({ user, onLeave }) => {
         </div>
       ) : (
         <div className="scramble-victory-screen">
-          <h2>🎉 VOCABULARY CHAMPION!</h2>
-          <p>You solved all {WORD_BANK.length} cyber words!</p>
+          <h2>🎉 VOCABULARY GENIUS!</h2>
+          <p>All 5 Cyber Difficulty Tiers Mastered!</p>
           <p>Final Score: <strong>{score}</strong></p>
-          <button className="btn-primary" onClick={() => { setCurrentWordIdx(0); loadWord(0); setGameWon(false); }}>
+          <button className="btn-primary" onClick={() => { setTierIdx(0); setWordIdxInTier(0); setScore(0); scoreRef.current = 0; loadWord(0, 0); setGameWon(false); }}>
             PLAY AGAIN
           </button>
         </div>

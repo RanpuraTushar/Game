@@ -137,6 +137,74 @@
   transition: opacity 0.2s ease;
 }
 
+/* Progressive Difficulty Styling */
+.knife-diff-badge {
+  border: 1px solid;
+  transition: border-color 0.3s ease;
+}
+
+.knife-levelup-toast {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(14, 5, 22, 0.95);
+  border: 2px solid;
+  border-radius: 24px;
+  padding: 8px 24px;
+  z-index: 50;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(157, 0, 255, 0.4);
+  animation: levelUpDrop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.knife-levelup-toast span {
+  font-size: 0.92rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.knife-levelup-toast small {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.knife-diff-hint {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(157, 0, 255, 0.25);
+  border-radius: 12px;
+  padding: 8px 16px;
+  max-width: 440px;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.knife-diff-hint b {
+  color: #00f3ff;
+}
+
+.knife-go-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 24px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.knife-go-stats p {
+  margin: 0;
+  color: #cbd5e1;
+}
+
 /* Mobile Responsive */
 @media (max-width: 480px) {
   .knife-hit-container {

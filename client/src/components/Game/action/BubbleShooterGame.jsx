@@ -10,77 +10,54 @@ const BUBBLE_DIAMETER = BUBBLE_RADIUS * 2;
 const ROWS = 8;
 const COLS = 11;
 
-const COLORS = ['#ff3b30', '#00e676', '#2979ff', '#ffd600', '#e040fb'];
+const BUBBLE_TIERS = [
+  { level: 1, name: 'NOVICE', colors: ['#ff3b30', '#00e676', '#2979ff'], dropEvery: 6, mult: 1.0, color: '#00ff66' },
+  { level: 2, name: 'ADEPT', colors: ['#ff3b30', '#00e676', '#2979ff', '#ffd600'], dropEvery: 5, mult: 1.25, color: '#00f3ff' },
+  { level: 3, name: 'EXPERT', colors: ['#ff3b30', '#00e676', '#2979ff', '#ffd600', '#e040fb'], dropEvery: 5, mult: 1.5, color: '#ffd600' },
+  { level: 4, name: 'MASTER', colors: ['#ff3b30', '#00e676', '#2979ff', '#ffd600', '#e040fb', '#00f3ff'], dropEvery: 4, mult: 2.0, color: '#ff9100' },
+  { level: 5, name: 'CHAOS LORD', colors: ['#ff3b30', '#00e676', '#2979ff', '#ffd600', '#e040fb', '#00f3ff', '#ff007f'], dropEvery: 3, mult: 2.5, color: '#ff0055' }
+];
 
 const BubbleShooterGame = ({ user, onLeave }) => {
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [shotsUntilDrop, setShotsUntilDrop] = useState(BUBBLE_TIERS[0].dropEvery);
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const gameState = useRef({
     grid: [],
+    level: 1,
+    shotsFired: 0,
     shooterAngle: -Math.PI / 2,
     currentBubble: null,
-    nextBubbleColor: COLORS[0],
+    nextBubbleColor: null,
     flyingBubble: null,
     particles: [],
-    active: true
+    active: true,
+    score: 0
   });
 
-  useEffect(() => {
-    initGrid();
+  const getCurrentTier = () => BUBBLE_TIERS[Math.min(gameState.current.level - 1, BUBBLE_TIERS.length - 1)];
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+  const initGrid = (targetLevel = 1) => {
+    const tier = BUBBLE_TIERS[targetLevel - 1] || BUBBLE_TIERS[0];
+    gameState.current.level = targetLevel;
+    gameState.current.shotsFired = 0;
+    setLevel(targetLevel);
+    setShotsUntilDrop(tier.dropEvery);
 
-    const handleMouseMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      const originX = CANVAS_WIDTH / 2;
-      const originY = CANVAS_HEIGHT - 35;
-
-      let angle = Math.atan2(mouseY - originY, mouseX - originX);
-      if (angle > -0.2) angle = -0.2;
-      if (angle < -Math.PI + 0.2) angle = -Math.PI + 0.2;
-      gameState.current.shooterAngle = angle;
-    };
-
-    const handleClick = () => {
-      shootBubble();
-    };
-
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('click', handleClick);
-
-    let animationId;
-    const render = () => {
-      update();
-      draw();
-      if (gameState.current.active) {
-        animationId = requestAnimationFrame(render);
-      }
-    };
-    animationId = requestAnimationFrame(render);
-
-    return () => {
-      gameState.current.active = false;
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('click', handleClick);
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
-
-  const initGrid = () => {
+    const colors = tier.colors;
     const grid = [];
     for (let r = 0; r < ROWS; r++) {
       const row = [];
       const colsInRow = r % 2 === 0 ? COLS : COLS - 1;
       for (let c = 0; c < colsInRow; c++) {
-        if (r < 5) {
-          row.push(COLORS[Math.floor(Math.random() * COLORS.length)]);
+        if (r < 4) {
+          row.push(colors[Math.floor(Math.random() * colors.length)]);
         } else {
           row.push(null);
         }
@@ -89,12 +66,19 @@ const BubbleShooterGame = ({ user, onLeave }) => {
     }
 
     gameState.current.grid = grid;
-    gameState.current.currentBubble = COLORS[Math.floor(Math.random() * COLORS.length)];
-    gameState.current.nextBubbleColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+    gameState.current.currentBubble = colors[Math.floor(Math.random() * colors.length)];
+    gameState.current.nextBubbleColor = colors[Math.floor(Math.random() * colors.length)];
     gameState.current.flyingBubble = null;
     gameState.current.active = true;
     setGameOver(false);
     setGameWon(false);
+  };
+
+  const restartGame = () => {
+    gameState.current.score = 0;
+    setScore(0);
+    setLevelUpBanner(null);
+    initGrid(1);
   };
 
   const shootBubble = () => {
@@ -110,8 +94,9 @@ const BubbleShooterGame = ({ user, onLeave }) => {
       color: s.currentBubble
     };
 
+    const colors = getCurrentTier().colors;
     s.currentBubble = s.nextBubbleColor;
-    s.nextBubbleColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+    s.nextBubbleColor = colors[Math.floor(Math.random() * colors.length)];
     SoundEffects.playClick();
   };
 
@@ -241,7 +226,8 @@ const BubbleShooterGame = ({ user, onLeave }) => {
 
     if (cluster.length >= 3) {
       SoundEffects.playSafe();
-      const points = cluster.length * 30;
+      const tier = getCurrentTier();
+      const points = Math.round(cluster.length * 35 * tier.mult);
       s.score = (s.score || 0) + points;
       setScore(s.score);
 
@@ -270,14 +256,67 @@ const BubbleShooterGame = ({ user, onLeave }) => {
       // Check Victory (No bubbles left)
       const anyLeft = s.grid.some(row => row.some(c => c !== null));
       if (!anyLeft) {
-        handleVictory();
+        if (s.level < 5) {
+          const nextLevel = s.level + 1;
+          const nextTier = BUBBLE_TIERS[nextLevel - 1];
+          s.score += 500 * s.level;
+          setScore(s.score);
+          SoundEffects.playTrophy();
+          setLevelUpBanner({ level: nextLevel, name: nextTier.name, mult: nextTier.mult });
+          setTimeout(() => setLevelUpBanner(null), 3000);
+          initGrid(nextLevel);
+          return;
+        } else {
+          handleVictory();
+          return;
+        }
       }
     } else {
       SoundEffects.playTokenStep();
+    }
+
+    // Shot fired counter towards ceiling drop
+    s.shotsFired += 1;
+    const tier = getCurrentTier();
+    const remaining = tier.dropEvery - (s.shotsFired % tier.dropEvery);
+    setShotsUntilDrop(remaining === tier.dropEvery ? 0 : remaining);
+
+    if (s.shotsFired % tier.dropEvery === 0) {
+      dropCeiling();
+    } else {
       // Check Loss (Bubble reached bottom row)
       if (s.grid[ROWS - 1].some(c => c !== null)) {
         handleGameOver();
       }
+    }
+  };
+
+  const dropCeiling = () => {
+    const s = gameState.current;
+    const tier = getCurrentTier();
+    const colors = tier.colors;
+
+    // Check if bottom row already occupied
+    if (s.grid[ROWS - 1].some(c => c !== null)) {
+      handleGameOver();
+      return;
+    }
+
+    // Shift rows down
+    for (let r = ROWS - 1; r > 0; r--) {
+      s.grid[r] = [...s.grid[r - 1]];
+    }
+
+    // New top row
+    const newTop = [];
+    for (let c = 0; c < COLS; c++) {
+      newTop.push(colors[Math.floor(Math.random() * colors.length)]);
+    }
+    s.grid[0] = newTop;
+    SoundEffects.playMove();
+
+    if (s.grid[ROWS - 1].some(c => c !== null)) {
+      handleGameOver();
     }
   };
 
@@ -376,14 +415,27 @@ const BubbleShooterGame = ({ user, onLeave }) => {
     ctx.restore();
   };
 
+  const currentTier = getCurrentTier();
+
   return (
     <div className="bubble-shooter-container glass-panel">
       <div className="bs-header">
-        <button className="btn-secondary" onClick={onLeave}>&larr; LEAVE</button>
-        <div className="bs-score">
-          SCORE: <strong style={{ color: '#00e676' }}>{score}</strong>
+        <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>
+        <div className="bs-stats-group">
+          <span>SCORE: <strong style={{ color: '#00e676' }}>{score}</strong></span> &bull;
+          <span className="bs-tier-badge" style={{ color: currentTier.color, borderColor: currentTier.color }}>
+            LVL {level} &bull; {currentTier.name} ({currentTier.mult}x)
+          </span> &bull;
+          <span className="bs-drop-tag">DROP: <strong>{shotsUntilDrop || currentTier.dropEvery}</strong></span>
         </div>
+        <button className="btn-tertiary" onClick={restartGame}>↺ RESET</button>
       </div>
+
+      {levelUpBanner && (
+        <div className="bs-levelup-toast">
+          🔮 LEVEL {levelUpBanner.level}: {levelUpBanner.name}! CEILING SPEED &amp; COLORS UP (+{levelUpBanner.mult}x SCORE)
+        </div>
+      )}
 
       {unlockedBanner && (
         <div className="achievement-toast">
@@ -398,11 +450,14 @@ const BubbleShooterGame = ({ user, onLeave }) => {
           <h2 className="neon-text" style={{ color: gameWon ? '#00ff66' : '#ff3366' }}>
             {gameWon ? '🏆 CEILING CLEARED!' : 'SECTOR OVERRUN!'}
           </h2>
-          <p style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '15px' }}>
-            Score: {score}
+          <p style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '6px' }}>
+            Final Score: <strong>{score}</strong>
+          </p>
+          <p style={{ color: currentTier.color, fontSize: '0.95rem', marginBottom: '15px' }}>
+            Tier Reached: Level {level} ({currentTier.name})
           </p>
           <div style={{ display: 'flex', gap: '12px' }}>
-            <button className="btn-primary" onClick={initGrid}>PLAY AGAIN</button>
+            <button className="btn-primary" onClick={restartGame}>PLAY AGAIN</button>
             <button className="btn-secondary" onClick={onLeave}>BACK TO HUB</button>
           </div>
         </div>

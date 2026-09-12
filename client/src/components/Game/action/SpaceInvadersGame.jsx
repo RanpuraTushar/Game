@@ -13,6 +13,7 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
   const [lives, setLives] = useState(3);
   const [wave, setWave] = useState(1);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const stateRef = useRef({
     player: { x: CANVAS_WIDTH / 2 - 18, y: CANVAS_HEIGHT - 45, width: 36, height: 22, speed: 6 },
@@ -226,15 +227,17 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
           a.x += s.direction * stepSpeed;
         });
 
-        // Alien shooting
-        if (Math.random() < 0.038 && aliveAliens.length > 0) {
+        // Alien shooting frequency and projectile speed scales with wave
+        const shootChance = Math.min(0.08, 0.032 + (s.wave - 1) * 0.012);
+        if (Math.random() < shootChance && aliveAliens.length > 0) {
           const shooter = aliveAliens[Math.floor(Math.random() * aliveAliens.length)];
+          const bulletSpeed = Math.min(7.2, 4.2 + (s.wave - 1) * 0.45);
           s.alienBullets.push({
             x: shooter.x + shooter.width / 2 - 2,
             y: shooter.y + shooter.height,
             width: 4,
             height: 10,
-            speed: 4.2
+            speed: bulletSpeed
           });
         }
 
@@ -258,6 +261,8 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
           }
         }
 
+        const waveMultiplier = 1.0 + (s.wave - 1) * 0.25;
+
         // 6. Bullet Collisions with Aliens
         s.bullets.forEach((b, bIdx) => {
           aliveAliens.forEach(a => {
@@ -265,7 +270,7 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
                 b.y < a.y + a.height && b.y + b.height > a.y) {
               a.alive = false;
               s.bullets.splice(bIdx, 1);
-              s.score += a.points;
+              s.score += Math.round(a.points * waveMultiplier);
               setScore(s.score);
               SoundEffects.playCapture();
 
@@ -286,7 +291,7 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
           // Bullet vs UFO
           if (s.ufo && b.x < s.ufo.x + s.ufo.width && b.x + b.width > s.ufo.x &&
               b.y < s.ufo.y + s.ufo.height && b.y + b.height > s.ufo.y) {
-            s.score += s.ufo.points;
+            s.score += Math.round(s.ufo.points * waveMultiplier);
             setScore(s.score);
             s.bullets.splice(bIdx, 1);
             s.ufo = null;
@@ -354,7 +359,10 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
           setWave(s.wave);
           s.aliens = initAliens(s.wave);
           s.alienSpeed += 0.35;
-          SoundEffects.playWin();
+          SoundEffects.playTrophy();
+          const waveMult = (1.0 + (s.wave - 1) * 0.25).toFixed(1);
+          setLevelUpBanner({ wave: s.wave, multiplier: waveMult });
+          setTimeout(() => setLevelUpBanner(null), 3000);
         }
       }
 
@@ -511,11 +519,17 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
         <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>
         <div className="invaders-dash-stats">
           <span>SCORE: <strong>{score}</strong></span> &bull;
-          <span>WAVE: <strong>{wave}</strong></span> &bull;
+          <span>WAVE: <strong>{wave}</strong> {wave > 1 && <span className="invaders-multiplier-tag">({(1.0 + (wave - 1) * 0.25).toFixed(1)}x)</span>}</span> &bull;
           <span className="lives-tag">LIVES: {'❤️'.repeat(Math.max(0, lives))}</span>
         </div>
         <button className="btn-tertiary" onClick={startNewGame}>↺ RESET</button>
       </div>
+
+      {levelUpBanner && (
+        <div className="invaders-levelup-toast">
+          🚀 WAVE {levelUpBanner.wave} INCOMING! &bull; SPEED &amp; FIRE RATE UP (+{levelUpBanner.multiplier}x SCORE)
+        </div>
+      )}
 
       {unlockedBanner && (
         <div className="achievement-toast">

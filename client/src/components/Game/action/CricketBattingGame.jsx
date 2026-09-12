@@ -107,7 +107,7 @@ export default function CricketBattingGame({ user, onLeave }) {
     eng.bowler.runupDist = 35;
     setShotDistance(null);
 
-    // Realistic delivery variations
+    // Realistic delivery variations scaling with batsman score
     const types = [
       { name: 'Express Inswinging Yorker', speed: 148.8, duration: 1000, curve: -1.8, bounceZ: 8 },
       { name: 'Seaming Outswinger', speed: 142.4, duration: 1120, curve: 2.2, bounceZ: 14 },
@@ -116,11 +116,18 @@ export default function CricketBattingGame({ user, onLeave }) {
       { name: 'Reverse-Swinging Toe-Crusher', speed: 151.2, duration: 950, curve: -2.4, bounceZ: 6 }
     ];
     const picked = types[Math.floor(Math.random() * types.length)];
-    setBowlerType(`${picked.name} • ${picked.speed} KM/H`);
-    eng.ballDeliveryDuration = picked.duration;
-    eng.ballCurve = picked.curve;
+
+    // Dynamic pace & curve scaling as batsman score climbs
+    const speedScale = Math.min(1.38, 1.0 + (score / 100) * 0.38);
+    const finalSpeed = Math.min(162.5, Number((picked.speed * speedScale).toFixed(1)));
+    const finalDuration = Math.max(680, Math.round(picked.duration / speedScale));
+    const finalCurve = picked.curve * (1.0 + Math.min(0.75, (score / 120) * 0.5));
+
+    setBowlerType(`${picked.name} • ${finalSpeed} KM/H ${score >= 30 ? '🔥 PACE UP' : ''}`);
+    eng.ballDeliveryDuration = finalDuration;
+    eng.ballCurve = finalCurve;
     eng.bounceHeight = picked.bounceZ;
-    eng.deliverySpeed = picked.speed;
+    eng.deliverySpeed = finalSpeed;
 
     setTimingFeedback({ text: 'Bowler running in from pavilion end...', color: '#a0aec0' });
 

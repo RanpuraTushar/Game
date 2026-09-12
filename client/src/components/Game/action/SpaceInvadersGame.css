@@ -39,6 +39,42 @@
   color: #00f3ff;
 }
 
+.invaders-multiplier-tag {
+  color: #ffd600;
+  font-weight: 800;
+  font-size: 0.76rem;
+  background: rgba(255, 214, 0, 0.15);
+  padding: 1px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 214, 0, 0.4);
+}
+
+.invaders-levelup-toast {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(255, 0, 127, 0.92), rgba(0, 243, 255, 0.92));
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.7);
+  animation: invadersToastPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 50;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@keyframes invadersToastPop {
+  0% { transform: translate(-50%, -15px) scale(0.85); opacity: 0; }
+  100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+}
+
 .lives-tag {
   color: #ff3366;
 }

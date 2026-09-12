@@ -5,6 +5,25 @@ import './SnakeArcadeGame.css';
 
 const GRID_SIZE = 20;
 
+// Progressive Dynamic Difficulty Scaling System
+// Speed accelerates, score multipliers increase, and cyber laser hazards appear!
+const SNAKE_DIFFICULTY_LEVELS = [
+  { level: 1, name: 'NOVICE', minScore: 0, speed: 125, color: '#00e676', multiplier: 1.0, maxHazards: 0 },
+  { level: 2, name: 'SPEEDER', minScore: 80, speed: 102, color: '#00f3ff', multiplier: 1.25, maxHazards: 0 },
+  { level: 3, name: 'CYBER HAZARD', minScore: 180, speed: 84, color: '#ffd600', multiplier: 1.5, maxHazards: 3 },
+  { level: 4, name: 'OVERDRIVE', minScore: 350, speed: 68, color: '#ff9100', multiplier: 2.0, maxHazards: 6 },
+  { level: 5, name: 'CHAOS GOD', minScore: 600, speed: 52, color: '#ff0055', multiplier: 2.5, maxHazards: 9 }
+];
+
+const getSnakeDifficulty = (score) => {
+  for (let i = SNAKE_DIFFICULTY_LEVELS.length - 1; i >= 0; i--) {
+    if (score >= SNAKE_DIFFICULTY_LEVELS[i].minScore) {
+      return SNAKE_DIFFICULTY_LEVELS[i];
+    }
+  }
+  return SNAKE_DIFFICULTY_LEVELS[0];
+};
+
 const SnakeArcadeGame = ({ user, onLeave }) => {
   const canvasRef = useRef(null);
   const [score, setScore] = useState(0);
@@ -13,6 +32,7 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [unlockedBanner, setUnlockedBanner] = useState(null);
+  const [levelUpBanner, setLevelUpBanner] = useState(null);
 
   const state = useRef({
     snake: [{ x: 10, y: 10 }, { x: 10, y: 11 }, { x: 10, y: 12 }],
@@ -20,20 +40,44 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
     nextDir: { x: 0, y: -1 },
     food: { x: 5, y: 5 },
     goldenFood: null,
+    hazards: [],
     score: 0,
-    speed: 120
+    speed: 125
   });
 
-  const spawnFood = (snake) => {
+  const spawnFood = (snake, hazards) => {
     let newFood;
     while (true) {
       newFood = {
         x: Math.floor(Math.random() * GRID_SIZE),
         y: Math.floor(Math.random() * GRID_SIZE)
       };
-      if (!snake.some(s => s.x === newFood.x && s.y === newFood.y)) break;
+      const hitSnake = snake.some(s => s.x === newFood.x && s.y === newFood.y);
+      const hitHazard = hazards.some(h => h.x === newFood.x && h.y === newFood.y);
+      if (!hitSnake && !hitHazard) break;
     }
     return newFood;
+  };
+
+  const spawnHazards = (count, snake, food) => {
+    const hazards = [];
+    while (hazards.length < count) {
+      const candidate = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE)
+      };
+      // Keep away from snake head and immediate area
+      const distToHead = Math.abs(candidate.x - snake[0].x) + Math.abs(candidate.y - snake[0].y);
+      if (distToHead <= 3) continue;
+
+      const hitSnake = snake.some(s => s.x === candidate.x && s.y === candidate.y);
+      const hitFood = food && food.x === candidate.x && food.y === candidate.y;
+      const hitExisting = hazards.some(h => h.x === candidate.x && h.y === candidate.y);
+      if (!hitSnake && !hitFood && !hitExisting) {
+        hazards.push(candidate);
+      }
+    }
+    return hazards;
   };
 
   const startNewGame = () => {
@@ -43,13 +87,15 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
       nextDir: { x: 0, y: -1 },
       food: { x: 5, y: 5 },
       goldenFood: null,
+      hazards: [],
       score: 0,
-      speed: 120
+      speed: 125
     };
     setScore(0);
     setLength(3);
     setGameOver(false);
     setIsPaused(false);
+    setLevelUpBanner(null);
   };
 
   useEffect(() => {
@@ -86,7 +132,11 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
       if (head.y >= GRID_SIZE) head.y = 0;
 
       // Self collision
-      if (s.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+      const hitSelf = s.snake.some(segment => segment.x === head.x && segment.y === head.y);
+      // Hazard collision
+      const hitHazard = s.hazards.some(hazard => hazard.x === head.x && hazard.y === head.y);
+
+      if (hitSelf || hitHazard) {
         setGameOver(true);
         SoundEffects.playLoss();
         if (s.score > highScore) setHighScore(s.score);
@@ -97,19 +147,51 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
 
       s.snake.unshift(head);
 
-      // Check Food Eaten
+      const curDiff = getSnakeDifficulty(s.score);
+
+      // Check Golden Food Eaten
+      let ateGolden = false;
+      if (s.goldenFood && head.x === s.goldenFood.x && head.y === s.goldenFood.y) {
+        ateGolden = true;
+        SoundEffects.playTrophy();
+        s.score += Math.round(30 * curDiff.multiplier);
+        s.goldenFood = null;
+      }
+
+      // Check Normal Food Eaten
       if (head.x === s.food.x && head.y === s.food.y) {
-        s.score += 10;
-        setScore(s.score);
-        setLength(s.snake.length);
-        s.food = spawnFood(s.snake);
         SoundEffects.playSafe();
-        s.speed = Math.max(65, 120 - Math.floor(s.snake.length * 1.5));
-      } else {
+        s.score += Math.round(10 * curDiff.multiplier);
+        s.food = spawnFood(s.snake, s.hazards);
+
+        // Chance to spawn golden bonus apple at level >= 2
+        if (curDiff.level >= 2 && !s.goldenFood && Math.random() < 0.35) {
+          s.goldenFood = spawnFood(s.snake, [...s.hazards, s.food]);
+        }
+      } else if (!ateGolden) {
         s.snake.pop();
       }
 
-      // Draw Grid
+      setScore(s.score);
+      setLength(s.snake.length);
+
+      // Check Level Up!
+      const newDiff = getSnakeDifficulty(s.score);
+      if (newDiff.level > curDiff.level) {
+        SoundEffects.playTrophy();
+        setLevelUpBanner(newDiff);
+        setTimeout(() => setLevelUpBanner(null), 3000);
+
+        // Spawn hazards for higher levels
+        if (newDiff.maxHazards > s.hazards.length) {
+          s.hazards = spawnHazards(newDiff.maxHazards, s.snake, s.food);
+        }
+      }
+
+      // Dynamic Speed calculated by current difficulty tier
+      s.speed = Math.max(48, newDiff.speed - Math.min(20, Math.floor(s.snake.length * 0.8)));
+
+      // Render Frame
       const cellSize = canvas.width / GRID_SIZE;
       ctx.fillStyle = '#0a0a14';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -122,21 +204,51 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
         }
       }
 
-      // Draw Food (Glowing Apple)
-      ctx.fillStyle = '#ff0055';
-      ctx.shadowColor = '#ff0055';
+      // Draw Cyber Hazards
+      s.hazards.forEach(hazard => {
+        ctx.fillStyle = '#ff0055';
+        ctx.shadowColor = '#ff0055';
+        ctx.shadowBlur = 10;
+        ctx.fillRect(hazard.x * cellSize + 2, hazard.y * cellSize + 2, cellSize - 4, cellSize - 4);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('✕', hazard.x * cellSize + cellSize / 2, hazard.y * cellSize + cellSize / 2);
+      });
+      ctx.shadowBlur = 0;
+
+      // Draw Normal Food (Glowing Apple)
+      ctx.fillStyle = '#ff2a5f';
+      ctx.shadowColor = '#ff2a5f';
       ctx.shadowBlur = 12;
       ctx.beginPath();
       ctx.arc(s.food.x * cellSize + cellSize / 2, s.food.y * cellSize + cellSize / 2, cellSize / 2.5, 0, Math.PI * 2);
       ctx.fill();
       ctx.shadowBlur = 0;
 
+      // Draw Golden Bonus Apple (if active)
+      if (s.goldenFood) {
+        ctx.fillStyle = '#ffd600';
+        ctx.shadowColor = '#ffd600';
+        ctx.shadowBlur = 16;
+        ctx.beginPath();
+        ctx.arc(s.goldenFood.x * cellSize + cellSize / 2, s.goldenFood.y * cellSize + cellSize / 2, cellSize / 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 9px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('★', s.goldenFood.x * cellSize + cellSize / 2, s.goldenFood.y * cellSize + cellSize / 2);
+        ctx.shadowBlur = 0;
+      }
+
       // Draw Snake Body
       s.snake.forEach((segment, idx) => {
         const isHead = idx === 0;
-        ctx.fillStyle = isHead ? '#00ff66' : '#00c853';
-        ctx.shadowColor = isHead ? '#00ff66' : 'transparent';
-        ctx.shadowBlur = isHead ? 10 : 0;
+        ctx.fillStyle = isHead ? newDiff.color : '#00c853';
+        ctx.shadowColor = isHead ? newDiff.color : 'transparent';
+        ctx.shadowBlur = isHead ? 12 : 0;
         ctx.fillRect(segment.x * cellSize + 1, segment.y * cellSize + 1, cellSize - 2, cellSize - 2);
       });
       ctx.shadowBlur = 0;
@@ -178,13 +290,25 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
     touchStartRef.current = null;
   };
 
+  const currentDiff = getSnakeDifficulty(score);
+
   return (
     <div className="snake-arcade-container glass-panel">
+      {/* Level Up Banner */}
+      {levelUpBanner && (
+        <div className="snake-levelup-toast" style={{ borderColor: levelUpBanner.color }}>
+          <span>⚡ LEVEL UP: <strong>{levelUpBanner.name} (L{levelUpBanner.level})</strong></span>
+          <small>Speed increased! • {levelUpBanner.multiplier}x bonus active</small>
+        </div>
+      )}
+
       <div className="snake-arcade-header">
         <button className="btn-secondary" onClick={onLeave}>&larr; LEAVE</button>
         <div className="snake-stats-bar">
           <span>SCORE: <strong style={{ color: '#00ff66' }}>{score}</strong></span>
-          <span>LENGTH: <strong style={{ color: '#00f3ff' }}>{length}</strong></span>
+          <span className="snake-diff-pill" style={{ borderColor: currentDiff.color, color: currentDiff.color }}>
+            L{currentDiff.level} • {currentDiff.name} ({currentDiff.multiplier}x)
+          </span>
           <span>BEST: <strong style={{ color: '#ffd600' }}>{highScore}</strong></span>
         </div>
         <button className="btn-tertiary" onClick={startNewGame}>RESET</button>
@@ -215,13 +339,17 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
         <button className="snake-dpad-btn down" onClick={() => handleDirection('DOWN')}>▼</button>
       </div>
 
-      <p className="snake-hint">💡 Swipe on board, use <strong>D-Pad</strong>, or <strong>Arrow Keys</strong>.</p>
+      <p className="snake-hint">💡 Eat apples to grow • Watch out for red <strong>✕</strong> cyber laser hazards at higher levels!</p>
 
       {gameOver && (
         <div className="finish-overlay">
           <h2 className="neon-text" style={{ color: '#ff0055' }}>SNAKE CRASH!</h2>
-          <p style={{ color: '#fff', fontSize: '1.3rem', marginBottom: '15px' }}>Final Score: {score}</p>
-          <div style={{ display: 'flex', gap: '12px' }}>
+          <div className="snake-go-stats">
+            <p>Level: <strong style={{ color: currentDiff.color }}>L{currentDiff.level} ({currentDiff.name})</strong></p>
+            <p>Final Score: <strong style={{ color: '#00ff66' }}>{score}</strong></p>
+            <p>Score Multiplier: <strong style={{ color: '#ffd600' }}>{currentDiff.multiplier}x</strong></p>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
             <button className="btn-primary" onClick={startNewGame}>PLAY AGAIN</button>
             <button className="btn-secondary" onClick={onLeave}>BACK TO HUB</button>
           </div>

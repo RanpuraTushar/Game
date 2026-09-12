@@ -2,7 +2,8 @@
 class SoundFX {
   constructor() {
     this.ctx = null;
-    this.muted = false;
+    this.muted = localStorage.getItem('arcade_sound_muted') === 'true';
+    this.hoverDebounce = 0;
   }
 
   init() {
@@ -13,8 +14,45 @@ class SoundFX {
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
     }
+  }
+
+  isMuted() {
+    return this.muted;
+  }
+
+  setMuted(val) {
+    this.muted = Boolean(val);
+    localStorage.setItem('arcade_sound_muted', this.muted ? 'true' : 'false');
+    return this.muted;
+  }
+
+  toggleMute() {
+    return this.setMuted(!this.muted);
+  }
+
+  playHover() {
+    if (this.muted) return;
+    const now = performance.now();
+    if (now - this.hoverDebounce < 50) return;
+    this.hoverDebounce = now;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(620, t);
+      osc.frequency.exponentialRampToValueAtTime(880, t + 0.035);
+      gain.gain.setValueAtTime(0.04, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.035);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.04);
+    } catch (e) {}
   }
 
   playClick() {
@@ -466,7 +504,90 @@ class SoundFX {
       osc.stop(this.ctx.currentTime + 0.12);
     } catch (e) {}
   }
+
+  // Futuristic warp sweep when launching a game
+  playLaunch() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const t = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, t);
+      osc.frequency.exponentialRampToValueAtTime(740, t + 0.18);
+
+      gain.gain.setValueAtTime(0.15, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(t);
+      osc.stop(t + 0.23);
+    } catch (e) {}
+  }
+
+  // Sparkling chime for favorite or achievements
+  playStar() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const t = this.ctx.currentTime;
+      [880, 1174, 1480].forEach((freq, i) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, t + i * 0.04);
+
+        gain.gain.setValueAtTime(0.08, t + i * 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + i * 0.04 + 0.14);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(t + i * 0.04);
+        osc.stop(t + i * 0.04 + 0.15);
+      });
+    } catch (e) {}
+  }
+
+  // Ascending celebratory chord for achievements/leaderboard
+  playTrophy() {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const t = this.ctx.currentTime;
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+      notes.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        const start = t + idx * 0.06;
+        osc.frequency.setValueAtTime(freq, start);
+
+        gain.gain.setValueAtTime(0.09, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.22);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(start);
+        osc.stop(start + 0.23);
+      });
+    } catch (e) {}
+  }
 }
 
 export const soundFX = new SoundFX();
+export const soundEffects = soundFX;
 export default soundFX;
