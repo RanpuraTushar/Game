@@ -35,6 +35,7 @@
   font-weight: 800;
   background: linear-gradient(90deg, #ffd600, #ff007f);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: flex;
   align-items: center;
@@ -276,9 +277,11 @@
     align-items: center;
     text-align: center;
   }
+
   .trivia-players-strip {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .options-grid {
     grid-template-columns: 1fr;
   }
