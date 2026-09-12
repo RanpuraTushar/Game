@@ -1,34 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GAMES_LIST } from '../../../../shared/gameMetadata.js';
 import { soundEffects } from '../../utils/SoundEffects';
+import { getGameAverageRating } from '../../utils/portalEconomy';
 import './HeroSpotlight.css';
 
 const FEATURED_GAME_IDS = [
-  'CYBER_RACER',
-  'ROOFTOP_SNIPERS',
-  'EIGHT_BALL_POOL',
+  'TIC_TAC_TOE',
   'CHESS',
-  'SLOPE_3D'
+  'EIGHT_BALL_POOL',
+  'LUDO',
+  'SNAKE'
 ];
 
 const SPOTLIGHT_EXTRAS = {
-  CYBER_RACER: {
-    tagline: 'HIT ARCADE RACER OF THE MONTH',
-    tags: ['⚡ 3D Arcade', '🏎️ Hyperspeed', '🏆 Leaderboard Ready'],
-    rating: '4.9 ★★★★★ (3.4K Reviews)',
-    backdropGradient: 'linear-gradient(135deg, rgba(0, 243, 255, 0.15) 0%, rgba(176, 38, 255, 0.25) 50%, rgba(10, 10, 25, 0.95) 100%)'
-  },
-  ROOFTOP_SNIPERS: {
-    tagline: 'TOP RATED 2-PLAYER PARTY DUEL',
-    tags: ['🎯 Ragdoll Physics', '👥 2-Player Local', '💥 Intense Knockouts'],
-    rating: '4.9 ★★★★★ (4.8K Reviews)',
-    backdropGradient: 'linear-gradient(135deg, rgba(255, 0, 127, 0.2) 0%, rgba(255, 170, 0, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
-  },
-  EIGHT_BALL_POOL: {
-    tagline: 'REALISTIC BILLIARDS SIMULATOR',
-    tags: ['🎱 Physics Engine', '🎯 Fine Cue Spin', '👑 Pro Tournament'],
-    rating: '4.8 ★★★★★ (2.9K Reviews)',
-    backdropGradient: 'linear-gradient(135deg, rgba(0, 230, 118, 0.2) 0%, rgba(0, 243, 255, 0.15) 50%, rgba(10, 10, 25, 0.95) 100%)'
+  TIC_TAC_TOE: {
+    tagline: 'CYBER NEON 1v1 DUEL',
+    tags: ['❌⭕ Neon Grid', '🤖 Smart AI Bot', '⚡ Fast Blitz'],
+    rating: '4.8 ★★★★★ (3.9K Reviews)',
+    backdropGradient: 'linear-gradient(135deg, rgba(0, 243, 255, 0.2) 0%, rgba(255, 0, 127, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
   },
   CHESS: {
     tagline: 'STRATEGIC MASTERCLASS',
@@ -36,11 +25,29 @@ const SPOTLIGHT_EXTRAS = {
     rating: '5.0 ★★★★★ (5.1K Reviews)',
     backdropGradient: 'linear-gradient(135deg, rgba(176, 38, 255, 0.25) 0%, rgba(0, 243, 255, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
   },
-  SLOPE_3D: {
-    tagline: 'ULTRA REFLEX CHALLENGE',
-    tags: ['🚀 Endless 3D Run', '⚡ Gravity Rush', '🔥 Ultra Addictive'],
-    rating: '4.8 ★★★★★ (3.1K Reviews)',
-    backdropGradient: 'linear-gradient(135deg, rgba(255, 51, 102, 0.25) 0%, rgba(0, 243, 255, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
+  EIGHT_BALL_POOL: {
+    tagline: 'REALISTIC BILLIARDS SIMULATOR',
+    tags: ['🎱 Physics Engine', '🎯 Fine Cue Spin', '👑 Pro Tournament'],
+    rating: '4.9 ★★★★★ (4.8K Reviews)',
+    backdropGradient: 'linear-gradient(135deg, rgba(0, 230, 118, 0.2) 0%, rgba(0, 243, 255, 0.15) 50%, rgba(10, 10, 25, 0.95) 100%)'
+  },
+  LUDO: {
+    tagline: 'ROYAL 3D BOARD KINGDOM',
+    tags: ['🎲 3D Dice Physics', '👑 1-4 Players', '⚔️ Battle Arena'],
+    rating: '4.9 ★★★★★ (6.2K Reviews)',
+    backdropGradient: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 0, 127, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
+  },
+  SNAKE: {
+    tagline: 'CLASSIC SNAKES & LADDERS 3D',
+    tags: ['🐍 Serpentine Board', '🪜 Ladder Climbs', '🎲 1-4P Board Race'],
+    rating: '4.8 ★★★★★ (3.5K Reviews)',
+    backdropGradient: 'linear-gradient(135deg, rgba(0, 230, 118, 0.2) 0%, rgba(255, 215, 0, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
+  },
+  UNO: {
+    tagline: 'FAST-PACED CYBER CARD BATTLE',
+    tags: ['🃏 Action Wilds', '🤖 Smart AI Bots', '🔥 4-Player Table'],
+    rating: '4.9 ★★★★★ (4.3K Reviews)',
+    backdropGradient: 'linear-gradient(135deg, rgba(255, 0, 127, 0.2) 0%, rgba(255, 170, 0, 0.2) 50%, rgba(10, 10, 25, 0.95) 100%)'
   }
 };
 
@@ -60,6 +67,11 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
     rating: '4.9 ★★★★★ (2.1K Reviews)',
     backdropGradient: 'linear-gradient(135deg, rgba(0, 243, 255, 0.2), rgba(10, 10, 25, 0.95))'
   };
+
+  const liveRating = activeGame ? getGameAverageRating(activeGame.id) : null;
+  const displayRating = liveRating && liveRating.total > 0
+    ? `${liveRating.average} ★★★★★ (${liveRating.total} Reviews)`
+    : activeExtras.rating;
 
   const isFavorite = activeGame ? favorites.includes(activeGame.id) : false;
 
@@ -101,7 +113,7 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
             <span className="badge-flame">🔥</span> {activeExtras.tagline}
           </span>
           <span className="spotlight-rating-pill">
-            {activeExtras.rating}
+            {displayRating}
           </span>
         </div>
 
@@ -130,7 +142,15 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
           <button
             className="btn-spotlight-play"
             onClick={() => {
-              soundEffects.playStart();
+              try {
+                if (typeof soundEffects.playStart === 'function') {
+                  soundEffects.playStart();
+                } else if (typeof soundEffects.playLaunch === 'function') {
+                  soundEffects.playLaunch();
+                } else {
+                  soundEffects.playClick?.();
+                }
+              } catch (e) {}
               onSelectGame(activeGame.id);
             }}
           >

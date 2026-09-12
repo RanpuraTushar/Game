@@ -220,7 +220,13 @@ const GameTheater = ({
           <section className="theater-reviews-section">
             <div className="reviews-section-header">
               <h3 className="section-heading">COMMUNITY REVIEWS & RATINGS</h3>
-              <span className="reviews-count-badge">★ 4.9 ({reviews.length} reviews)</span>
+              {(() => {
+                const totalScore = reviews.reduce((acc, r) => acc + (Number(r.rating) || 5), 0);
+                const avgScore = reviews.length > 0 ? (totalScore / reviews.length).toFixed(1) : '5.0';
+                return (
+                  <span className="reviews-count-badge">★ {avgScore} ({reviews.length} reviews)</span>
+                );
+              })()}
             </div>
 
             {/* Leave a review form */}

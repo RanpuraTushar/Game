@@ -531,6 +531,11 @@ class SoundFX {
     } catch (e) {}
   }
 
+  // Alias for launching games from Hero Spotlight
+  playStart() {
+    this.playLaunch();
+  }
+
   // Sparkling chime for favorite or achievements
   playStar() {
     if (this.muted) return;

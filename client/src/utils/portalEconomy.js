@@ -342,6 +342,22 @@ const SEED_REVIEWS = {
     { id: 'r6', username: 'CueMaster', avatar: '🎱', rating: 5, time: '4 hours ago', comment: 'Realistic spin physics and angled pockets. Best browser pool game hands down.' },
     { id: 'r7', username: 'TrickShot', avatar: '🎯', rating: 4, time: '2 days ago', comment: 'The interactive cue stick pull feels extremely satisfying!' }
   ],
+  LUDO: [
+    { id: 'r_ludo1', username: 'DiceKing', avatar: '👑', rating: 5, time: '2 hours ago', comment: 'Awesome 3D pawns and authentic dice rolling physics! Great family multiplayer.' },
+    { id: 'r_ludo2', username: 'LuckySixer', avatar: '🎲', rating: 5, time: '1 day ago', comment: 'Super nostalgic and smooth animations. Love the token capture sounds!' }
+  ],
+  TIC_TAC_TOE: [
+    { id: 'r_ttt1', username: 'GridMaster', avatar: '❌', rating: 5, time: '3 hours ago', comment: 'Classic 3x3 fun with glowing neon grids. The AI bot gives a solid challenge!' },
+    { id: 'r_ttt2', username: 'NeonChallenger', avatar: '⭕', rating: 4, time: 'Yesterday', comment: 'Fast and responsive blitz matches.' }
+  ],
+  SNAKE: [
+    { id: 'r_snake1', username: 'LadderClimber', avatar: '🪜', rating: 5, time: '5 hours ago', comment: 'The 3D board race is thrilling! Love climbing ladders past snakes.' },
+    { id: 'r_snake2', username: 'CobraDodger', avatar: '🐍', rating: 4, time: '2 days ago', comment: 'Great classic gameplay with modern neon visuals.' }
+  ],
+  UNO: [
+    { id: 'r_uno1', username: 'WildCardPro', avatar: '🃏', rating: 5, time: '4 hours ago', comment: 'So fun playing +4 Wild Cards against AI! Fast, vibrant and super addictive.' },
+    { id: 'r_uno2', username: 'ColorMatcher', avatar: '✨', rating: 5, time: 'Yesterday', comment: 'Smooth card dealing animations and realistic rules.' }
+  ],
   SLOPE_3D: [
     { id: 'r8', username: 'GravityDefier', avatar: '🚀', rating: 5, time: '5 hours ago', comment: 'Fast, thrilling, and instantly restarts when you fall. Pure reflex arcade goodness!' }
   ],
@@ -362,6 +378,14 @@ export const getGameReviews = (gameId) => {
   } catch (e) {
     return SEED_REVIEWS[gameId] || [];
   }
+};
+
+export const getGameAverageRating = (gameId) => {
+  const reviews = getGameReviews(gameId);
+  if (!reviews || reviews.length === 0) return { average: '5.0', total: 0 };
+  const sum = reviews.reduce((acc, curr) => acc + (Number(curr.rating) || 5), 0);
+  const avg = (sum / reviews.length).toFixed(1);
+  return { average: avg, total: reviews.length };
 };
 
 export const addGameReview = (gameId, { username, avatar, rating, comment }) => {
