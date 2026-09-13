@@ -13,12 +13,12 @@ import { recordGamePlay } from './utils/gameActivity';
 import GameTheater from './components/Game/GameTheater';
 import CyberShopModal from './components/Shop/CyberShopModal';
 import DailyQuestsModal from './components/Quests/DailyQuestsModal';
-import { 
-  getUserEconomy, 
-  addCoins, 
-  addXP, 
-  reportQuestProgress, 
-  COSMETICS_CATALOG 
+import {
+  getUserEconomy,
+  addCoins,
+  addXP,
+  reportQuestProgress,
+  COSMETICS_CATALOG
 } from './utils/portalEconomy';
 
 // ==========================================
@@ -146,9 +146,9 @@ function App() {
   const handleToggleFullscreen = () => {
     soundEffects.playClick();
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen?.().catch(() => {});
+      document.documentElement.requestFullscreen?.().catch(() => { });
     } else {
-      document.exitFullscreen?.().catch(() => {});
+      document.exitFullscreen?.().catch(() => { });
     }
   };
 
@@ -181,7 +181,7 @@ function App() {
     try {
       const saved = localStorage.getItem('arcade_favorites_' + (userData?.id || 'guest'));
       setFavorites(saved ? JSON.parse(saved) : []);
-    } catch (e) {}
+    } catch (e) { }
     soundEffects.playTrophy();
   };
 
@@ -370,7 +370,7 @@ function App() {
             }}
             title={`Click to view & edit profile (${user.username})`}
           >
-            <span 
+            <span
               className={`user-icon-avatar ${activeFrameObj?.cssClass || ''}`}
               style={{ borderColor: activeFrameObj?.color || 'transparent' }}
             >
