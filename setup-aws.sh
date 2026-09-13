@@ -70,9 +70,11 @@ cd "$SCRIPT_DIR/client"
 npm install
 npm run build
 
-# 7. Configure Nginx
-echo "🌐 Configuring Nginx..."
+# 7. Configure Nginx & Permissions
+echo "🌐 Configuring Nginx & Permissions..."
 PUBLIC_IP=$(curl -s ifconfig.me || echo "localhost")
+sudo chmod 755 /home/ubuntu || true
+sudo chmod -R 755 "$SCRIPT_DIR/client/dist" || true
 
 sudo bash -c "cat <<EOF > /etc/nginx/sites-available/game
 server {
