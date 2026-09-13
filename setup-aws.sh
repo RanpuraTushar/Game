@@ -36,8 +36,8 @@ fi
 echo "🗄️ Setting up MySQL..."
 sudo systemctl start mysql
 sudo mysql -e "CREATE DATABASE IF NOT EXISTS arcade_nexus CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-sudo mysql -e "CREATE USER IF NOT EXISTS 'gameuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ArcadePass@2026';"
-sudo mysql -e "ALTER USER 'gameuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ArcadePass@2026';"
+sudo mysql -e "CREATE USER IF NOT EXISTS 'gameuser'@'localhost' IDENTIFIED BY 'ArcadePass@2026';"
+sudo mysql -e "ALTER USER 'gameuser'@'localhost' IDENTIFIED BY 'ArcadePass@2026';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON arcade_nexus.* TO 'gameuser'@'localhost'; FLUSH PRIVILEGES;"
 
 # Import schema
