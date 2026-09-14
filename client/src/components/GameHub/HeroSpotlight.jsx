@@ -51,14 +51,6 @@ const SPOTLIGHT_EXTRAS = {
   }
 };
 
-const FEATURED_GAMES_MOBILE_META = {
-  TIC_TAC_TOE: { shortTitle: 'Tic-Tac', tag: '1v1' },
-  CHESS: { shortTitle: 'Chess', tag: 'AI' },
-  EIGHT_BALL_POOL: { shortTitle: 'Pool', tag: 'Cue' },
-  LUDO: { shortTitle: 'Ludo', tag: 'Dice' },
-  SNAKE: { shortTitle: 'Snakes', tag: 'Race' }
-};
-
 const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -184,18 +176,16 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
         </div>
       </div>
 
-      {/* Steam-Style Carousel Navigation (Desktop: Vertical Sidebar / Mobile: Sleek 5-Game Dock) */}
+      {/* Steam-Style Sidebar Carousel Navigation */}
       <div className="spotlight-side-nav">
         <div className="side-nav-title">
-          <span className="side-nav-heading">FEATURED SPOTLIGHT</span>
-          <span className="side-nav-heading-mobile">FEATURED (5 GAMES)</span>
+          <span>FEATURED SPOTLIGHT</span>
           <span className="side-nav-hint">{isPaused ? '⏸ PAUSED' : 'AUTO-ADVANCING'}</span>
         </div>
 
         <div className="side-nav-list">
           {featuredGames.map((game, idx) => {
             const isActive = idx === currentIndex;
-            const mobileMeta = FEATURED_GAMES_MOBILE_META[game.id] || {};
             return (
               <div
                 key={game.id}
@@ -209,9 +199,6 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
                 <span className="side-card-icon">{game.icon}</span>
                 <div className="side-card-meta">
                   <span className="side-card-title">{game.title}</span>
-                  <span className="side-card-title-mobile">
-                    {mobileMeta.shortTitle || game.title.split(' ')[0]}
-                  </span>
                   <span className="side-card-cat">{game.category}</span>
                 </div>
                 {/* Active progress timer bar */}

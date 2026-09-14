@@ -739,272 +739,39 @@ canvas,
 }
 
 /* ==========================================================================
-   Mobile Bottom Navigation Bar (Poki / CrazyGames App Look)
+   Responsive & Modal Layout
    ========================================================================== */
-.mobile-bottom-nav {
-  display: none;
-}
-
 .nav-btn-icon {
-  display: none;
+  margin-left: 4px;
 }
 
-@media (max-width: 768px) {
-  .mobile-bottom-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 62px;
-    background: rgba(8, 9, 20, 0.96);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border-top: 1px solid rgba(0, 243, 255, 0.3);
-    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 243, 255, 0.12);
-    z-index: 1200;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  .mobile-nav-item {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    background: transparent;
-    border: none;
-    color: #8892b0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    padding: 6px 0;
-    position: relative;
-    user-select: none;
-  }
-
-  .mobile-nav-item:active {
-    transform: scale(0.92);
-  }
-
-  .mobile-nav-icon {
-    font-size: 1.25rem;
-    line-height: 1;
-    transition: all 0.2s ease;
-  }
-
-  .mobile-nav-label {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-  }
-
-  .mobile-nav-item.active {
-    color: #00f3ff;
-  }
-
-  .mobile-nav-item.active .mobile-nav-icon {
-    transform: translateY(-2px) scale(1.1);
-    filter: drop-shadow(0 0 10px #00f3ff);
-  }
-
-  .mobile-nav-item.active::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 22%;
-    right: 22%;
-    height: 2px;
-    background: #00f3ff;
-    box-shadow: 0 0 10px #00f3ff;
-    border-radius: 2px;
-  }
-
-  /* Hide desktop-only items in top navbar */
-  .nav-desktop-only {
-    display: none !important;
-  }
-
-  .App {
-    padding-top: 66px;
-    padding-bottom: 75px; /* Space for Mobile Bottom Nav */
-    overflow-x: hidden;
-  }
-
-  .App.in-game-active {
-    padding-top: 56px !important;
-    padding-bottom: 20px !important; /* Maximized screen space for gameplay */
-  }
-
+@media (max-width: 1024px) {
   .app-navbar {
-    height: 58px;
-    padding: 0 12px;
-  }
-
-  .brand-text {
-    font-size: 1.05rem;
-    letter-spacing: 1px;
-  }
-
-  .nav-live-indicator {
-    display: none;
-  }
-
-  .nav-breadcrumbs {
-    display: none;
-  }
-
-  .nav-right-section {
+    padding: 0 16px;
     gap: 8px;
   }
 
-  .nav-economy-pill {
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    border-radius: 20px;
-  }
-
-  .nav-audio-btn {
-    width: 34px;
-    height: 34px;
-    font-size: 0.95rem;
-    border-radius: 8px;
-  }
-
-  .nav-desktop-only {
-    display: none !important;
-  }
-
-  .nav-btn-logout {
-    display: none !important;
-  }
-
-  .nav-user-profile-badge {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    max-width: 38px !important;
-    padding: 0 !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: radial-gradient(circle, rgba(0, 243, 255, 0.25) 0%, rgba(12, 16, 32, 0.95) 100%) !important;
-    border: 1.5px solid rgba(0, 243, 255, 0.6) !important;
-    box-shadow: 0 0 12px rgba(0, 243, 255, 0.35) !important;
-    position: relative !important;
-  }
-
-  .nav-user-profile-badge .nav-profile-avatar-wrap {
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .nav-user-profile-badge .user-icon-avatar {
-    font-size: 1.25rem !important;
-    line-height: 1 !important;
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .nav-user-profile-badge .nav-profile-level-badge {
-    position: absolute !important;
-    bottom: -2px !important;
-    right: -2px !important;
-    font-size: 0.52rem !important;
-    padding: 1px 3.5px !important;
-    border-radius: 5px !important;
-  }
-
-  .nav-edit-hint {
-    display: none !important;
+  .nav-btn-text {
+    font-size: 0.75rem;
   }
 
   .nav-user-details-col {
-    display: none !important;
-  }
-
-  /* Modals on Mobile */
-  .modal-backdrop {
-    padding: 12px;
-  }
-
-  .modal-card {
-    width: 100% !important;
-    max-width: 520px !important;
-    max-height: 88vh !important;
-    padding: 16px !important;
-    border-radius: 16px !important;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
-@media (max-width: 480px) {
-  .app-navbar {
-    padding: 0 8px;
-    height: 54px;
-  }
+/* Modals */
+.modal-backdrop {
+  padding: 16px;
+}
 
-  .brand-logo-icon {
-    font-size: 1.2rem;
-  }
-
-  .brand-text {
-    font-size: 0.88rem;
-    letter-spacing: 0.5px;
-  }
-
-  .nav-right-section {
-    gap: 6px;
-  }
-
-  .nav-economy-pill {
-    padding: 4px 8px;
-    font-size: 0.76rem;
-    gap: 4px;
-  }
-
-  .nav-coin-val {
-    font-size: 0.78rem;
-  }
-
-  .nav-audio-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.88rem;
-  }
-
-  .nav-btn-text {
-    display: none !important;
-  }
-
-  .nav-btn-icon {
-    display: inline;
-  }
-
-  .nav-user-profile-badge {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    max-width: 36px !important;
-  }
-
-  .nav-hub-return-btn {
-    padding: 5px 8px;
-    font-size: 0.7rem;
-  }
+.modal-card {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  padding: 24px;
+  border-radius: 20px;
 }
