@@ -961,25 +961,131 @@
   color: #fff;
 }
 
-/* Responsive */
+/* ==========================================================================
+   Responsive Mobile Version for GameHub (Poki / CrazyGames Mobile UX)
+   ========================================================================== */
 @media (max-width: 768px) {
-  .hub-hero-banner {
-    padding: 24px 20px;
+  .game-hub-wrapper {
+    gap: 16px;
+    padding: 0 10px;
   }
 
-  .hero-main-title {
-    font-size: 2.1rem;
+  .hub-quick-toolbar {
+    padding: 10px 14px;
+    gap: 12px;
+  }
+
+  .quick-toolbar-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .quick-toolbar-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .btn-quick-nav-pill {
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 0.72rem;
+  }
+
+  .category-tabs-shelf {
+    padding-bottom: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-tabs-shelf::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-tab-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .hub-search-container {
     width: 100%;
   }
 
-  .recent-mini-card {
-    flex: 0 0 180px;
+  .hub-search-input {
+    font-size: 0.88rem;
+    padding: 10px 14px 10px 38px;
   }
 
+  /* Sleek 2-Column Poki-Style Mobile Grid */
   .games-cards-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .game-card {
+    padding: 10px !important;
+    border-radius: 14px !important;
+  }
+
+  .game-thumbnail-frame {
+    height: 95px !important;
+    border-radius: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .game-card-icon {
+    font-size: 2.2rem !important;
+  }
+
+  .game-card-title {
+    font-size: 0.84rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .game-card-desc {
+    font-size: 0.72rem !important;
+    line-height: 1.3 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    margin-bottom: 8px !important;
+  }
+
+  .game-card-meta {
+    gap: 4px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .game-card-category-badge,
+  .card-highscore-badge,
+  .card-played-badge {
+    font-size: 0.6rem !important;
+    padding: 2px 6px !important;
+  }
+
+  .game-card-play-btn {
+    padding: 7px 0 !important;
+    font-size: 0.72rem !important;
+    border-radius: 8px !important;
+  }
+
+  .recent-mini-card {
+    flex: 0 0 160px;
+    padding: 8px;
+  }
+
+  .recent-mini-title {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .games-cards-grid {
+    grid-template-columns: 1fr !important;
   }
 }

@@ -658,5 +658,95 @@
 @media (max-width: 960px) {
   .theater-details-layout {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-theater-container {
+    padding: 8px 6px 40px 6px;
+    gap: 10px;
+  }
+
+  .theater-top-bar {
+    padding: 6px 10px;
+  }
+
+  .theater-back-btn {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+  }
+
+  .theater-breadcrumbs {
+    display: none;
+  }
+
+  .btn-theater-light {
+    padding: 6px 10px;
+    font-size: 0.68rem;
+  }
+
+  .theater-screen-frame {
+    padding: 4px;
+    border-radius: 12px;
+    border-color: rgba(0, 243, 255, 0.25);
+  }
+
+  .theater-screen-frame canvas,
+  .game-canvas,
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    touch-action: none;
+  }
+
+  .theater-toolbar {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .theater-game-identity {
+    gap: 10px;
+  }
+
+  .theater-game-icon {
+    font-size: 1.6rem;
+  }
+
+  .theater-game-title {
+    font-size: 1.05rem;
+  }
+
+  .theater-dev-badge {
+    display: none;
+  }
+
+  .toolbar-right {
+    gap: 6px;
+  }
+
+  .vote-btn-group .btn-vote {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .btn-theater-action {
+    padding: 6px 9px;
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+
+  .btn-theater-action span:nth-child(2) {
+    display: none;
+  }
+
+  .theater-card-box {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .theater-sidebar-related {
+    padding: 14px;
+    border-radius: 12px;
   }
 }
