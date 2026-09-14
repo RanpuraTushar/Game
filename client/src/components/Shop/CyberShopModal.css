@@ -439,6 +439,15 @@
 }
 
 /* Animated Cosmetic Frame CSS Classes */
+.frame-pulse-cyan,
+.frame-pulse-gold,
+.frame-pulse-crimson,
+.frame-pulse-emerald,
+.frame-pulse-hologram {
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+}
+
 .frame-pulse-cyan {
   border: 2.5px solid #00f3ff;
   box-shadow: 0 0 16px #00f3ff;
