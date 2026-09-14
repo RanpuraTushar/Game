@@ -177,47 +177,48 @@
   justify-content: center;
   gap: 10px;
   background: linear-gradient(135deg, #00f3ff 0%, #0099ff 100%) !important;
-  color: #040814 !important;
-  -webkit-text-fill-color: #040814 !important;
+  color: #030816 !important;
   border: none;
   font-family: 'Orbitron', sans-serif !important;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 900 !important;
   letter-spacing: 1.5px;
-  padding: 13px 28px;
+  padding: 12px 28px;
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 0 25px rgba(0, 243, 255, 0.55);
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  overflow: hidden;
   text-decoration: none;
-}
-
-.btn-spotlight-play * {
-  color: #040814 !important;
-  -webkit-text-fill-color: #040814 !important;
-  font-weight: 900 !important;
-  z-index: 2;
-  position: relative;
+  line-height: 1;
 }
 
 .btn-spotlight-play:hover {
-  transform: translateY(-2px) scale(1.03);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 0 35px rgba(0, 243, 255, 0.8);
-  filter: brightness(1.1);
+  filter: brightness(1.08);
 }
 
 .btn-play-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #030816 !important;
+  line-height: 1;
+}
+
+.btn-play-text {
+  color: #030816 !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px;
+  line-height: 1;
 }
 
 .btn-spotlight-favorite {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #e2e8f0;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0 !important;
   font-family: 'Orbitron', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
@@ -226,14 +227,25 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
+  line-height: 1;
 }
 
 .btn-spotlight-favorite:hover,
 .btn-spotlight-favorite.active {
   background: rgba(255, 215, 0, 0.15);
   border-color: rgba(255, 215, 0, 0.6);
-  color: #ffd700;
+  color: #ffd700 !important;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.fav-star {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.fav-label {
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
 .spotlight-controls-hint {
@@ -477,32 +489,73 @@
   }
 
   .spotlight-actions-row {
-    flex-direction: column !important;
-    gap: 8px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
     padding-top: 10px !important;
     width: 100% !important;
   }
 
   .btn-spotlight-play {
-    width: 100% !important;
+    flex: 1 !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 12px 16px !important;
+    font-size: 0.88rem !important;
+    min-height: 46px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
-    padding: 13px 18px !important;
-    font-size: 0.9rem !important;
-    min-height: 48px !important;
+    gap: 8px !important;
     box-sizing: border-box !important;
+    background: linear-gradient(135deg, #00f3ff 0%, #0099ff 100%) !important;
+    color: #030816 !important;
+  }
+
+  .btn-spotlight-play .btn-play-icon {
+    font-size: 0.95rem !important;
+    color: #030816 !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+  }
+
+  .btn-spotlight-play .btn-play-text {
+    font-size: 0.84rem !important;
+    color: #030816 !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.8px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    display: inline-block !important;
   }
 
   .btn-spotlight-favorite {
-    width: 100% !important;
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    min-height: 46px !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
-    padding: 10px 14px !important;
-    font-size: 0.8rem !important;
-    min-height: 42px !important;
+    flex-shrink: 0 !important;
     box-sizing: border-box !important;
   }
 
+  .btn-spotlight-favorite .fav-label {
+    display: none !important;
+  }
+
+  .btn-spotlight-favorite .fav-star {
+    font-size: 1.3rem !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+  }
+
   .spotlight-controls-hint {
-    margin: 2px auto 0 auto !important;
-    font-size: 0.72rem !important;
+    display: none !important;
   }
 }

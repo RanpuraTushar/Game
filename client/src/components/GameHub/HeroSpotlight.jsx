@@ -165,7 +165,7 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
               title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
             >
               <span className="fav-star">{isFavorite ? '★' : '☆'}</span>
-              <span>{isFavorite ? 'FAVORITED' : 'WISHLIST'}</span>
+              <span className="fav-label">{isFavorite ? 'FAVORITED' : 'WISHLIST'}</span>
             </button>
           )}
 
