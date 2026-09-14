@@ -156,7 +156,6 @@ const HeroSpotlight = ({ onSelectGame, favorites = [], onToggleFavorite }) => {
           >
             <span className="btn-play-icon">▶</span>
             <span className="btn-play-text">PLAY FREE NOW</span>
-            <span className="btn-glow-bar" />
           </button>
 
           {onToggleFavorite && (

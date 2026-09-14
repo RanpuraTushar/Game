@@ -259,3 +259,61 @@
   border-radius: 6px;
   letter-spacing: 0.8px;
 }
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: 10px !important;
+  }
+
+  .modal-card {
+    border-radius: 14px !important;
+    max-height: 92vh !important;
+  }
+
+  .modal-header {
+    padding: 14px 16px !important;
+  }
+
+  .modal-title-icon {
+    font-size: 1.4rem !important;
+    padding: 4px 8px !important;
+  }
+
+  .modal-header h2 {
+    font-size: 1.05rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  .modal-subtitle {
+    font-size: 0.72rem !important;
+  }
+
+  .leaderboard-table th {
+    padding: 8px 10px !important;
+    font-size: 0.68rem !important;
+  }
+
+  .leaderboard-table td {
+    padding: 10px 10px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .rank-cell {
+    font-size: 1rem !important;
+    width: 44px !important;
+  }
+
+  .player-name {
+    font-size: 0.9rem !important;
+  }
+
+  .score-badge {
+    font-size: 0.95rem !important;
+  }
+
+  .rank-title {
+    font-size: 0.68rem !important;
+    padding: 2px 6px !important;
+  }
+}

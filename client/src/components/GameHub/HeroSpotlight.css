@@ -83,17 +83,20 @@
 }
 
 .spotlight-icon-wrap {
-  width: 90px;
-  height: 90px;
-  min-width: 90px;
+  width: 86px;
+  height: 86px;
+  min-width: 86px;
   background: radial-gradient(circle, rgba(0, 243, 255, 0.25) 0%, rgba(10, 10, 25, 0.8) 100%);
   border: 2px solid var(--halo-color, #00f3ff);
-  border-radius: 20px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 25px var(--halo-color, #00f3ff);
   animation: pulseHalo 3s infinite ease-in-out;
+  overflow: hidden;
+  padding: 4px;
+  flex-shrink: 0;
 }
 
 @keyframes pulseHalo {
@@ -102,8 +105,14 @@
 }
 
 .spotlight-big-icon {
-  font-size: 3.2rem;
+  font-size: 2.2rem;
   line-height: 1;
+  letter-spacing: -2px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .spotlight-info-col {
@@ -167,30 +176,29 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: linear-gradient(135deg, #00f3ff 0%, #0077fe 100%);
-  color: #050510 !important;
+  background: linear-gradient(135deg, #00f3ff 0%, #0099ff 100%) !important;
+  color: #040814 !important;
+  -webkit-text-fill-color: #040814 !important;
   border: none;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', sans-serif !important;
   font-size: 1rem;
-  font-weight: 900;
+  font-weight: 900 !important;
   letter-spacing: 1.5px;
   padding: 13px 28px;
   border-radius: 12px;
   cursor: pointer;
-  box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+  box-shadow: 0 0 25px rgba(0, 243, 255, 0.55);
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
   text-decoration: none;
 }
 
-.btn-spotlight-play .btn-play-icon,
-.btn-spotlight-play .btn-play-text {
-  color: #050510 !important;
-  -webkit-text-fill-color: #050510 !important;
+.btn-spotlight-play * {
+  color: #040814 !important;
+  -webkit-text-fill-color: #040814 !important;
   font-weight: 900 !important;
   z-index: 2;
   position: relative;
-  display: inline-block;
 }
 
 .btn-spotlight-play:hover {
@@ -380,72 +388,121 @@
 
 @media (max-width: 600px) {
   .hero-spotlight-container {
-    padding: 14px;
-    border-radius: 14px;
+    padding: 14px 12px;
+    border-radius: 16px;
+    margin-bottom: 18px;
   }
 
   .spotlight-header-meta {
-    gap: 8px;
-    margin-bottom: 12px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+  }
+
+  .spotlight-tagline-badge {
+    font-size: 0.68rem !important;
+    padding: 4px 8px !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 58% !important;
+  }
+
+  .spotlight-rating-pill {
+    font-size: 0.68rem !important;
+    padding: 4px 8px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
   }
 
   .spotlight-content-core {
-    gap: 14px;
-    margin-bottom: 14px;
+    gap: 12px !important;
+    margin-bottom: 12px !important;
+    align-items: center !important;
   }
 
   .spotlight-icon-wrap {
-    width: 60px !important;
-    height: 60px !important;
-    min-width: 60px !important;
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
     border-radius: 14px !important;
     overflow: hidden !important;
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 2px !important;
+    flex-shrink: 0 !important;
   }
 
   .spotlight-big-icon {
-    font-size: 1.8rem !important;
+    font-size: 1.5rem !important;
     line-height: 1 !important;
+    letter-spacing: -2px !important;
+    white-space: nowrap !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     max-width: 100% !important;
+    overflow: hidden !important;
   }
 
   .spotlight-title {
     font-size: 1.25rem !important;
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
     line-height: 1.2 !important;
   }
 
   .spotlight-description {
-    font-size: 0.8rem !important;
+    font-size: 0.78rem !important;
     line-height: 1.35 !important;
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .spotlight-tags-row {
+    gap: 6px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .spotlight-tag-pill {
+    font-size: 0.68rem !important;
+    padding: 3px 8px !important;
   }
 
   .spotlight-actions-row {
     flex-direction: column !important;
     gap: 8px !important;
     padding-top: 10px !important;
+    width: 100% !important;
   }
 
   .btn-spotlight-play {
     width: 100% !important;
     justify-content: center !important;
     padding: 13px 18px !important;
-    font-size: 0.88rem !important;
+    font-size: 0.9rem !important;
     min-height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   .btn-spotlight-favorite {
     width: 100% !important;
     justify-content: center !important;
     padding: 10px 14px !important;
-    font-size: 0.82rem !important;
+    font-size: 0.8rem !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+  }
+
+  .spotlight-controls-hint {
+    margin: 2px auto 0 auto !important;
+    font-size: 0.72rem !important;
   }
 }

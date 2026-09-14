@@ -290,3 +290,111 @@
   font-size: 0.74rem;
   color: #718096;
 }
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+  .daily-quests-card {
+    width: 96% !important;
+    max-width: 96% !important;
+    max-height: 92vh !important;
+    padding: 14px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .quests-header {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-areas:
+      "brand close"
+      "overview overview" !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 12px !important;
+  }
+
+  .quests-brand {
+    grid-area: brand;
+    gap: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .quests-badge-icon {
+    font-size: 1.6rem !important;
+  }
+
+  .quests-brand h2 {
+    font-size: 1.05rem !important;
+    letter-spacing: 0.8px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .quests-subtitle {
+    display: none !important;
+  }
+
+  .btn-close-modal {
+    grid-area: close;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1rem !important;
+    margin-right: 2px;
+  }
+
+  .quests-overview-pill {
+    grid-area: overview;
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 6px 14px !important;
+    width: 100% !important;
+  }
+
+  .overview-count {
+    font-size: 1rem !important;
+  }
+
+  .quests-overall-bar-wrap {
+    padding: 10px 12px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .quest-item-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 12px !important;
+  }
+
+  .quest-icon-col {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    font-size: 1.3rem !important;
+  }
+
+  .quest-title {
+    font-size: 0.85rem !important;
+  }
+
+  .quest-step-fraction {
+    font-size: 0.72rem !important;
+  }
+
+  .quest-desc {
+    font-size: 0.75rem !important;
+  }
+
+  .quest-action-col {
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .btn-quest-status {
+    width: 100% !important;
+    text-align: center !important;
+    padding: 10px !important;
+    font-size: 0.76rem !important;
+  }
+}
