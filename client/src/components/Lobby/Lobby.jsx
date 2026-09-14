@@ -99,6 +99,42 @@ const Lobby = ({ socket, user, selectedGame, onBack, onGameStart }) => {
   };
 
 
+  const [isQuickMatching, setIsQuickMatching] = useState(false);
+  const [matchCountdown, setMatchCountdown] = useState(6);
+
+  const handleQuickMatch = () => {
+    setError('');
+    setIsQuickMatching(true);
+    setMatchCountdown(6);
+
+    let remaining = 6;
+    const cdInterval = setInterval(() => {
+      remaining -= 1;
+      setMatchCountdown(remaining);
+      if (remaining <= 0) {
+        clearInterval(cdInterval);
+        setIsQuickMatching(false);
+        // Fallback to seamless AI bot match
+        handleSinglePlayer();
+      }
+    }, 1000);
+
+    // Try finding open room on socket
+    if (socket.connected) {
+      socket.emit('findMatch', {
+        user,
+        gameType: selectedGame,
+        maxPlayers: supportsMultiplayerCount ? playerCount : 2
+      }, (response) => {
+        if (response && response.success) {
+          clearInterval(cdInterval);
+          setIsQuickMatching(false);
+          onGameStart(response.room);
+        }
+      });
+    }
+  };
+
   return (
     <div className="lobby-container glass-panel" style={{ maxWidth: '440px', margin: '0 auto', padding: '35px 30px' }}>
       <h2 className="neon-text" style={{ fontSize: '2.2rem', marginBottom: '25px', textAlign: 'center' }}>
@@ -145,26 +181,43 @@ const Lobby = ({ socket, user, selectedGame, onBack, onGameStart }) => {
       )}
 
       <div className="action-buttons" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {/* 1-Click Quick Match Online Matchmaking */}
+        <button
+          className="btn-primary quick-match-glow-btn"
+          onClick={handleQuickMatch}
+          disabled={isConnecting || isQuickMatching}
+          style={{
+            width: '100%',
+            padding: '16px',
+            fontSize: '1.25rem',
+            background: 'linear-gradient(135deg, #00f3ff 0%, #ff007f 100%)',
+            border: '2px solid #00f3ff',
+            boxShadow: '0 0 25px rgba(0, 243, 255, 0.5)'
+          }}
+        >
+          {isQuickMatching ? `🔍 FINDING MATCH (${matchCountdown}s)...` : '⚡ 1-CLICK QUICK MATCH'}
+        </button>
+
+        <div style={{ textAlign: 'center', margin: '2px 0', color: 'rgba(255,255,255,0.4)', letterSpacing: '3px', fontSize: '0.85rem' }}>
+          --- OR CHOOSE MODE ---
+        </div>
+
         <button 
           className="btn-tertiary" 
           onClick={handleSinglePlayer} 
-          disabled={isConnecting}
-          style={{ width: '100%', padding: '14px', fontSize: '1.2rem' }}
+          disabled={isConnecting || isQuickMatching}
+          style={{ width: '100%', padding: '14px', fontSize: '1.15rem' }}
         >
           {isConnecting ? 'CONNECTING...' : `VS AI BOT (${playerCount}P)`}
         </button>
 
-        <div style={{ textAlign: 'center', margin: '2px 0', color: 'rgba(255,255,255,0.4)', letterSpacing: '3px', fontSize: '0.85rem' }}>
-          --- OR ---
-        </div>
-
         <button 
-          className="btn-primary" 
+          className="btn-secondary" 
           onClick={handleCreateRoom} 
-          disabled={isConnecting}
-          style={{ width: '100%', padding: '14px', fontSize: '1.2rem' }}
+          disabled={isConnecting || isQuickMatching}
+          style={{ width: '100%', padding: '14px', fontSize: '1.15rem' }}
         >
-          {isConnecting ? 'CONNECTING...' : `CREATE ROOM (${playerCount}P)`}
+          {isConnecting ? 'CONNECTING...' : `CREATE PRIVATE ROOM (${playerCount}P)`}
         </button>
 
         <div style={{ textAlign: 'center', margin: '2px 0', color: 'rgba(255,255,255,0.4)', letterSpacing: '3px', fontSize: '0.85rem' }}>

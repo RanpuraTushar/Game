@@ -8,6 +8,7 @@ import {
   addCoins 
 } from '../../utils/portalEconomy';
 import { soundEffects } from '../../utils/SoundEffects';
+import EmoteWheel from '../Common/EmoteWheel';
 import './GameTheater.css';
 
 const GameTheater = ({ 

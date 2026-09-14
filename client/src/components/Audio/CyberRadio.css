@@ -1,0 +1,277 @@
+/* CyberRadio.css - Cyberpunk Synthwave In-Game Radio Widget */
+
+.cyber-radio-widget {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
+.radio-main-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(14, 18, 38, 0.85);
+  border: 1.5px solid rgba(0, 243, 255, 0.3);
+  border-radius: 20px;
+  padding: 2px 8px 2px 4px;
+  gap: 6px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.radio-main-pill:hover,
+.radio-main-pill.is-playing {
+  border-color: #00f3ff;
+  background: rgba(18, 24, 52, 0.95);
+  box-shadow: 0 0 16px rgba(0, 243, 255, 0.35);
+}
+
+.radio-play-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00f3ff, #0077ff);
+  border: none;
+  color: #050b14;
+  font-size: 0.72rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 243, 255, 0.4);
+}
+
+.radio-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 14px #00f3ff;
+}
+
+.radio-play-btn:active {
+  transform: scale(0.92);
+}
+
+.radio-channel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.radio-channel-btn:hover .radio-station-title {
+  color: #00f3ff;
+}
+
+.radio-station-icon {
+  font-size: 0.95rem;
+}
+
+.radio-station-title {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+/* Equalizer Bars */
+.radio-equalizer {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+  padding-left: 2px;
+}
+
+.eq-bar {
+  width: 2.5px;
+  border-radius: 2px;
+  background: #00f3ff;
+  height: 3px;
+  transition: height 0.1s ease;
+}
+
+.radio-equalizer.animating .eq-1 { animation: eqBounce 0.6s infinite alternate ease-in-out; }
+.radio-equalizer.animating .eq-2 { animation: eqBounce 0.45s infinite alternate ease-in-out 0.15s; }
+.radio-equalizer.animating .eq-3 { animation: eqBounce 0.7s infinite alternate ease-in-out 0.3s; }
+.radio-equalizer.animating .eq-4 { animation: eqBounce 0.5s infinite alternate ease-in-out 0.2s; }
+
+@keyframes eqBounce {
+  0% { height: 3px; opacity: 0.6; }
+  100% { height: 14px; opacity: 1; filter: drop-shadow(0 0 4px #00f3ff); }
+}
+
+/* Popover Menu */
+.radio-popover-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 260px;
+  background: rgba(10, 14, 28, 0.96);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 243, 255, 0.2);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: popoverFadeIn 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.radio-popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.popover-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #a0aec0;
+  letter-spacing: 0.8px;
+}
+
+.popover-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  color: #00f3ff;
+  background: rgba(0, 243, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.radio-stations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.radio-station-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  color: #cbd5e0;
+  text-align: left;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.radio-station-item:hover {
+  background: rgba(0, 243, 255, 0.1);
+  border-color: rgba(0, 243, 255, 0.3);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.radio-station-item.active {
+  background: rgba(0, 243, 255, 0.16);
+  border-color: #00f3ff;
+  color: #00f3ff;
+}
+
+.station-item-icon {
+  font-size: 1.1rem;
+}
+
+.station-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.station-item-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.station-item-genre {
+  font-size: 0.65rem;
+  color: #718096;
+}
+
+.station-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00ff66;
+  box-shadow: 0 0 8px #00ff66;
+  animation: liveBlink 1s infinite alternate;
+}
+
+@keyframes liveBlink {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Volume Control */
+.radio-volume-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vol-icon {
+  font-size: 0.85rem;
+}
+
+.radio-volume-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+
+.radio-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00f3ff;
+  box-shadow: 0 0 6px #00f3ff;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.radio-volume-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.3);
+}
+
+.vol-percent {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #a0aec0;
+  min-width: 28px;
+  text-align: right;
+}
