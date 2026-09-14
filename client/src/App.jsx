@@ -287,13 +287,13 @@ function App() {
           </button>
 
           {/* Level Pill */}
-          <div className="nav-level-pill" title={`Pilot Level ${economy.level} (${economy.xp} XP)`}>
+          <div className="nav-level-pill nav-desktop-only" title={`Pilot Level ${economy.level} (${economy.xp} XP)`}>
             <span className="nav-lvl-badge">LVL {economy.level}</span>
           </div>
 
           {/* Daily Quests Pill */}
           <button
-            className="btn-tertiary nav-pill-btn nav-btn-quests"
+            className="btn-tertiary nav-pill-btn nav-btn-quests nav-desktop-only"
             onClick={() => {
               soundEffects.playClick();
               setShowQuests(true);
@@ -306,7 +306,7 @@ function App() {
 
           {/* Cyber Shop Pill */}
           <button
-            className="btn-tertiary nav-pill-btn nav-btn-shop"
+            className="btn-tertiary nav-pill-btn nav-btn-shop nav-desktop-only"
             onClick={() => {
               soundEffects.playClick();
               setShowShop(true);
@@ -329,7 +329,7 @@ function App() {
 
           {/* Fullscreen Toggle */}
           <button
-            className="nav-icon-btn nav-fullscreen-btn"
+            className="nav-icon-btn nav-fullscreen-btn nav-desktop-only"
             onClick={handleToggleFullscreen}
             title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen (⛶)'}
             aria-label="Toggle Fullscreen"
@@ -338,7 +338,7 @@ function App() {
           </button>
 
           <button
-            className="btn-tertiary nav-pill-btn nav-btn-ranks"
+            className="btn-tertiary nav-pill-btn nav-btn-ranks nav-desktop-only"
             onClick={() => {
               soundEffects.playTrophy();
               setShowLeaderboard(true);
@@ -350,7 +350,7 @@ function App() {
           </button>
 
           <button
-            className="btn-tertiary nav-pill-btn nav-btn-achieve"
+            className="btn-tertiary nav-pill-btn nav-btn-achieve nav-desktop-only"
             onClick={() => {
               soundEffects.playTrophy();
               setShowAchievements(true);
@@ -625,6 +625,109 @@ function App() {
           )}
         </GameTheater>
       )}
+
+      {/* Mobile Bottom Quick Navigation Bar */}
+      <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <button 
+          className={`mobile-nav-item ${!selectedGame && !activeRoom && !showShop && !showQuests && !showLeaderboard && !showAchievements && !showProfile ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            if (selectedGame || activeRoom) {
+              handleLeaveGame();
+            }
+            setShowShop(false);
+            setShowQuests(false);
+            setShowLeaderboard(false);
+            setShowAchievements(false);
+            setShowProfile(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          title="Arcade Hub"
+        >
+          <span className="mobile-nav-icon">🏠</span>
+          <span className="mobile-nav-label">Hub</span>
+        </button>
+
+        <button 
+          className={`mobile-nav-item ${showShop ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            setShowShop(true);
+            setShowQuests(false);
+            setShowLeaderboard(false);
+            setShowAchievements(false);
+            setShowProfile(false);
+          }}
+          title="Cyber Vault Store"
+        >
+          <span className="mobile-nav-icon">🛍️</span>
+          <span className="mobile-nav-label">Store</span>
+        </button>
+
+        <button 
+          className={`mobile-nav-item ${showQuests ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            setShowQuests(true);
+            setShowShop(false);
+            setShowLeaderboard(false);
+            setShowAchievements(false);
+            setShowProfile(false);
+          }}
+          title="Daily Quests"
+        >
+          <span className="mobile-nav-icon">🎯</span>
+          <span className="mobile-nav-label">Quests</span>
+        </button>
+
+        <button 
+          className={`mobile-nav-item ${showLeaderboard ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playTrophy();
+            setShowLeaderboard(true);
+            setShowShop(false);
+            setShowQuests(false);
+            setShowAchievements(false);
+            setShowProfile(false);
+          }}
+          title="Leaderboards"
+        >
+          <span className="mobile-nav-icon">🏆</span>
+          <span className="mobile-nav-label">Ranks</span>
+        </button>
+
+        <button 
+          className={`mobile-nav-item ${showAchievements ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playTrophy();
+            setShowAchievements(true);
+            setShowShop(false);
+            setShowQuests(false);
+            setShowLeaderboard(false);
+            setShowProfile(false);
+          }}
+          title="Badges"
+        >
+          <span className="mobile-nav-icon">🎖️</span>
+          <span className="mobile-nav-label">Badges</span>
+        </button>
+
+        <button 
+          className={`mobile-nav-item ${showProfile ? 'active' : ''}`}
+          onClick={() => {
+            soundEffects.playClick();
+            setShowProfile(true);
+            setShowShop(false);
+            setShowQuests(false);
+            setShowLeaderboard(false);
+            setShowAchievements(false);
+          }}
+          title="Profile"
+        >
+          <span className="mobile-nav-icon">👤</span>
+          <span className="mobile-nav-label">Profile</span>
+        </button>
+      </nav>
     </div>
   );
 }
