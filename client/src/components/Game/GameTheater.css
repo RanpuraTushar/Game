@@ -112,14 +112,38 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background: #080914;
   border: 1px solid rgba(0, 243, 255, 0.2);
   border-radius: 16px;
-  padding: 10px;
+  padding: 8px;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--glow-color, 0, 243, 255), 0.15);
   position: relative;
   overflow: hidden;
+}
+
+/* Universal Normalization for Any Game inside the Theater */
+.theater-screen-frame > div,
+.theater-screen-frame [class*="-container"],
+.theater-screen-frame .snake-container,
+.theater-screen-frame .tictactoe-container,
+.theater-screen-frame .ludo-container,
+.theater-screen-frame .chess-nexus-container,
+.theater-screen-frame .block-puzzle-container,
+.theater-screen-frame .knife-hit-container,
+.theater-screen-frame .fruit-slicer-container,
+.theater-screen-frame .air-hockey-container,
+.theater-screen-frame .game-wrapper,
+.theater-screen-frame .pool-container {
+  min-height: unset !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 /* Under-Game Toolbar */
@@ -664,32 +688,38 @@
 
 @media (max-width: 768px) {
   .game-theater-container {
-    padding: 8px 6px 40px 6px;
-    gap: 10px;
+    padding: 6px 4px 60px 4px !important;
+    gap: 8px !important;
   }
 
   .theater-top-bar {
-    padding: 6px 10px;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    padding: 6px 8px !important;
+    background: rgba(12, 14, 28, 0.95) !important;
+    backdrop-filter: blur(16px) !important;
   }
 
   .theater-back-btn {
-    padding: 6px 12px;
-    font-size: 0.72rem;
+    padding: 7px 12px !important;
+    font-size: 0.74rem !important;
+    font-weight: 800 !important;
   }
 
   .theater-breadcrumbs {
-    display: none;
+    display: none !important;
   }
 
   .btn-theater-light {
-    padding: 6px 10px;
-    font-size: 0.68rem;
+    padding: 6px 10px !important;
+    font-size: 0.68rem !important;
   }
 
   .theater-screen-frame {
-    padding: 4px;
-    border-radius: 12px;
-    border-color: rgba(0, 243, 255, 0.25);
+    padding: 2px !important;
+    border-radius: 12px !important;
+    border-color: rgba(0, 243, 255, 0.25) !important;
   }
 
   .theater-screen-frame canvas,
@@ -697,56 +727,78 @@
   canvas {
     max-width: 100% !important;
     height: auto !important;
-    touch-action: none;
+    touch-action: manipulation;
   }
 
   .theater-toolbar {
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 8px 10px !important;
+    gap: 8px !important;
   }
 
   .theater-game-identity {
-    gap: 10px;
+    gap: 8px !important;
   }
 
   .theater-game-icon {
-    font-size: 1.6rem;
+    font-size: 1.5rem !important;
   }
 
   .theater-game-title {
-    font-size: 1.05rem;
+    font-size: 1rem !important;
   }
 
   .theater-dev-badge {
-    display: none;
+    display: none !important;
   }
 
   .toolbar-right {
-    gap: 6px;
+    gap: 4px !important;
   }
 
   .vote-btn-group .btn-vote {
-    padding: 6px 10px;
-    font-size: 0.75rem;
+    padding: 5px 8px !important;
+    font-size: 0.72rem !important;
   }
 
   .btn-theater-action {
-    padding: 6px 9px;
-    font-size: 0.8rem;
-    gap: 4px;
+    padding: 5px 8px !important;
+    font-size: 0.75rem !important;
   }
 
   .btn-theater-action span:nth-child(2) {
-    display: none;
+    display: none !important;
+  }
+
+  /* Review section & Community */
+  .composer-input-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .review-input-field {
+    width: 100% !important;
+    font-size: 0.82rem !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-submit-review {
+    width: 100% !important;
+    padding: 10px !important;
+    font-size: 0.78rem !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
   }
 
   .theater-card-box {
-    padding: 14px;
-    border-radius: 12px;
+    padding: 12px 10px !important;
+    border-radius: 12px !important;
   }
 
   .theater-sidebar-related {
-    padding: 14px;
-    border-radius: 12px;
+    padding: 12px 10px !important;
+    border-radius: 12px !important;
   }
 }

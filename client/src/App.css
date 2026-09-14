@@ -789,8 +789,13 @@ canvas,
 
   .App {
     padding-top: 66px;
-    padding-bottom: 80px; /* Space for Mobile Bottom Nav */
+    padding-bottom: 75px; /* Space for Mobile Bottom Nav */
     overflow-x: hidden;
+  }
+
+  .App.in-game-active {
+    padding-top: 56px !important;
+    padding-bottom: 20px !important; /* Maximized screen space for gameplay */
   }
 
   .app-navbar {

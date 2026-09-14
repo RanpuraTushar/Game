@@ -4,11 +4,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 6px;
   font-family: 'Orbitron', 'Rajdhani', sans-serif;
   user-select: none;
+  width: 100%;
 }
 
 .tictactoe-panel {
@@ -17,7 +18,7 @@
   border: 2px solid rgba(0, 243, 255, 0.4);
   box-shadow: 0 0 35px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.1);
   border-radius: 20px;
-  padding: 35px;
+  padding: 16px;
   max-width: 480px;
   width: 100%;
   text-align: center;
@@ -241,46 +242,47 @@
 }
 
 /* Mobile Responsive */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .tictactoe-container {
-    padding: 10px;
+    padding: 2px !important;
+    min-height: auto !important;
   }
   .tictactoe-panel {
-    padding: 18px 12px;
-    border-radius: 14px;
+    padding: 12px 8px !important;
+    border-radius: 14px !important;
   }
   .tictactoe-title {
-    font-size: 1.3rem;
-    letter-spacing: 1px;
+    font-size: 1.2rem !important;
+    letter-spacing: 1px !important;
   }
   .tictactoe-room-badge {
-    padding: 4px 10px;
-    font-size: 0.85rem;
+    padding: 3px 8px !important;
+    font-size: 0.8rem !important;
   }
   .room-copy-action-box {
-    padding: 8px 12px;
-    gap: 8px;
+    padding: 6px 10px !important;
+    gap: 6px !important;
   }
   .room-code-text {
-    font-size: 1.25rem;
-    letter-spacing: 1.5px;
+    font-size: 1.1rem !important;
+    letter-spacing: 1px !important;
   }
   .copy-button-badge {
-    padding: 5px 10px;
-    font-size: 0.72rem;
+    padding: 4px 8px !important;
+    font-size: 0.68rem !important;
   }
   .tictactoe-scoreboard {
-    padding: 8px 12px;
-    margin-bottom: 16px;
+    padding: 6px 10px !important;
+    margin-bottom: 12px !important;
   }
   .tictactoe-grid {
-    max-width: 280px;
-    grid-template-rows: repeat(3, clamp(72px, 22vw, 90px));
-    gap: 8px;
-    margin-bottom: 18px;
+    max-width: 300px !important;
+    grid-template-rows: repeat(3, clamp(68px, 20vw, 86px)) !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
   }
   .tictactoe-cell {
-    font-size: clamp(2rem, 8vw, 2.7rem);
-    border-radius: 10px;
+    font-size: clamp(2rem, 8vw, 2.7rem) !important;
+    border-radius: 10px !important;
   }
 }

@@ -238,7 +238,7 @@ function App() {
   const activeTitleObj = COSMETICS_CATALOG.titles.find(t => t.id === economy.equippedTitle);
 
   return (
-    <div className="App" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className={`App ${selectedGame ? 'in-game-active' : ''}`} style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Living Cyber Particle & Constellation Canvas */}
       <CyberBackground />
 
@@ -626,8 +626,9 @@ function App() {
         </GameTheater>
       )}
 
-      {/* Mobile Bottom Quick Navigation Bar */}
-      <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
+      {/* Mobile Bottom Quick Navigation Bar (Active on Hub/Modals, hidden during active gameplay) */}
+      {!selectedGame && !activeRoom && (
+        <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">
         <button 
           className={`mobile-nav-item ${!selectedGame && !activeRoom && !showShop && !showQuests && !showLeaderboard && !showAchievements && !showProfile ? 'active' : ''}`}
           onClick={() => {
@@ -728,6 +729,7 @@ function App() {
           <span className="mobile-nav-label">Profile</span>
         </button>
       </nav>
+      )}
     </div>
   );
 }
