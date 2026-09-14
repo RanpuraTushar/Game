@@ -455,8 +455,13 @@
 }
 
 @keyframes frameCyan {
-  0% { box-shadow: 0 0 8px #00f3ff; }
-  100% { box-shadow: 0 0 20px #00f3ff, 0 0 35px rgba(0, 243, 255, 0.5); }
+  0% {
+    box-shadow: 0 0 8px #00f3ff;
+  }
+
+  100% {
+    box-shadow: 0 0 20px #00f3ff, 0 0 35px rgba(0, 243, 255, 0.5);
+  }
 }
 
 .frame-pulse-gold {
@@ -466,8 +471,13 @@
 }
 
 @keyframes frameGold {
-  0% { box-shadow: 0 0 10px #ffd700; }
-  100% { box-shadow: 0 0 24px #ffd700, 0 0 40px rgba(255, 215, 0, 0.5); }
+  0% {
+    box-shadow: 0 0 10px #ffd700;
+  }
+
+  100% {
+    box-shadow: 0 0 24px #ffd700, 0 0 40px rgba(255, 215, 0, 0.5);
+  }
 }
 
 .frame-pulse-crimson {
@@ -477,8 +487,13 @@
 }
 
 @keyframes frameCrimson {
-  0% { box-shadow: 0 0 10px #ff0055; }
-  100% { box-shadow: 0 0 24px #ff0055, 0 0 40px rgba(255, 0, 85, 0.5); }
+  0% {
+    box-shadow: 0 0 10px #ff0055;
+  }
+
+  100% {
+    box-shadow: 0 0 24px #ff0055, 0 0 40px rgba(255, 0, 85, 0.5);
+  }
 }
 
 .frame-pulse-emerald {
@@ -488,8 +503,13 @@
 }
 
 @keyframes frameEmerald {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .frame-pulse-hologram {
@@ -498,9 +518,17 @@
 }
 
 @keyframes frameHolo {
-  0% { box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff; }
-  50% { box-shadow: 0 0 25px #00f3ff, 0 0 40px #ff007f; }
-  100% { box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff; }
+  0% {
+    box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff;
+  }
+
+  50% {
+    box-shadow: 0 0 25px #00f3ff, 0 0 40px #ff007f;
+  }
+
+  100% {
+    box-shadow: 0 0 15px #b026ff, 0 0 30px #00f3ff;
+  }
 }
 
 /* Responsive Mobile & Tablet Layout */

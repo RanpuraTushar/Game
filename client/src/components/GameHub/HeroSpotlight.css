@@ -100,8 +100,17 @@
 }
 
 @keyframes pulseHalo {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.04); filter: brightness(1.2); }
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+    filter: brightness(1.2);
+  }
 }
 
 .spotlight-big-icon {
@@ -366,8 +375,13 @@
 }
 
 @keyframes fillProgress {
-  from { width: 0%; }
-  to { width: 100%; }
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 @media (max-width: 900px) {
@@ -376,12 +390,14 @@
     padding: 18px;
     margin-bottom: 20px;
   }
+
   .spotlight-side-nav {
     border-left: none;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-left: 0;
     padding-top: 14px;
   }
+
   .side-nav-list {
     flex-direction: row;
     overflow-x: auto;
@@ -389,9 +405,11 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
+
   .side-nav-list::-webkit-scrollbar {
     display: none;
   }
+
   .side-nav-card {
     min-width: 150px;
     flex-shrink: 0;
