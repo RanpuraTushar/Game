@@ -195,37 +195,47 @@
   margin-bottom: 6px;
 }
 
-.tetris-mobile-controls {
+/* Desktop Keyboard Controls HUD */
+.tetris-desktop-controls-hud {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   width: 100%;
-  max-width: 380px;
+  max-width: 440px;
   margin-top: 14px;
+  padding: 8px 14px;
+  background: rgba(10, 15, 30, 0.7);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.control-row {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-}
-
-.ctrl-btn {
-  flex: 1;
-  padding: 10px;
-  font-family: 'Orbitron', sans-serif;
+.hud-key-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.76rem;
-  font-weight: 800;
+  color: #a0aec0;
+  font-weight: 600;
 }
 
-.rotate-btn {
-  background: linear-gradient(135deg, #00f3ff 0%, #0066ff 100%);
+.hud-key-pill kbd {
+  background: rgba(0, 243, 255, 0.12);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  color: #00f3ff;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0, 243, 255, 0.3);
 }
 
-.dir-btn {
-  flex: 1;
-  padding: 12px;
-  font-size: 1.1rem;
+.hud-key-pill span {
+  font-size: 0.74rem;
+  color: #cbd5e0;
 }
 
 @media (max-width: 480px) {

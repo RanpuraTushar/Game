@@ -258,78 +258,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Mobile Touch Controls */
-.racer-mobile-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 800px;
-  gap: 10px;
-  margin-top: 10px;
-  user-select: none;
-}
 
-.racer-mobile-steer, .racer-mobile-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.racer-touch-btn {
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 800;
-  border: 1.5px solid rgba(0, 243, 255, 0.4);
-  background: rgba(14, 18, 38, 0.88);
-  color: #fff;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: all 0.1s ease;
-}
-
-.racer-touch-btn:active {
-  transform: scale(0.94);
-}
-
-.steer-btn {
-  border-color: #00f3ff;
-  color: #00f3ff;
-  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
-}
-
-.steer-btn:active {
-  background: #00f3ff;
-  color: #000;
-}
-
-.brake-btn {
-  border-color: #ff3b30;
-  color: #ff3b30;
-}
-
-.brake-btn:active {
-  background: #ff3b30;
-  color: #fff;
-}
-
-.nitro-btn {
-  border-color: #ffd600;
-  color: #ffd600;
-  box-shadow: 0 0 12px rgba(255, 214, 0, 0.3);
-}
-
-.nitro-btn:active {
-  background: #ffd600;
-  color: #000;
-}
-
-@media (min-width: 769px) {
-  .racer-mobile-controls {
-    display: none;
-  }
-}
 
 /* Mobile Responsive */
 @media (max-width: 480px) {

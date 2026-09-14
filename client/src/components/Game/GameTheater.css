@@ -116,10 +116,17 @@
   background: radial-gradient(circle at 50% 30%, #0e1224 0%, #05060c 100%);
   border: 1.5px solid rgba(0, 243, 255, 0.28);
   border-radius: 18px;
-  padding: 10px;
+  padding: 12px;
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--glow-color, 0, 243, 255), 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
+}
+
+.theater-screen-frame canvas {
+  max-width: 100% !important;
+  max-height: min(680px, calc(100vh - 210px)) !important;
+  height: auto !important;
+  object-fit: contain !important;
 }
 
 /* Universal Normalization & Elimination of Nested Square Boxes inside Theater */

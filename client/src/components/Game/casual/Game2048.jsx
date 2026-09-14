@@ -279,11 +279,8 @@ const Game2048 = ({ user, onLeave }) => {
         <button className="btn-tertiary undo-btn" onClick={handleUndo} disabled={!history}>
           ↩ UNDO
         </button>
-        <div style={{ display: 'flex', gap: '6px' }}>
-          <button className="dpad-btn" onClick={() => move('UP')}>▲</button>
-          <button className="dpad-btn" onClick={() => move('LEFT')}>◀</button>
-          <button className="dpad-btn" onClick={() => move('DOWN')}>▼</button>
-          <button className="dpad-btn" onClick={() => move('RIGHT')}>▶</button>
+        <div className="hud-key-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', color: '#a0aec0' }}>
+          <kbd style={{ background: 'rgba(0, 243, 255, 0.12)', border: '1px solid rgba(0, 243, 255, 0.4)', color: '#00f3ff', padding: '3px 7px', borderRadius: '6px', fontFamily: 'Orbitron, monospace', fontSize: '0.75rem', fontWeight: 700 }}>W/A/S/D</kbd> or <kbd style={{ background: 'rgba(0, 243, 255, 0.12)', border: '1px solid rgba(0, 243, 255, 0.4)', color: '#00f3ff', padding: '3px 7px', borderRadius: '6px', fontFamily: 'Orbitron, monospace', fontSize: '0.75rem', fontWeight: 700 }}>▲◀▼▶</kbd> <span>to Slide</span>
         </div>
       </div>
 

@@ -181,10 +181,10 @@ const GameTheater = ({
       {showControlsGuide && (
         <div className="theater-controls-drawer">
           <div className="controls-drawer-header">
-            <h4>🎮 HOW TO PLAY & CONTROLS</h4>
+            <h4>🎮 HOW TO PLAY & CONTROLS (DESKTOP)</h4>
             <button className="btn-close-drawer" onClick={() => setShowControlsGuide(false)}>✕</button>
           </div>
-          <p className="controls-drawer-text">{game.controls || 'Use mouse or tap to interact.'}</p>
+          <p className="controls-drawer-text">{game.controls || 'Use keyboard and mouse to play.'}</p>
         </div>
       )}
 
@@ -211,7 +211,7 @@ const GameTheater = ({
               </div>
               <div className="spec-item">
                 <span className="spec-label">PLATFORM</span>
-                <span className="spec-value">Web Browser & Mobile</span>
+                <span className="spec-value">PC & Laptop Browser (Desktop)</span>
               </div>
             </div>
           </section>

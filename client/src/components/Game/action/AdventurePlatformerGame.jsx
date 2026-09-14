@@ -877,40 +877,12 @@ export default function AdventurePlatformerGame({ user, onLeave }) {
         )}
       </div>
 
-      {/* Touch & Mobile Controls */}
-      <div className="platformer-touch-controls">
-        <div className="touch-dpad-horiz">
-          <button
-            className="plat-btn"
-            onMouseDown={() => (keysRef.current.left = true)}
-            onMouseUp={() => (keysRef.current.left = false)}
-            onTouchStart={() => (keysRef.current.left = true)}
-            onTouchEnd={() => (keysRef.current.left = false)}
-          >
-            ◀ LEFT
-          </button>
-          <button
-            className="plat-btn"
-            onMouseDown={() => (keysRef.current.right = true)}
-            onMouseUp={() => (keysRef.current.right = false)}
-            onTouchStart={() => (keysRef.current.right = true)}
-            onTouchEnd={() => (keysRef.current.right = false)}
-          >
-            RIGHT ▶
-          </button>
-        </div>
-
-        <div className="touch-action-btns">
-          <button className="plat-btn jump-btn" onClick={handleJump}>
-            ⬆ JUMP (W)
-          </button>
-          <button className="plat-btn slash-btn" onClick={handleSlash}>
-            🗡️ SLASH (SPACE)
-          </button>
-          <button className="plat-btn" onClick={handleShoot}>
-            ⚡ BLAST (K)
-          </button>
-        </div>
+      {/* Desktop Keyboard Controls HUD */}
+      <div className="platformer-desktop-controls-hud">
+        <div className="hud-key-pill"><kbd>A</kbd><kbd>D</kbd> or <kbd>◀</kbd><kbd>▶</kbd> <span>Run</span></div>
+        <div className="hud-key-pill"><kbd>W</kbd> or <kbd>▲</kbd> <span>Jump</span></div>
+        <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Sword Slash</span></div>
+        <div className="hud-key-pill"><kbd>K</kbd> <span>Energy Blast</span></div>
       </div>
     </div>
   );

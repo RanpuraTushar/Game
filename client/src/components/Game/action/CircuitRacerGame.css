@@ -104,67 +104,44 @@
   touch-action: none;
 }
 
-.circuit-touch-controls {
+/* Desktop Keyboard Controls HUD */
+.circuit-desktop-controls-hud {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   width: 100%;
   max-width: 900px;
   margin-top: 12px;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.touch-dpad, .touch-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.racer-ctrl-btn {
-  background: rgba(15, 25, 48, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 243, 255, 0.3);
-  color: #00f3ff;
-  font-size: 0.95rem;
-  font-weight: 800;
-  padding: 14px 20px;
+  padding: 8px 14px;
+  background: rgba(10, 18, 38, 0.7);
+  border: 1px solid rgba(0, 243, 255, 0.25);
   border-radius: 12px;
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
-  transition: all 0.12s ease;
-  white-space: nowrap;
 }
 
-.racer-ctrl-btn:active {
-  background: #00f3ff;
-  color: #05130b;
-  transform: scale(0.95);
-  box-shadow: 0 0 15px #00f3ff;
+.circuit-desktop-controls-hud .hud-key-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #a0aec0;
 }
 
-.racer-ctrl-btn.drift-btn {
-  background: linear-gradient(135deg, #e040fb, #ff007f);
-  color: #fff;
-  border: none;
-  box-shadow: 0 0 18px rgba(224, 64, 251, 0.5);
+.circuit-desktop-controls-hud kbd {
+  background: rgba(0, 243, 255, 0.12);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  color: #00f3ff;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0, 243, 255, 0.3);
 }
 
-.racer-ctrl-btn.drift-btn:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 25px rgba(224, 64, 251, 0.8);
-}
-
-.racer-ctrl-btn.item-btn {
-  background: linear-gradient(135deg, #ffd600, #ff9100);
-  color: #05130b;
-  border: none;
-  box-shadow: 0 0 18px rgba(255, 214, 0, 0.5);
-}
-
-.racer-ctrl-btn.item-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  filter: grayscale(0.8);
+.circuit-desktop-controls-hud span {
+  color: #cbd5e0;
 }
 
 .circuit-overlay {

@@ -1079,51 +1079,6 @@ const CyberRacerGame = ({ user, onLeave }) => {
           </div>
         )}
 
-        {/* Mobile On-Screen Touch Controls */}
-        {gameState === 'PLAYING' && (
-          <div className="racer-mobile-controls">
-            <div className="racer-mobile-steer">
-              <button
-                className="racer-touch-btn steer-btn"
-                onTouchStart={() => { stateRef.current.keys['ArrowLeft'] = true; }}
-                onTouchEnd={() => { stateRef.current.keys['ArrowLeft'] = false; }}
-                onMouseDown={() => { stateRef.current.keys['ArrowLeft'] = true; }}
-                onMouseUp={() => { stateRef.current.keys['ArrowLeft'] = false; }}
-              >
-                ◀ LEFT
-              </button>
-              <button
-                className="racer-touch-btn steer-btn"
-                onTouchStart={() => { stateRef.current.keys['ArrowRight'] = true; }}
-                onTouchEnd={() => { stateRef.current.keys['ArrowRight'] = false; }}
-                onMouseDown={() => { stateRef.current.keys['ArrowRight'] = true; }}
-                onMouseUp={() => { stateRef.current.keys['ArrowRight'] = false; }}
-              >
-                RIGHT ▶
-              </button>
-            </div>
-            <div className="racer-mobile-actions">
-              <button
-                className="racer-touch-btn brake-btn"
-                onTouchStart={() => { stateRef.current.keys['ArrowDown'] = true; }}
-                onTouchEnd={() => { stateRef.current.keys['ArrowDown'] = false; }}
-                onMouseDown={() => { stateRef.current.keys['ArrowDown'] = true; }}
-                onMouseUp={() => { stateRef.current.keys['ArrowDown'] = false; }}
-              >
-                🛑 BRAKE
-              </button>
-              <button
-                className="racer-touch-btn nitro-btn"
-                onTouchStart={() => { stateRef.current.keys['Space'] = true; }}
-                onTouchEnd={() => { stateRef.current.keys['Space'] = false; }}
-                onMouseDown={() => { stateRef.current.keys['Space'] = true; }}
-                onMouseUp={() => { stateRef.current.keys['Space'] = false; }}
-              >
-                ⚡ NITRO
-              </button>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Controls Legend */}

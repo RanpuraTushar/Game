@@ -546,38 +546,7 @@ const SoccerPhysicsGame = ({ user, onLeave }) => {
         )}
       </div>
 
-      {/* Mobile Touch Jump & Kick Controls */}
-      <div className="soccer-mobile-controls">
-        {gameMode === 'TWO_PLAYER' ? (
-          <div className="soccer-m-split">
-            <button 
-              type="button" 
-              className="soccer-touch-btn p1-btn"
-              onTouchStart={handleP1Jump}
-              onClick={handleP1Jump}
-            >
-              🔵 P1 JUMP
-            </button>
-            <button 
-              type="button" 
-              className="soccer-touch-btn p2-btn"
-              onTouchStart={handleP2Jump}
-              onClick={handleP2Jump}
-            >
-              🔴 P2 JUMP
-            </button>
-          </div>
-        ) : (
-          <button 
-            type="button" 
-            className="soccer-touch-btn p1-btn full-btn"
-            onTouchStart={handleP1Jump}
-            onClick={handleP1Jump}
-          >
-            ⚽ TAP TO JUMP & KICK
-          </button>
-        )}
-      </div>
+
 
       {/* 1-Button Controls Bar */}
       <div className="soccer-controls-bar">

@@ -561,28 +561,10 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
         )}
       </div>
 
-      {/* Mobile / On-screen Controls */}
-      <div className="invaders-mobile-controls">
-        <button
-          className="btn-secondary move-btn"
-          onPointerDown={() => { stateRef.current.keys['ArrowLeft'] = true; }}
-          onPointerUp={() => { stateRef.current.keys['ArrowLeft'] = false; }}
-        >
-          ◀ LEFT
-        </button>
-        <button
-          className="btn-primary fire-btn"
-          onClick={shootPlayerBullet}
-        >
-          ⚡ FIRE LASER
-        </button>
-        <button
-          className="btn-secondary move-btn"
-          onPointerDown={() => { stateRef.current.keys['ArrowRight'] = true; }}
-          onPointerUp={() => { stateRef.current.keys['ArrowRight'] = false; }}
-        >
-          RIGHT ▶
-        </button>
+      {/* Desktop Keyboard Controls HUD */}
+      <div className="invaders-desktop-controls-hud">
+        <div className="hud-key-pill"><kbd>A</kbd><kbd>D</kbd> or <kbd>◀</kbd><kbd>▶</kbd> <span>Steer Cannon</span></div>
+        <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Fire Laser Cannon</span></div>
       </div>
 
       <p className="invaders-footer-hint">

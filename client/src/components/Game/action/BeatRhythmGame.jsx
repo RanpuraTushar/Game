@@ -503,18 +503,21 @@ export default function BeatRhythmGame({ user, onLeave }) {
         )}
       </div>
 
-      {/* On-Screen Mobile Touch Keys */}
-      <div className="rhythm-touch-keys">
-        {LANE_KEYS.map((key, idx) => (
-          <button
-            key={key}
-            className={`touch-key-btn ${activeLaneKeys[idx] ? 'pressed' : ''}`}
-            onClick={() => handleLaneHit(idx)}
-          >
-            <span>{key}</span>
-            <span style={{ fontSize: '0.7rem', color: LANE_COLORS[idx] }}>LANE {idx + 1}</span>
-          </button>
-        ))}
+      {/* Desktop Keyboard Lane Monitor */}
+      <div className="rhythm-desktop-key-monitor">
+        <span className="rhythm-monitor-label">⌨️ KEYBOARD INPUT:</span>
+        <div className="rhythm-key-caps">
+          {LANE_KEYS.map((key, idx) => (
+            <div
+              key={key}
+              className={`rhythm-key-cap ${activeLaneKeys[idx] ? 'pressed' : ''}`}
+              style={{ '--lane-color': LANE_COLORS[idx] }}
+            >
+              <kbd>{key}</kbd>
+              <span className="lane-lbl">LANE {idx + 1}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

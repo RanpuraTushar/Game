@@ -328,15 +328,9 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
         <canvas ref={canvasRef} width={420} height={420} className="snake-canvas" />
       </div>
 
-      {/* Mobile Virtual D-Pad */}
-      <div className="snake-mobile-dpad">
-        <button className="snake-dpad-btn up" onClick={() => handleDirection('UP')}>▲</button>
-        <div className="dpad-middle-row">
-          <button className="snake-dpad-btn left" onClick={() => handleDirection('LEFT')}>◀</button>
-          <div className="dpad-center-dot"></div>
-          <button className="snake-dpad-btn right" onClick={() => handleDirection('RIGHT')}>▶</button>
-        </div>
-        <button className="snake-dpad-btn down" onClick={() => handleDirection('DOWN')}>▼</button>
+      {/* Desktop Keyboard Controls HUD */}
+      <div className="snake-desktop-controls-hud">
+        <div className="hud-key-pill"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>▲</kbd><kbd>◀</kbd><kbd>▼</kbd><kbd>▶</kbd> <span>Control Snake Movement</span></div>
       </div>
 
       <p className="snake-hint">💡 Eat apples to grow • Watch out for red <strong>✕</strong> cyber laser hazards at higher levels!</p>

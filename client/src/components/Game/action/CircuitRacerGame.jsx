@@ -723,56 +723,13 @@ export default function CircuitRacerGame({ user, onLeave }) {
         )}
       </div>
 
-      {/* Touch & Mobile Controls */}
-      <div className="circuit-touch-controls">
-        <div className="touch-dpad">
-          <button
-            className="racer-ctrl-btn"
-            onMouseDown={() => (keysRef.current.left = true)}
-            onMouseUp={() => (keysRef.current.left = false)}
-            onTouchStart={() => (keysRef.current.left = true)}
-            onTouchEnd={() => (keysRef.current.left = false)}
-          >
-            ◀ LEFT
-          </button>
-          <button
-            className="racer-ctrl-btn"
-            onMouseDown={() => (keysRef.current.right = true)}
-            onMouseUp={() => (keysRef.current.right = false)}
-            onTouchStart={() => (keysRef.current.right = true)}
-            onTouchEnd={() => (keysRef.current.right = false)}
-          >
-            RIGHT ▶
-          </button>
-        </div>
-
-        <div className="touch-actions">
-          <button
-            className="racer-ctrl-btn"
-            onMouseDown={() => (keysRef.current.up = true)}
-            onMouseUp={() => (keysRef.current.up = false)}
-            onTouchStart={() => (keysRef.current.up = true)}
-            onTouchEnd={() => (keysRef.current.up = false)}
-          >
-            ⚡ ACCEL
-          </button>
-          <button
-            className="racer-ctrl-btn drift-btn"
-            onMouseDown={() => (keysRef.current.drift = true)}
-            onMouseUp={() => (keysRef.current.drift = false)}
-            onTouchStart={() => (keysRef.current.drift = true)}
-            onTouchEnd={() => (keysRef.current.drift = false)}
-          >
-            🔥 DRIFT (SPACE)
-          </button>
-          <button
-            className="racer-ctrl-btn item-btn"
-            onClick={handleUseItem}
-            disabled={!activePowerUp}
-          >
-            ⭐ USE ITEM (E)
-          </button>
-        </div>
+      {/* Desktop Keyboard Controls HUD */}
+      <div className="circuit-desktop-controls-hud">
+        <div className="hud-key-pill"><kbd>W</kbd> or <kbd>▲</kbd> <span>Accelerate</span></div>
+        <div className="hud-key-pill"><kbd>A</kbd><kbd>D</kbd> or <kbd>◀</kbd><kbd>▶</kbd> <span>Steer</span></div>
+        <div className="hud-key-pill"><kbd>S</kbd> or <kbd>▼</kbd> <span>Brake</span></div>
+        <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Drift & Boost</span></div>
+        <div className="hud-key-pill"><kbd>E</kbd> <span>Use Item</span></div>
       </div>
     </div>
   );

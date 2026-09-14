@@ -85,7 +85,7 @@ const AuthForms = ({ onLoginSuccess }) => {
         <div className="auth-hero-panel">
           <div className="hero-top-badge">
             <span className="hero-status-dot"></span>
-            <span>CYBER ARCADE • 25+ GAMES READY</span>
+            <span>CYBER ARCADE • 45+ GAMES READY</span>
           </div>
 
           <div className="hero-brand-section">
@@ -94,7 +94,7 @@ const AuthForms = ({ onLoginSuccess }) => {
               CYBER <span className="hero-title-highlight">ARCADE</span>
             </h1>
             <p className="hero-subtitle">
-              Your ultimate online arcade station. Play 25+ retro and multiplayer hit games, challenge friends in real-time, and reach the top ranks!
+              Your ultimate desktop arcade station. Play 45+ retro and multiplayer hit games, challenge friends in real-time, and reach the top ranks!
             </p>
           </div>
 

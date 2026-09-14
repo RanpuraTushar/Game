@@ -104,56 +104,41 @@
   font-size: 0.85rem;
 }
 
-/* Mobile Virtual D-Pad */
-.snake-mobile-dpad {
+/* Desktop Keyboard Controls HUD */
+.snake-desktop-controls-hud {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: rgba(10, 20, 15, 0.7);
+  border: 1px solid rgba(0, 255, 102, 0.25);
+  border-radius: 12px;
+}
+
+.snake-desktop-controls-hud .hud-key-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #a0aec0;
 }
 
-.dpad-middle-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.dpad-center-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: rgba(0, 255, 102, 0.4);
-}
-
-.snake-dpad-btn {
-  width: 52px;
-  height: 48px;
-  background: rgba(14, 24, 18, 0.85);
-  border: 1.5px solid #00ff66;
+.snake-desktop-controls-hud kbd {
+  background: rgba(0, 255, 102, 0.12);
+  border: 1px solid rgba(0, 255, 102, 0.4);
   color: #00ff66;
-  font-size: 1.3rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
-  transition: all 0.15s ease;
-  user-select: none;
-  touch-action: manipulation;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0, 255, 102, 0.3);
 }
 
-.snake-dpad-btn:active {
-  background: #00ff66;
-  color: #000;
-  transform: scale(0.92);
-}
-
-@media (min-width: 769px) {
-  .snake-mobile-dpad {
-    display: none;
-  }
+.snake-desktop-controls-hud span {
+  color: #cbd5e0;
 }
 
 @media (max-width: 480px) {

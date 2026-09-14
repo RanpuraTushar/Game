@@ -86,66 +86,44 @@
   touch-action: none;
 }
 
-.platformer-touch-controls {
+/* Desktop Keyboard Controls HUD */
+.platformer-desktop-controls-hud {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
   width: 100%;
   max-width: 900px;
   margin-top: 12px;
-  gap: 12px;
-  box-sizing: border-box;
-}
-
-.touch-dpad-horiz, .touch-action-btns {
-  display: flex;
-  gap: 10px;
-}
-
-.plat-btn {
-  background: rgba(15, 25, 48, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 243, 255, 0.3);
-  color: #00f3ff;
-  font-size: 0.95rem;
-  font-weight: 800;
-  padding: 14px 20px;
+  padding: 8px 14px;
+  background: rgba(10, 18, 38, 0.7);
+  border: 1px solid rgba(0, 243, 255, 0.25);
   border-radius: 12px;
-  cursor: pointer;
-  user-select: none;
-  touch-action: manipulation;
-  transition: all 0.12s ease;
-  white-space: nowrap;
 }
 
-.plat-btn:active {
-  background: #00f3ff;
-  color: #05130b;
-  transform: scale(0.95);
-  box-shadow: 0 0 15px #00f3ff;
+.platformer-desktop-controls-hud .hud-key-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #a0aec0;
 }
 
-.plat-btn.jump-btn {
-  background: linear-gradient(135deg, #00ff66, #00b4d8);
-  color: #05130b;
-  border: none;
-  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+.platformer-desktop-controls-hud kbd {
+  background: rgba(0, 243, 255, 0.12);
+  border: 1px solid rgba(0, 243, 255, 0.4);
+  color: #00f3ff;
+  padding: 3px 7px;
+  border-radius: 6px;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0, 243, 255, 0.3);
 }
 
-.plat-btn.jump-btn:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 28px rgba(0, 255, 102, 0.8);
-}
-
-.plat-btn.slash-btn {
-  background: linear-gradient(135deg, #ff007f, #e040fb);
-  color: #fff;
-  border: none;
-  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
-}
-
-.plat-btn.slash-btn:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 28px rgba(255, 0, 127, 0.8);
+.platformer-desktop-controls-hud span {
+  color: #cbd5e0;
 }
 
 /* Modal Overlays */
