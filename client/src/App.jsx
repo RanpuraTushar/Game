@@ -13,6 +13,9 @@ import { recordGamePlay } from './utils/gameActivity';
 import GameTheater from './components/Game/GameTheater';
 import CyberShopModal from './components/Shop/CyberShopModal';
 import DailyQuestsModal from './components/Quests/DailyQuestsModal';
+import CyberRadio from './components/Audio/CyberRadio';
+import LuckySpinModal, { isLuckySpinReady } from './components/Shop/LuckySpinModal';
+import { useGamepad } from './utils/useGamepad';
 import {
   getUserEconomy,
   addCoins,
@@ -104,6 +107,31 @@ function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [showShop, setShowShop] = useState(false);
   const [showQuests, setShowQuests] = useState(false);
+  const [showLuckySpin, setShowLuckySpin] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState(null);
+
+  // Global Gamepad controller listener & HUD toast
+  const { controllerName, toastMessage: gamepadToast } = useGamepad();
+
+  // PWA Desktop App install trigger listener
+  useEffect(() => {
+    const handleBeforeInstall = (e) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!installPrompt) return;
+    soundEffects.playStar();
+    installPrompt.prompt();
+    const choice = await installPrompt.userChoice;
+    if (choice?.outcome === 'accepted') {
+      setInstallPrompt(null);
+    }
+  };
 
   // Portal Economy & Favorites
   const [economy, setEconomy] = useState(() => getUserEconomy(user?.id || 'guest'));
@@ -317,6 +345,35 @@ function App() {
             <span className="nav-btn-text">STORE</span>
           </button>
 
+          {/* Daily Lucky Spin Wheel Button */}
+          <button
+            className={`btn-tertiary nav-pill-btn nav-btn-spin nav-desktop-only ${isLuckySpinReady(user?.id) ? 'spin-ready-pulse' : ''}`}
+            onClick={() => {
+              soundEffects.playClick();
+              setShowLuckySpin(true);
+            }}
+            title="Daily Lucky Cyber Spin Wheel (+XP & Coins)"
+          >
+            <span className="nav-icon">🎡</span>
+            <span className="nav-btn-text">LUCKY SPIN</span>
+            {isLuckySpinReady(user?.id) && <span className="spin-ready-dot" />}
+          </button>
+
+          {/* Desktop PWA App 1-Click Install Button */}
+          {installPrompt && (
+            <button
+              className="btn-primary nav-pill-btn nav-btn-install nav-desktop-only"
+              onClick={handleInstallApp}
+              title="Install Neon Arcade Desktop App (PWA)"
+            >
+              <span className="nav-icon">💻</span>
+              <span className="nav-btn-text">INSTALL APP</span>
+            </button>
+          )}
+
+          {/* Cyber Radio Synthwave Player */}
+          <CyberRadio />
+
           {/* Sound Mute/Unmute Toggle */}
           <button
             className="nav-icon-btn nav-audio-btn"
@@ -443,6 +500,25 @@ function App() {
           onClose={() => setShowQuests(false)}
           onEconomyUpdate={(newEcon) => setEconomy(newEcon)}
         />
+      )}
+
+      {/* Lucky Spin Wheel Modal */}
+      {showLuckySpin && (
+        <LuckySpinModal
+          user={user}
+          onClose={() => setShowLuckySpin(false)}
+          onReward={(reward, updatedEcon) => {
+            if (updatedEcon) setEconomy(updatedEcon);
+          }}
+        />
+      )}
+
+      {/* Gamepad / Controller HUD Toast Notification */}
+      {gamepadToast && (
+        <div className="gamepad-hud-toast">
+          <span className="gamepad-toast-icon">🎮</span>
+          <span className="gamepad-toast-text">{gamepadToast}</span>
+        </div>
       )}
 
       {/* Main View Router */}

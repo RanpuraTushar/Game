@@ -166,6 +166,9 @@ const GameTheater = ({
             <span>{copiedToast ? 'COPIED!' : 'SHARE'}</span>
           </button>
 
+          {/* In-Game Reactions & Cyber Emotes */}
+          <EmoteWheel />
+
           {/* Controls Help */}
           <button 
             className={`btn-theater-action ${showControlsGuide ? 'active' : ''}`}
