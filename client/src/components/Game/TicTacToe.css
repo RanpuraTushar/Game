@@ -248,12 +248,13 @@
     min-height: auto !important;
   }
   .tictactoe-panel {
-    padding: 12px 8px !important;
-    border-radius: 14px !important;
+    padding: 6px 4px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
-  .tictactoe-title {
-    font-size: 1.2rem !important;
-    letter-spacing: 1px !important;
+  .tictactoe-header {
+    display: none !important;
   }
   .tictactoe-room-badge {
     padding: 3px 8px !important;

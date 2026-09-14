@@ -266,7 +266,7 @@ function App() {
         <div className="nav-right-section">
           {selectedGame && (
             <button
-              className="btn-secondary nav-hub-return-btn"
+              className="btn-secondary nav-hub-return-btn nav-desktop-only"
               onClick={handleLeaveGame}
             >
               ← PORTAL
@@ -361,7 +361,7 @@ function App() {
             <span className="nav-btn-text">BADGES</span>
           </button>
 
-          {/* User Profile Badge with active cosmetic frame & title */}
+          {/* User Profile Badge with active cosmetic frame & level pip */}
           <button
             className="nav-user-profile-badge"
             onClick={() => {
@@ -369,13 +369,17 @@ function App() {
               setShowProfile(true);
             }}
             title={`Click to view & edit profile (${user.username})`}
+            aria-label="Profile"
           >
-            <span
-              className={`user-icon-avatar ${activeFrameObj?.cssClass || ''}`}
-              style={{ borderColor: activeFrameObj?.color || 'transparent' }}
-            >
-              {user.avatar || '👤'}
-            </span>
+            <div className="nav-profile-avatar-wrap">
+              <span
+                className={`user-icon-avatar ${activeFrameObj?.cssClass || ''}`}
+                style={{ borderColor: activeFrameObj?.color || 'transparent' }}
+              >
+                {user.avatar || '👤'}
+              </span>
+              <span className="nav-profile-level-badge">{economy.level}</span>
+            </div>
             <div className="nav-user-details-col">
               <span className="user-name-label">{user.username}</span>
               {activeTitleObj && (
@@ -389,7 +393,7 @@ function App() {
 
           <button
             onClick={handleLogout}
-            className="btn-primary nav-btn-logout"
+            className="btn-primary nav-btn-logout nav-desktop-only"
             title="Logout"
           >
             <span className="nav-btn-text">LOGOUT</span>

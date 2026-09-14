@@ -480,15 +480,16 @@
 /* Mobile Responsive */
 @media (max-width: 480px) {
   .ludo-container {
-    padding: 6px;
+    padding: 0 !important;
   }
   .ludo-panel {
-    padding: 10px 6px;
-    border-radius: 14px;
+    padding: 2px !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
   }
-  .ludo-title {
-    font-size: 1.3rem;
-    letter-spacing: 1px;
+  .ludo-header {
+    display: none !important;
   }
   .ludo-players-grid {
     grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
@@ -506,7 +507,8 @@
   }
   .ludo-board-wrapper {
     border-width: 3px;
-    border-radius: 10px;
+    border-radius: 12px;
+    max-width: min(94vw, 360px) !important;
   }
   .ludo-token-piece {
     width: 17px;

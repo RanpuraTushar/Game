@@ -112,17 +112,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  background: #080914;
-  border: 1px solid rgba(0, 243, 255, 0.2);
-  border-radius: 16px;
-  padding: 8px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--glow-color, 0, 243, 255), 0.15);
+  align-items: center;
+  background: radial-gradient(circle at 50% 30%, #0e1224 0%, #05060c 100%);
+  border: 1.5px solid rgba(0, 243, 255, 0.28);
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--glow-color, 0, 243, 255), 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
 }
 
-/* Universal Normalization for Any Game inside the Theater */
+/* Universal Normalization & Elimination of Nested Square Boxes inside Theater */
 .theater-screen-frame > div,
 .theater-screen-frame [class*="-container"],
 .theater-screen-frame .snake-container,
@@ -134,16 +134,51 @@
 .theater-screen-frame .fruit-slicer-container,
 .theater-screen-frame .air-hockey-container,
 .theater-screen-frame .game-wrapper,
-.theater-screen-frame .pool-container {
+.theater-screen-frame .pool-container,
+.theater-screen-frame .carrom-game-container {
   min-height: unset !important;
   height: auto !important;
-  justify-content: flex-start !important;
+  justify-content: center !important;
   align-items: center !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 auto !important;
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
+  background: transparent !important;
+}
+
+/* Strip nested heavy square panels and double borders inside Theater Screen */
+.theater-screen-frame .snake-panel,
+.theater-screen-frame .ludo-panel,
+.theater-screen-frame .tictactoe-panel,
+.theater-screen-frame .glass-panel:not(.modal-card):not(.promotion-modal):not(.game-over-modal):not(.carrom-gameover-overlay):not(.wm-modal-card):not(.wm-game-over-overlay),
+.theater-screen-frame .match3-master-container,
+.theater-screen-frame .minesweeper-container,
+.theater-screen-frame .sudoku-master-container,
+.theater-screen-frame .tetris-master-container,
+.theater-screen-frame .wordle-container,
+.theater-screen-frame .memory-master-container,
+.theater-screen-frame .game-2048-container,
+.theater-screen-frame .snake-arcade-container,
+.theater-screen-frame .solitaire-master-container,
+.theater-screen-frame .uno-container,
+.theater-screen-frame .pong-container,
+.theater-screen-frame .scramble-master-container,
+.theater-screen-frame .pool-master-arena,
+.theater-screen-frame .carrom-game-container,
+.theater-screen-frame .carrom-board-wrapper,
+.theater-screen-frame .carrom-nav-bar,
+.theater-screen-frame .carrom-info-sidebar,
+.theater-screen-frame .chess-nexus-container {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 4px !important;
+  margin: 0 auto !important;
+  max-width: 100% !important;
 }
 
 /* Under-Game Toolbar */
@@ -718,8 +753,10 @@
 
   .theater-screen-frame {
     padding: 2px !important;
-    border-radius: 12px !important;
-    border-color: rgba(0, 243, 255, 0.25) !important;
+    border-radius: 14px !important;
+    border: 1.5px solid rgba(0, 243, 255, 0.35) !important;
+    background: #060812 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9) !important;
   }
 
   .theater-screen-frame canvas,
