@@ -220,7 +220,7 @@ const Game2048 = ({ user, onLeave }) => {
   };
 
   return (
-    <div className="game-2048-container glass-panel">
+    <div className="game-2048-container" style={{ maxWidth: '480px', width: '100%', margin: '0 auto' }}>
       {/* Top Header */}
       <div className="game-2048-header">
         <button className="btn-secondary" onClick={onLeave}>&larr; HUB</button>

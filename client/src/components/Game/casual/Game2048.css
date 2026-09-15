@@ -4,9 +4,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 480px;
-  width: 100%;
-  margin: 10px auto;
+  max-width: 480px !important;
+  width: 100% !important;
+  margin: 10px auto !important;
   padding: 24px;
   position: relative;
   border-radius: 18px;

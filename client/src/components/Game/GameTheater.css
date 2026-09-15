@@ -159,7 +159,7 @@
 .theater-screen-frame .snake-panel,
 .theater-screen-frame .ludo-panel,
 .theater-screen-frame .tictactoe-panel,
-.theater-screen-frame .glass-panel:not(.modal-card):not(.promotion-modal):not(.game-over-modal):not(.carrom-gameover-overlay):not(.wm-modal-card):not(.wm-game-over-overlay),
+.theater-screen-frame .glass-panel:not(.modal-card):not(.promotion-modal):not(.game-over-modal):not(.carrom-gameover-overlay):not(.wm-modal-card):not(.wm-game-over-overlay):not(.game-2048-container),
 .theater-screen-frame .match3-master-container,
 .theater-screen-frame .minesweeper-container,
 .theater-screen-frame .sudoku-master-container,
