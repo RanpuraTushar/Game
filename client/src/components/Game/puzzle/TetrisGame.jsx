@@ -468,6 +468,35 @@ const TetrisGame = ({ user, onLeave }) => {
         <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Hard Drop</span></div>
         <div className="hud-key-pill"><kbd>C</kbd> <span>Hold</span></div>
       </div>
+
+      {/* Mobile Touch Gamepad Controls */}
+      <div className="tetris-mobile-controls">
+        <div className="tetris-mobile-row">
+          <button className="t-ctrl-btn t-ctrl-hold" onClick={hold} title="Hold Piece">
+            <span>📥</span>
+            <small>HOLD</small>
+          </button>
+          <button className="t-ctrl-btn t-ctrl-rotate" onClick={rotate} title="Rotate Piece">
+            <span>↻</span>
+            <small>ROTATE</small>
+          </button>
+          <button className="t-ctrl-btn t-ctrl-harddrop" onClick={hardDrop} title="Instant Drop">
+            <span>⚡</span>
+            <small>SLAM</small>
+          </button>
+        </div>
+        <div className="tetris-mobile-row">
+          <button className="t-ctrl-btn t-ctrl-dir" onClick={moveLeft} title="Left">
+            <span>◀</span>
+          </button>
+          <button className="t-ctrl-btn t-ctrl-softdrop" onClick={drop} title="Soft Drop">
+            <span>▼</span>
+          </button>
+          <button className="t-ctrl-btn t-ctrl-dir" onClick={moveRight} title="Right">
+            <span>▶</span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

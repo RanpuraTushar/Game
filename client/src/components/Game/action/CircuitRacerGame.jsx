@@ -219,6 +219,26 @@ export default function CircuitRacerGame({ user, onLeave }) {
     setActivePowerUp(null);
   };
 
+  const handleTouchDriftStart = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    keysRef.current.drift = true;
+  };
+
+  const handleTouchDriftEnd = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    keysRef.current.drift = false;
+    const p = engineRef.current?.player;
+    if (p && p.driftCharge > 40) {
+      p.boostTimer = 60;
+      soundFX.playBoost();
+      createBoostSparks(p.x, p.y, p.color, 25);
+    }
+    if (p) {
+      p.driftCharge = 0;
+      p.isDrifting = false;
+    }
+  };
+
   const createBoostSparks = (x, y, color, count) => {
     const eng = engineRef.current;
     for (let i = 0; i < count; i++) {
@@ -721,6 +741,75 @@ export default function CircuitRacerGame({ user, onLeave }) {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Mobile Touch Circuit Controls */}
+      <div className="circuit-mobile-controls">
+        <div className="circuit-touch-group steer-group">
+          <button
+            className="circuit-touch-btn btn-steer"
+            onTouchStart={(e) => { e.preventDefault(); keysRef.current.left = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); keysRef.current.left = false; }}
+            onMouseDown={() => { keysRef.current.left = true; }}
+            onMouseUp={() => { keysRef.current.left = false; }}
+            aria-label="Steer Left"
+          >
+            ◀
+          </button>
+          <button
+            className="circuit-touch-btn btn-steer"
+            onTouchStart={(e) => { e.preventDefault(); keysRef.current.right = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); keysRef.current.right = false; }}
+            onMouseDown={() => { keysRef.current.right = true; }}
+            onMouseUp={() => { keysRef.current.right = false; }}
+            aria-label="Steer Right"
+          >
+            ▶
+          </button>
+        </div>
+
+        <div className="circuit-touch-group action-group">
+          <button
+            className="circuit-touch-btn btn-brake"
+            onTouchStart={(e) => { e.preventDefault(); keysRef.current.down = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); keysRef.current.down = false; }}
+            onMouseDown={() => { keysRef.current.down = true; }}
+            onMouseUp={() => { keysRef.current.down = false; }}
+            aria-label="Brake"
+          >
+            🛑
+          </button>
+          <button
+            className="circuit-touch-btn btn-gas"
+            onTouchStart={(e) => { e.preventDefault(); keysRef.current.up = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); keysRef.current.up = false; }}
+            onMouseDown={() => { keysRef.current.up = true; }}
+            onMouseUp={() => { keysRef.current.up = false; }}
+            aria-label="Accelerate"
+          >
+            ⚡ GAS
+          </button>
+          <button
+            className="circuit-touch-btn btn-drift"
+            onTouchStart={handleTouchDriftStart}
+            onTouchEnd={handleTouchDriftEnd}
+            onMouseDown={handleTouchDriftStart}
+            onMouseUp={handleTouchDriftEnd}
+            aria-label="Drift"
+          >
+            🌀 DRIFT
+          </button>
+          {activePowerUp && (
+            <button
+              className="circuit-touch-btn btn-item"
+              onTouchStart={(e) => { e.preventDefault(); handleUseItem(); }}
+              onClick={handleUseItem}
+              aria-label="Use Item"
+            >
+              🎁 USE
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Desktop Keyboard Controls HUD */}

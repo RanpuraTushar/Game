@@ -175,6 +175,31 @@ const RooftopSnipersGame = ({ user, onLeave }) => {
     };
   }, [gameMode, currentMapIdx]);
 
+  const handleP1Jump = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    const s = stateRef.current;
+    if (s.p1.grounded) {
+      s.p1.vy = -10.5;
+      s.p1.vx = (Math.random() - 0.5) * 2;
+      s.p1.grounded = false;
+      SoundEffects.playClick();
+    }
+  };
+
+  const handleP1Aim = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    stateRef.current.p1.aiming = true;
+  };
+
+  const handleP1Shoot = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    const s = stateRef.current;
+    if (s.p1.aiming && !s.roundOver) {
+      fireSniperBullet('P1');
+      s.p1.aiming = false;
+    }
+  };
+
   // Main 60FPS Game Loop
   useEffect(() => {
     let animId;
@@ -570,6 +595,28 @@ const RooftopSnipersGame = ({ user, onLeave }) => {
             </h3>
           </div>
         )}
+      </div>
+
+      {/* Mobile Touch Action Controls */}
+      <div className="snipers-mobile-controls">
+        <button
+          className="sniper-touch-btn sniper-btn-jump"
+          onTouchStart={handleP1Jump}
+          onClick={handleP1Jump}
+        >
+          <span>🦘</span>
+          <strong>JUMP</strong>
+        </button>
+        <button
+          className="sniper-touch-btn sniper-btn-shoot"
+          onTouchStart={handleP1Aim}
+          onTouchEnd={handleP1Shoot}
+          onMouseDown={handleP1Aim}
+          onMouseUp={handleP1Shoot}
+        >
+          <span>🎯</span>
+          <strong>HOLD TO AIM &bull; RELEASE SHOOT</strong>
+        </button>
       </div>
 
       {/* Controls Reference */}

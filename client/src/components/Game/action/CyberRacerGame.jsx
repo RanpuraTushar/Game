@@ -280,11 +280,11 @@ const CyberRacerGame = ({ user, onLeave }) => {
     // --- 1. PLAYER 1 CONTROLS ---
     const p1 = s.p1;
     if (p1.alive) {
-      const p1Left = k['KeyA'] || (gameMode !== 'TWO_PLAYER' && k['ArrowLeft']);
-      const p1Right = k['KeyD'] || (gameMode !== 'TWO_PLAYER' && k['ArrowRight']);
-      const p1Accelerate = k['KeyW'] || (gameMode !== 'TWO_PLAYER' && k['ArrowUp']);
-      const p1Brake = k['KeyS'] || (gameMode !== 'TWO_PLAYER' && k['ArrowDown']);
-      const p1Nitro = (k['Space'] || k['ShiftLeft']) && p1.nitro > 5;
+      const p1Left = k['KeyA'] || (gameMode !== 'TWO_PLAYER' && k['ArrowLeft']) || s.touchLeft;
+      const p1Right = k['KeyD'] || (gameMode !== 'TWO_PLAYER' && k['ArrowRight']) || s.touchRight;
+      const p1Accelerate = k['KeyW'] || (gameMode !== 'TWO_PLAYER' && k['ArrowUp']) || s.touchGas;
+      const p1Brake = k['KeyS'] || (gameMode !== 'TWO_PLAYER' && k['ArrowDown']) || s.touchBrake;
+      const p1Nitro = ((k['Space'] || k['ShiftLeft']) || s.touchNitro) && p1.nitro > 5;
 
       p1.braking = p1Brake;
       p1.steerDir = p1Left ? -1 : p1Right ? 1 : 0;
@@ -1078,7 +1078,65 @@ const CyberRacerGame = ({ user, onLeave }) => {
             </div>
           </div>
         )}
+      </div>
 
+      {/* Mobile Touch Driving Controller */}
+      <div className="racer-mobile-controls">
+        <div className="racer-touch-group steer-group">
+          <button
+            className="racer-touch-btn btn-steer"
+            onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchLeft = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchLeft = false; }}
+            onMouseDown={() => { stateRef.current.touchLeft = true; }}
+            onMouseUp={() => { stateRef.current.touchLeft = false; }}
+            aria-label="Steer Left"
+          >
+            ◀
+          </button>
+          <button
+            className="racer-touch-btn btn-steer"
+            onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchRight = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchRight = false; }}
+            onMouseDown={() => { stateRef.current.touchRight = true; }}
+            onMouseUp={() => { stateRef.current.touchRight = false; }}
+            aria-label="Steer Right"
+          >
+            ▶
+          </button>
+        </div>
+
+        <div className="racer-touch-group pedal-group">
+          <button
+            className="racer-touch-btn btn-brake"
+            onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchBrake = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchBrake = false; }}
+            onMouseDown={() => { stateRef.current.touchBrake = true; }}
+            onMouseUp={() => { stateRef.current.touchBrake = false; }}
+            aria-label="Brake"
+          >
+            🛑
+          </button>
+          <button
+            className="racer-touch-btn btn-gas"
+            onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchGas = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchGas = false; }}
+            onMouseDown={() => { stateRef.current.touchGas = true; }}
+            onMouseUp={() => { stateRef.current.touchGas = false; }}
+            aria-label="Gas / Accelerate"
+          >
+            ⚡ GAS
+          </button>
+          <button
+            className="racer-touch-btn btn-nitro"
+            onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchNitro = true; }}
+            onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchNitro = false; }}
+            onMouseDown={() => { stateRef.current.touchNitro = true; }}
+            onMouseUp={() => { stateRef.current.touchNitro = false; }}
+            aria-label="Nitro Boost"
+          >
+            🔥 NITRO
+          </button>
+        </div>
       </div>
 
       {/* Controls Legend */}

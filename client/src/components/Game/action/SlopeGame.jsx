@@ -161,8 +161,8 @@ const SlopeGame = ({ user, onLeave }) => {
 
     // --- 1. Handle Steering & Speed Acceleration ---
     const k = s.keys;
-    const left = k['KeyA'] || k['ArrowLeft'];
-    const right = k['KeyD'] || k['ArrowRight'];
+    const left = k['KeyA'] || k['ArrowLeft'] || s.touchSteer === 'LEFT';
+    const right = k['KeyD'] || k['ArrowRight'] || s.touchSteer === 'RIGHT';
 
     if (left) s.ballX -= 4.2 * dt;
     if (right) s.ballX += 4.2 * dt;
@@ -504,7 +504,28 @@ const SlopeGame = ({ user, onLeave }) => {
       )}
 
       {/* 3D Slope Canvas Area */}
-      <div className="slope-canvas-wrap">
+      <div
+        className="slope-canvas-wrap"
+        onTouchStart={(e) => {
+          if (gameState !== 'PLAYING') return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          if (e.touches && e.touches[0]) {
+            const touchX = e.touches[0].clientX - rect.left;
+            stateRef.current.touchSteer = touchX < rect.width / 2 ? 'LEFT' : 'RIGHT';
+          }
+        }}
+        onTouchMove={(e) => {
+          if (gameState !== 'PLAYING') return;
+          const rect = e.currentTarget.getBoundingClientRect();
+          if (e.touches && e.touches[0]) {
+            const touchX = e.touches[0].clientX - rect.left;
+            stateRef.current.touchSteer = touchX < rect.width / 2 ? 'LEFT' : 'RIGHT';
+          }
+        }}
+        onTouchEnd={() => {
+          stateRef.current.touchSteer = null;
+        }}
+      >
         <canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} className="slope-canvas" />
 
         {gameState === 'MENU' && (
@@ -540,6 +561,29 @@ const SlopeGame = ({ user, onLeave }) => {
         )}
       </div>
 
+      {/* Mobile Touch Steer Controls */}
+      <div className="slope-mobile-controls">
+        <button
+          className="slope-mobile-steer-btn steer-left"
+          onMouseDown={() => { stateRef.current.touchSteer = 'LEFT'; }}
+          onMouseUp={() => { stateRef.current.touchSteer = null; }}
+          onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchSteer = 'LEFT'; }}
+          onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchSteer = null; }}
+        >
+          <span>◀</span>
+          <span>STEER LEFT</span>
+        </button>
+        <button
+          className="slope-mobile-steer-btn steer-right"
+          onMouseDown={() => { stateRef.current.touchSteer = 'RIGHT'; }}
+          onMouseUp={() => { stateRef.current.touchSteer = null; }}
+          onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchSteer = 'RIGHT'; }}
+          onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchSteer = null; }}
+        >
+          <span>STEER RIGHT</span>
+          <span>▶</span>
+        </button>
+      </div>
 
       {/* Controls Reference */}
       <div className="slope-controls-bar">

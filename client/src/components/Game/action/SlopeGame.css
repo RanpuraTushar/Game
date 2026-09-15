@@ -93,6 +93,58 @@
 
 
 /* Mobile Responsive */
+/* ==========================================================================
+   Mobile Touch Steer Controls
+   ========================================================================== */
+.slope-mobile-controls {
+  display: none;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  margin-top: 10px;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.slope-mobile-steer-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  background: rgba(14, 24, 48, 0.9);
+  border: 2px solid #00f3ff;
+  border-radius: 14px;
+  color: #00f3ff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 243, 255, 0.25);
+  transition: all 0.1s ease;
+}
+
+.slope-mobile-steer-btn:active {
+  background: #00f3ff;
+  color: #000;
+  box-shadow: 0 0 25px #00f3ff;
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .slope-controls-bar {
+    display: none !important;
+  }
+
+  .slope-mobile-controls {
+    display: flex !important;
+  }
+}
+
 @media (max-width: 480px) {
   .slope-container {
     padding: 10px 8px;
@@ -106,8 +158,8 @@
   .hud-box strong {
     font-size: 0.95rem;
   }
-  .slope-touch-btn {
-    padding: 12px 14px;
+  .slope-mobile-steer-btn {
+    min-height: 48px;
     font-size: 0.82rem;
   }
 }

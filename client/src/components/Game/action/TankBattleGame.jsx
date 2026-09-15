@@ -491,9 +491,63 @@ const TankBattleGame = ({ user, onLeave }) => {
         <canvas ref={canvasRef} width={ARENA_WIDTH} height={ARENA_HEIGHT} className="tank-canvas" />
       </div>
 
+      {/* Mobile Cyber Tank Controller */}
+      <div className="tank-mobile-controls">
+        <div className="tank-dpad-col">
+          <button
+            className="tank-ctrl-btn t-btn-up"
+            onTouchStart={(e) => { e.preventDefault(); handleTouchKey('KeyW', true); }}
+            onTouchEnd={(e) => { e.preventDefault(); handleTouchKey('KeyW', false); }}
+            onMouseDown={() => handleTouchKey('KeyW', true)}
+            onMouseUp={() => handleTouchKey('KeyW', false)}
+            aria-label="Forward"
+          >
+            ▲
+          </button>
+          <div className="tank-dpad-row">
+            <button
+              className="tank-ctrl-btn t-btn-left"
+              onTouchStart={(e) => { e.preventDefault(); handleTouchKey('KeyA', true); }}
+              onTouchEnd={(e) => { e.preventDefault(); handleTouchKey('KeyA', false); }}
+              onMouseDown={() => handleTouchKey('KeyA', true)}
+              onMouseUp={() => handleTouchKey('KeyA', false)}
+              aria-label="Turn Left"
+            >
+              ◀
+            </button>
+            <button
+              className="tank-ctrl-btn t-btn-down"
+              onTouchStart={(e) => { e.preventDefault(); handleTouchKey('KeyS', true); }}
+              onTouchEnd={(e) => { e.preventDefault(); handleTouchKey('KeyS', false); }}
+              onMouseDown={() => handleTouchKey('KeyS', true)}
+              onMouseUp={() => handleTouchKey('KeyS', false)}
+              aria-label="Reverse"
+            >
+              ▼
+            </button>
+            <button
+              className="tank-ctrl-btn t-btn-right"
+              onTouchStart={(e) => { e.preventDefault(); handleTouchKey('KeyD', true); }}
+              onTouchEnd={(e) => { e.preventDefault(); handleTouchKey('KeyD', false); }}
+              onMouseDown={() => handleTouchKey('KeyD', true)}
+              onMouseUp={() => handleTouchKey('KeyD', false)}
+              aria-label="Turn Right"
+            >
+              ▶
+            </button>
+          </div>
+        </div>
 
+        <button
+          className="tank-ctrl-btn tank-fire-btn"
+          onTouchStart={(e) => { e.preventDefault(); handleTouchFire('P1'); }}
+          onClick={() => handleTouchFire('P1')}
+          aria-label="Fire Cannon"
+        >
+          💥 FIRE
+        </button>
+      </div>
 
-      {/* Controls Reference */}
       <div className="tank-controls-legend">
         <div>🔵 <strong>P1:</strong> W/A/S/D to Drive &bull; <strong style={{ color: '#00f3ff' }}>SPACE</strong> to Fire</div>
         <div>🔴 <strong>P2:</strong> Arrow Keys to Drive &bull; <strong style={{ color: '#ff007f' }}>ENTER</strong> to Fire</div>
