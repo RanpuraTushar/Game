@@ -118,13 +118,15 @@
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
   width: 100%;
-  aspect-ratio: 1;
+  max-width: min(440px, calc(100vh - 300px));
+  max-height: min(440px, calc(100vh - 300px));
+  aspect-ratio: 1 / 1;
   background: #080814;
   border: 2px solid rgba(0, 243, 255, 0.35);
   border-radius: 14px;
   padding: 10px;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
   touch-action: none;
 }
 

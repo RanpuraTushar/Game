@@ -166,7 +166,6 @@
 .theater-screen-frame .tetris-master-container,
 .theater-screen-frame .wordle-container,
 .theater-screen-frame .memory-master-container,
-.theater-screen-frame .game-2048-container,
 .theater-screen-frame .snake-arcade-container,
 .theater-screen-frame .solitaire-master-container,
 .theater-screen-frame .uno-container,
@@ -186,6 +185,31 @@
   padding: 4px !important;
   margin: 0 auto !important;
   max-width: 100% !important;
+}
+
+/* Compact Board & Puzzle Games - Maintain clean, centered, playable proportions */
+.theater-screen-frame .game-2048-container {
+  max-width: min(480px, 95vw) !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.theater-screen-frame .tictactoe-panel {
+  max-width: min(480px, 95vw) !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.theater-screen-frame .wordle-container {
+  max-width: min(520px, 95vw) !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.theater-screen-frame .sudoku-master-container {
+  max-width: min(520px, 95vw) !important;
+  width: 100% !important;
+  margin: 0 auto !important;
 }
 
 /* Under-Game Toolbar */
