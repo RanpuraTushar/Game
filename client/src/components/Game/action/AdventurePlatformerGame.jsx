@@ -884,6 +884,56 @@ export default function AdventurePlatformerGame({ user, onLeave }) {
         <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Sword Slash</span></div>
         <div className="hud-key-pill"><kbd>K</kbd> <span>Energy Blast</span></div>
       </div>
+
+      {/* Mobile Touch Controls Bar */}
+      <div className="platformer-touch-controls">
+        <div className="touch-dpad-horiz">
+          <button
+            type="button"
+            className="plat-btn plat-btn-move"
+            onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); keysRef.current.left = true; }}
+            onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); keysRef.current.left = false; }}
+            onMouseDown={() => { keysRef.current.left = true; }}
+            onMouseUp={() => { keysRef.current.left = false; }}
+          >
+            ◀ LEFT
+          </button>
+          <button
+            type="button"
+            className="plat-btn plat-btn-move"
+            onTouchStart={(e) => { if (e.cancelable) e.preventDefault(); keysRef.current.right = true; }}
+            onTouchEnd={(e) => { if (e.cancelable) e.preventDefault(); keysRef.current.right = false; }}
+            onMouseDown={() => { keysRef.current.right = true; }}
+            onMouseUp={() => { keysRef.current.right = false; }}
+          >
+            RIGHT ▶
+          </button>
+        </div>
+
+        <div className="touch-action-btns">
+          <button
+            type="button"
+            className="plat-btn plat-btn-jump"
+            onClick={handleJump}
+          >
+            🦘 JUMP
+          </button>
+          <button
+            type="button"
+            className="plat-btn plat-btn-slash"
+            onClick={handleSlash}
+          >
+            🗡️ SLASH
+          </button>
+          <button
+            type="button"
+            className="plat-btn plat-btn-blast"
+            onClick={handleShoot}
+          >
+            ⚡ BLAST
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

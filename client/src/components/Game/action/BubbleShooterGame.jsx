@@ -417,6 +417,88 @@ const BubbleShooterGame = ({ user, onLeave }) => {
 
   const currentTier = getCurrentTier();
 
+  const handleAimLeft = () => {
+    const s = gameState.current;
+    s.shooterAngle = Math.max(-Math.PI + 0.15, s.shooterAngle - 0.12);
+  };
+
+  const handleAimRight = () => {
+    const s = gameState.current;
+    s.shooterAngle = Math.min(-0.15, s.shooterAngle + 0.12);
+  };
+
+  useEffect(() => {
+    initGrid(1);
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const updateAim = (clientX, clientY) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = CANVAS_WIDTH / (rect.width || 1);
+      const scaleY = CANVAS_HEIGHT / (rect.height || 1);
+      const mx = (clientX - rect.left) * scaleX;
+      const my = (clientY - rect.top) * scaleY;
+      const originX = CANVAS_WIDTH / 2;
+      const originY = CANVAS_HEIGHT - 35;
+      const dx = mx - originX;
+      const dy = my - originY;
+      let angle = Math.atan2(dy, dx);
+      if (angle > -0.15) angle = -0.15;
+      if (angle < -Math.PI + 0.15) angle = -Math.PI + 0.15;
+      gameState.current.shooterAngle = angle;
+    };
+
+    const handleMouseMove = (e) => {
+      updateAim(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        updateAim(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      if (e.touches && e.touches[0]) {
+        updateAim(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+
+    const handleClick = (e) => {
+      updateAim(e.clientX, e.clientY);
+      shootBubble();
+    };
+
+    const handleTouchEnd = (e) => {
+      if (e.cancelable) e.preventDefault();
+      shootBubble();
+    };
+
+    canvas.addEventListener('mousemove', handleMouseMove);
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: true });
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: true });
+    canvas.addEventListener('click', handleClick);
+    canvas.addEventListener('touchend', handleTouchEnd);
+
+    let animId;
+    const loop = () => {
+      update();
+      draw();
+      animId = requestAnimationFrame(loop);
+    };
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('click', handleClick);
+      canvas.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
   return (
     <div className="bubble-shooter-container glass-panel">
       <div className="bs-header">
@@ -444,6 +526,13 @@ const BubbleShooterGame = ({ user, onLeave }) => {
       )}
 
       <canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} className="bs-canvas" />
+
+      {/* Mobile Controls Bar */}
+      <div className="bs-mobile-controls">
+        <button type="button" className="bs-ctrl-btn" onClick={handleAimLeft}>◀ AIM LEFT</button>
+        <button type="button" className="bs-ctrl-btn bs-fire-btn" onClick={shootBubble}>⚡ SHOOT</button>
+        <button type="button" className="bs-ctrl-btn" onClick={handleAimRight}>AIM RIGHT ▶</button>
+      </div>
 
       {(gameOver || gameWon) && (
         <div className="finish-overlay">
