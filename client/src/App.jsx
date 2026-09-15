@@ -277,7 +277,7 @@ function App() {
           <div className="nav-brand" onClick={handleLeaveGame} style={{ cursor: 'pointer' }}>
             <span className="brand-logo-icon">⚡</span>
             <span className="brand-text">NEON<span className="cyan-text">ARCADE</span></span>
-            <span className="nav-live-indicator">
+            <span className="nav-live-indicator nav-desktop-only">
               <span className="live-dot-green" /> 1.4K ONLINE
             </span>
           </div>
