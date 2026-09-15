@@ -166,6 +166,8 @@ body {
   align-items: center;
   gap: 16px;
   user-select: none;
+  flex-shrink: 0 !important;
+  min-width: max-content !important;
 }
 
 .nav-brand {
@@ -174,6 +176,8 @@ body {
   gap: 8px;
   text-decoration: none;
   transition: transform 0.2s ease;
+  flex-shrink: 0 !important;
+  min-width: max-content !important;
 }
 
 .nav-brand:hover {
@@ -192,6 +196,7 @@ body {
   font-weight: 900;
   letter-spacing: 2px;
   color: #ffffff;
+  white-space: nowrap;
 }
 
 .cyan-text {
@@ -206,6 +211,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .crumb-sep {
@@ -224,13 +230,58 @@ body {
   border-radius: 6px;
   border: 1px solid rgba(0, 243, 255, 0.3);
   letter-spacing: 0.8px;
+  white-space: nowrap;
 }
 
 /* Right: Navigation Actions, Profile, & Hub Return */
 .nav-right-section {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Navbar Buttons: Sleek, compact cyber icon pills by default */
+.nav-pill-btn {
+  height: 38px !important;
+  border-radius: 10px !important;
+  font-size: 0.76rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  user-select: none !important;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.nav-pill-btn .nav-icon,
+.nav-btn-logout .nav-btn-icon {
+  font-size: 1.05rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* Compact icon-first pills on all laptop & desktop displays */
+.nav-btn-quests .nav-btn-text,
+.nav-btn-shop .nav-btn-text,
+.nav-btn-spin .nav-btn-text,
+.nav-btn-ranks .nav-btn-text,
+.nav-btn-achieve .nav-btn-text,
+.nav-btn-logout .nav-btn-text,
+.nav-edit-hint {
+  display: none;
+}
+
+.nav-btn-quests,
+.nav-btn-shop,
+.nav-btn-spin,
+.nav-btn-ranks,
+.nav-btn-achieve,
+.nav-btn-logout {
+  width: 38px !important;
+  min-width: 38px !important;
+  padding: 0 !important;
+  justify-content: center !important;
 }
 
 .nav-icon-btn {
@@ -247,6 +298,7 @@ body {
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   user-select: none;
+  flex-shrink: 0;
 }
 
 .nav-icon-btn:hover {
