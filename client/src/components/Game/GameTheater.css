@@ -23,36 +23,37 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 8px 12px;
-  background: rgba(15, 18, 35, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+  padding: 6px 14px;
+  min-height: 38px;
+  background: rgba(15, 18, 35, 0.7);
+  border: 1px solid rgba(0, 243, 255, 0.22);
   border-radius: 12px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
 }
 
 .theater-back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(0, 243, 255, 0.08);
-  border: 1px solid rgba(0, 243, 255, 0.3);
+  gap: 6px;
+  background: rgba(0, 243, 255, 0.1);
+  border: 1.5px solid rgba(0, 243, 255, 0.35);
   color: #00f3ff;
   font-family: 'Orbitron', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1px;
-  padding: 8px 16px;
+  padding: 6px 14px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .theater-back-btn:hover {
-  background: rgba(0, 243, 255, 0.2);
+  background: rgba(0, 243, 255, 0.22);
   border-color: #00f3ff;
   transform: translateX(-3px);
-  box-shadow: 0 0 14px rgba(0, 243, 255, 0.3);
+  box-shadow: 0 0 14px rgba(0, 243, 255, 0.35);
 }
 
 .theater-breadcrumbs {
@@ -86,7 +87,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 1px;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -120,11 +121,12 @@
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(var(--glow-color, 0, 243, 255), 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
+  max-height: calc(100vh - 170px);
 }
 
 .theater-screen-frame canvas {
   max-width: 100% !important;
-  max-height: min(680px, calc(100vh - 210px)) !important;
+  max-height: min(580px, calc(100vh - 200px)) !important;
   height: auto !important;
   object-fit: contain !important;
 }
@@ -210,6 +212,24 @@
   max-width: min(520px, 95vw) !important;
   width: 100% !important;
   margin: 0 auto !important;
+}
+
+/* Suppress duplicate in-game return buttons inside Theater (Theater bar provides authoritative exit) */
+.theater-screen-frame .game-2048-header > .btn-secondary:first-child,
+.theater-screen-frame .wordle-header > .btn-secondary:first-child,
+.theater-screen-frame .sudoku-top-nav > .btn-secondary:first-child,
+.theater-screen-frame .tetris-header > .btn-secondary:first-child,
+.theater-screen-frame .minesweeper-header > .btn-secondary:first-child,
+.theater-screen-frame .memory-header > .btn-secondary:first-child,
+.theater-screen-frame .match3-header > .btn-secondary:first-child,
+.theater-screen-frame .tictactoe-header > .btn-secondary:first-child,
+.theater-screen-frame .tictactoe-container > .btn-secondary:first-child,
+.theater-screen-frame .tictactoe-panel > .btn-secondary:first-child,
+.theater-screen-frame .brick-breaker-nav > .btn-secondary:first-child,
+.theater-screen-frame .scramble-header > .btn-secondary:first-child,
+.theater-screen-frame .typing-header > .btn-secondary:first-child,
+.theater-screen-frame .math-header > .btn-secondary:first-child {
+  display: none !important;
 }
 
 /* Under-Game Toolbar */
@@ -870,3 +890,46 @@
     border-radius: 12px !important;
   }
 }
+
+/* Laptop & Height Constrained Viewport Optimization */
+@media (max-height: 850px) {
+  .game-theater-container {
+    padding: 8px 16px 40px 16px;
+    gap: 10px;
+  }
+
+  .theater-screen-frame {
+    padding: 8px;
+    border-radius: 14px;
+    max-height: calc(100vh - 150px);
+  }
+
+  .theater-screen-frame canvas {
+    max-height: min(520px, calc(100vh - 180px)) !important;
+  }
+
+  .theater-toolbar {
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+
+  .theater-game-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 1366px) {
+  .game-theater-container {
+    padding: 10px 14px 40px 14px;
+    gap: 10px;
+  }
+
+  .theater-top-bar {
+    padding: 6px 12px;
+  }
+
+  .theater-screen-frame {
+    padding: 8px;
+  }
+}
+

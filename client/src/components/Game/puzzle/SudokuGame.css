@@ -59,7 +59,8 @@
 .sudoku-grid-wrapper {
   position: relative;
   width: 100%;
-  max-width: 440px;
+  max-width: min(420px, calc(100vh - 280px));
+  max-height: min(420px, calc(100vh - 280px));
   aspect-ratio: 1 / 1;
 }
 

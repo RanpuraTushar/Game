@@ -117,6 +117,29 @@ body {
   gap: 16px;
   position: relative;
   overflow: hidden;
+  transition: height 0.3s ease, padding 0.3s ease;
+}
+
+/* In-Game Focused Experience: Slim navbar and focus on gameplay without distractions */
+.App.in-game-active {
+  padding-top: 66px !important;
+}
+
+.App.in-game-active .app-navbar {
+  height: 56px !important;
+  padding: 0 20px !important;
+  border-bottom-color: rgba(0, 243, 255, 0.4);
+}
+
+/* Hide non-game clutter when actively playing a game */
+.App.in-game-active .nav-btn-quests,
+.App.in-game-active .nav-btn-shop,
+.App.in-game-active .nav-btn-spin,
+.App.in-game-active .nav-btn-ranks,
+.App.in-game-active .nav-btn-achieve,
+.App.in-game-active .nav-level-pill,
+.App.in-game-active .nav-hub-return-btn {
+  display: none !important;
 }
 
 /* Neon laser scanline under navbar */
@@ -741,8 +764,95 @@ canvas,
 /* ==========================================================================
    Responsive & Modal Layout
    ========================================================================== */
-.nav-btn-icon {
-  margin-left: 4px;
+/* Laptop & Moderate Desktop Optimization (1025px - 1440px) */
+@media (max-width: 1440px) {
+  .app-navbar {
+    padding: 0 18px;
+    gap: 10px;
+  }
+
+  .nav-right-section {
+    gap: 8px;
+  }
+
+  .nav-btn-ranks .nav-btn-text,
+  .nav-btn-achieve .nav-btn-text {
+    display: none;
+  }
+
+  .nav-btn-ranks,
+  .nav-btn-achieve {
+    padding: 6px 10px;
+  }
+
+  .cyber-radio-widget .radio-station-title {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .app-navbar {
+    height: 60px;
+    padding: 0 14px;
+    gap: 8px;
+  }
+
+  .App {
+    padding-top: 72px;
+  }
+
+  .nav-brand .brand-text {
+    font-size: 1.15rem;
+  }
+
+  .nav-live-indicator {
+    display: none;
+  }
+
+  .nav-btn-quests .nav-btn-text,
+  .nav-btn-shop .nav-btn-text,
+  .nav-btn-spin .nav-btn-text {
+    display: none;
+  }
+
+  .nav-btn-quests,
+  .nav-btn-shop,
+  .nav-btn-spin {
+    padding: 6px 10px;
+  }
+
+  .nav-user-details-col {
+    display: none;
+  }
+
+  .cyber-radio-widget .radio-station-title {
+    max-width: 80px;
+  }
+}
+
+/* Vertical Height Constrained (Laptops 768p and below) */
+@media (max-height: 820px) {
+  .app-navbar {
+    height: 56px !important;
+  }
+
+  .App {
+    padding-top: 66px !important;
+  }
+
+  .nav-brand .brand-logo-icon {
+    font-size: 1.25rem;
+  }
+
+  .nav-brand .brand-text {
+    font-size: 1.15rem;
+  }
+
+  .nav-icon-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
 }
 
 @media (max-width: 1024px) {
