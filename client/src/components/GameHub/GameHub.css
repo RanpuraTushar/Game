@@ -962,6 +962,36 @@
 }
 
 /* ==========================================================================
+   Laptop & Desktop Optimization for GameHub (1025px - 1440px)
+   ========================================================================== */
+@media (max-width: 1440px) {
+  .game-hub-wrapper {
+    max-width: 1240px;
+    gap: 20px;
+    padding: 0 14px;
+  }
+
+  .hub-quick-toolbar {
+    padding: 10px 16px;
+    gap: 14px;
+  }
+
+  .games-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .game-catalog-card {
+    padding: 18px;
+  }
+
+  .category-tab-btn {
+    padding: 7px 14px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ==========================================================================
    Responsive Mobile Version for GameHub (Poki / CrazyGames Mobile UX)
    ========================================================================== */
 @media (max-width: 768px) {

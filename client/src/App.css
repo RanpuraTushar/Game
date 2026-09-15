@@ -342,6 +342,26 @@ body {
   letter-spacing: 0.2px;
 }
 
+.user-name-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.nav-edit-hint {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.56rem;
+  font-weight: 800;
+  color: #00f3ff;
+  background: rgba(0, 243, 255, 0.12);
+  border: 1px solid rgba(0, 243, 255, 0.35);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
 /* Commercial Portal Additions */
 .nav-live-indicator {
   display: inline-flex;
@@ -767,22 +787,50 @@ canvas,
 /* Laptop & Moderate Desktop Optimization (1025px - 1440px) */
 @media (max-width: 1440px) {
   .app-navbar {
-    padding: 0 18px;
+    padding: 0 16px;
     gap: 10px;
+    height: 62px;
+  }
+
+  .App {
+    padding-top: 76px;
   }
 
   .nav-right-section {
-    gap: 8px;
+    gap: 7px;
   }
 
+  /* Collapse secondary portal action texts to sleek, uncluttered icon buttons */
+  .nav-btn-quests .nav-btn-text,
+  .nav-btn-shop .nav-btn-text,
+  .nav-btn-spin .nav-btn-text,
   .nav-btn-ranks .nav-btn-text,
-  .nav-btn-achieve .nav-btn-text {
-    display: none;
+  .nav-btn-achieve .nav-btn-text,
+  .nav-btn-logout .nav-btn-text,
+  .nav-edit-hint {
+    display: none !important;
   }
 
+  .nav-btn-quests,
+  .nav-btn-shop,
+  .nav-btn-spin,
   .nav-btn-ranks,
-  .nav-btn-achieve {
-    padding: 6px 10px;
+  .nav-btn-achieve,
+  .nav-btn-logout {
+    padding: 6px 11px !important;
+    min-width: 36px;
+    justify-content: center;
+  }
+
+  .nav-user-details-col {
+    max-width: 105px;
+  }
+
+  .nav-user-details-col .user-name-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
   }
 
   .cyber-radio-widget .radio-station-title {
@@ -790,15 +838,15 @@ canvas,
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1200px) {
   .app-navbar {
-    height: 60px;
-    padding: 0 14px;
-    gap: 8px;
+    height: 58px;
+    padding: 0 12px;
+    gap: 6px;
   }
 
   .App {
-    padding-top: 72px;
+    padding-top: 70px;
   }
 
   .nav-brand .brand-text {
@@ -809,16 +857,8 @@ canvas,
     display: none;
   }
 
-  .nav-btn-quests .nav-btn-text,
-  .nav-btn-shop .nav-btn-text,
-  .nav-btn-spin .nav-btn-text {
+  .nav-level-pill {
     display: none;
-  }
-
-  .nav-btn-quests,
-  .nav-btn-shop,
-  .nav-btn-spin {
-    padding: 6px 10px;
   }
 
   .nav-user-details-col {
@@ -826,7 +866,7 @@ canvas,
   }
 
   .cyber-radio-widget .radio-station-title {
-    max-width: 80px;
+    max-width: 70px;
   }
 }
 
