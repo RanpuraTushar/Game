@@ -1,9 +1,56 @@
-/* App.css - Master Cyberpunk Arcade Nexus Styling */
+/* App.css - Master Esports Arcade Nexus Styling */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap');
 
-:root {
-  /* Vibrant Neon Cy
-  ber Palette */
+:root,
+[data-theme="midnight-stealth"] {
+  /* ==========================================================================
+     Theme: Midnight Stealth / Pro-Esports (Default)
+     Clean, deep slate titanium with electric emerald & ice cyan accents
+     ========================================================================== */
+  --neon-blue: #00f59b;        /* Electric Mint / Emerald */
+  --neon-cyan: #00d2ff;        /* Ice Cyan */
+  --neon-pink: #00d2ff;        /* Ice Cyan alternative / vibrant pop */
+  --neon-purple: #8b5cf6;      /* Violet Iris */
+  --neon-green: #00f59b;       /* Emerald */
+  --neon-yellow: #fbbf24;      /* Amber Gold */
+  --neon-orange: #f59e0b;      /* Sunburst */
+  --neon-red: #ff3366;         /* Crimson Rose */
+
+  /* Surfaces & Dark Slate Glassmorphism */
+  --dark-bg: #07090e;
+  --dark-surface: #0e131f;
+  --dark-card: rgba(14, 19, 31, 0.88);
+  --dark-card-hover: rgba(20, 27, 45, 0.95);
+  --glass-bg: rgba(14, 19, 31, 0.85);
+  --glass-border: rgba(0, 245, 155, 0.22);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  /* Typography */
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Glow Filters & Shadows */
+  --glow-blue: 0 0 20px rgba(0, 245, 155, 0.35);
+  --glow-pink: 0 0 20px rgba(0, 210, 255, 0.35);
+  --glow-green: 0 0 20px rgba(0, 245, 155, 0.35);
+  --glow-yellow: 0 0 20px rgba(251, 191, 36, 0.35);
+
+  /* Gradients */
+  --bg-radial-1: rgba(0, 245, 155, 0.06);
+  --bg-radial-2: rgba(0, 210, 255, 0.06);
+  --bg-radial-3: rgba(139, 92, 246, 0.03);
+  --bg-linear-1: #07090e;
+  --bg-linear-2: #0b101b;
+  --bg-linear-3: #07090e;
+  --scanline-grad: linear-gradient(90deg, transparent, #00f59b, #00d2ff, transparent);
+}
+
+[data-theme="cyber-neon"] {
+  /* ==========================================================================
+     Theme: Classic Cyber Neon
+     Vibrant high-voltage Cyan & Magenta rift aesthetic
+     ========================================================================== */
   --neon-blue: #00f3ff;
   --neon-cyan: #00e5ff;
   --neon-pink: #ff007f;
@@ -13,7 +60,6 @@
   --neon-orange: #ff9100;
   --neon-red: #ff3366;
 
-  /* Surfaces & Dark Glassmorphism */
   --dark-bg: #07070e;
   --dark-surface: #0e0e1b;
   --dark-card: rgba(14, 14, 28, 0.85);
@@ -22,16 +68,102 @@
   --glass-border: rgba(0, 243, 255, 0.22);
   --border-subtle: rgba(255, 255, 255, 0.08);
 
-  /* Typography */
   --text-primary: #ffffff;
   --text-secondary: #a4acc4;
   --text-muted: #646a84;
 
-  /* Glow Filters & Shadows */
   --glow-blue: 0 0 20px rgba(0, 243, 255, 0.35);
   --glow-pink: 0 0 20px rgba(255, 0, 127, 0.35);
   --glow-green: 0 0 20px rgba(0, 255, 102, 0.35);
   --glow-yellow: 0 0 20px rgba(255, 214, 0, 0.35);
+
+  --bg-radial-1: rgba(0, 243, 255, 0.07);
+  --bg-radial-2: rgba(255, 0, 127, 0.07);
+  --bg-radial-3: rgba(157, 78, 221, 0.04);
+  --bg-linear-1: #07070e;
+  --bg-linear-2: #0d0d1b;
+  --bg-linear-3: #07070e;
+  --scanline-grad: linear-gradient(90deg, transparent, #00f3ff, #ff007f, transparent);
+}
+
+[data-theme="cosmic-nebula"] {
+  /* ==========================================================================
+     Theme: Cosmic Nebula
+     Deep Galaxy Violet, Nebula Magenta & Starlight Gold
+     ========================================================================== */
+  --neon-blue: #a855f7;
+  --neon-cyan: #38bdf8;
+  --neon-pink: #ec4899;
+  --neon-purple: #c084fc;
+  --neon-green: #34d399;
+  --neon-yellow: #f59e0b;
+  --neon-orange: #fb923c;
+  --neon-red: #f43f5e;
+
+  --dark-bg: #060714;
+  --dark-surface: #0f1026;
+  --dark-card: rgba(18, 16, 42, 0.88);
+  --dark-card-hover: rgba(28, 24, 64, 0.95);
+  --glass-bg: rgba(18, 16, 42, 0.85);
+  --glass-border: rgba(168, 85, 247, 0.28);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+
+  --text-primary: #ffffff;
+  --text-secondary: #c4b5fd;
+  --text-muted: #7c6f9f;
+
+  --glow-blue: 0 0 20px rgba(168, 85, 247, 0.4);
+  --glow-pink: 0 0 20px rgba(236, 72, 153, 0.4);
+  --glow-green: 0 0 20px rgba(52, 211, 153, 0.35);
+  --glow-yellow: 0 0 20px rgba(245, 158, 11, 0.4);
+
+  --bg-radial-1: rgba(168, 85, 247, 0.08);
+  --bg-radial-2: rgba(236, 72, 153, 0.06);
+  --bg-radial-3: rgba(56, 189, 248, 0.05);
+  --bg-linear-1: #060714;
+  --bg-linear-2: #0e0e24;
+  --bg-linear-3: #060714;
+  --scanline-grad: linear-gradient(90deg, transparent, #a855f7, #ec4899, transparent);
+}
+
+[data-theme="obsidian-crimson"] {
+  /* ==========================================================================
+     Theme: Obsidian Crimson
+     ASUS ROG / Alienware aggressive Gamer Crimson & Molten Lava
+     ========================================================================== */
+  --neon-blue: #ff1e46;
+  --neon-cyan: #ff6b00;
+  --neon-pink: #ff3366;
+  --neon-purple: #e11d48;
+  --neon-green: #10b981;
+  --neon-yellow: #ffd000;
+  --neon-orange: #ff6b00;
+  --neon-red: #ff1e46;
+
+  --dark-bg: #09090c;
+  --dark-surface: #131318;
+  --dark-card: rgba(19, 19, 25, 0.9);
+  --dark-card-hover: rgba(30, 30, 40, 0.96);
+  --glass-bg: rgba(19, 19, 25, 0.88);
+  --glass-border: rgba(255, 30, 70, 0.28);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #64748b;
+
+  --glow-blue: 0 0 20px rgba(255, 30, 70, 0.45);
+  --glow-pink: 0 0 20px rgba(255, 107, 0, 0.4);
+  --glow-green: 0 0 20px rgba(16, 185, 129, 0.35);
+  --glow-yellow: 0 0 20px rgba(255, 208, 0, 0.4);
+
+  --bg-radial-1: rgba(255, 30, 70, 0.07);
+  --bg-radial-2: rgba(255, 107, 0, 0.05);
+  --bg-radial-3: rgba(225, 29, 72, 0.04);
+  --bg-linear-1: #09090c;
+  --bg-linear-2: #14141a;
+  --bg-linear-3: #09090c;
+  --scanline-grad: linear-gradient(90deg, transparent, #ff1e46, #ff6b00, transparent);
 }
 
 /* Global Reset */
@@ -55,11 +187,12 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   background:
-    radial-gradient(circle at 15% 15%, rgba(0, 243, 255, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(255, 0, 127, 0.07) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(157, 78, 221, 0.04) 0%, transparent 60%),
-    linear-gradient(180deg, #07070e 0%, #0d0d1b 50%, #07070e 100%);
+    radial-gradient(circle at 15% 15%, var(--bg-radial-1) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, var(--bg-radial-2) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, var(--bg-radial-3) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-linear-1) 0%, var(--bg-linear-2) 50%, var(--bg-linear-3) 100%);
   background-attachment: fixed;
+  transition: background-color 0.4s ease;
 }
 
 /* Custom Sleek Neon Scrollbars */
@@ -69,18 +202,18 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #07070e;
+  background: var(--dark-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(0, 243, 255, 0.4), rgba(255, 0, 127, 0.4));
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-cyan));
   border-radius: 4px;
-  border: 1px solid rgba(0, 243, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00f3ff, #ff007f);
-  box-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+  background: var(--neon-blue);
+  box-shadow: 0 0 10px var(--neon-blue);
 }
 
 /* App Master Layout */
@@ -105,19 +238,19 @@ body {
   right: 0;
   height: 72px;
   z-index: 1000;
-  background: rgba(8, 8, 18, 0.92);
+  background: var(--dark-surface);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(0, 243, 255, 0.28);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 243, 255, 0.1);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--bg-radial-1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 28px;
   gap: 16px;
   position: relative;
-  overflow: hidden;
-  transition: height 0.3s ease, padding 0.3s ease;
+  overflow: visible;
+  transition: height 0.3s ease, padding 0.3s ease, background 0.3s ease;
 }
 
 /* In-Game Focused Experience: Slim navbar and focus on gameplay without distractions */
@@ -128,7 +261,7 @@ body {
 .App.in-game-active .app-navbar {
   height: 56px !important;
   padding: 0 20px !important;
-  border-bottom-color: rgba(0, 243, 255, 0.4);
+  border-bottom-color: var(--neon-blue);
 }
 
 /* Hide non-game clutter when actively playing a game */
@@ -150,7 +283,7 @@ body {
   left: -100%;
   width: 50%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-pink), transparent);
+  background: var(--scanline-grad);
   animation: cyberScanline 4s linear infinite;
   pointer-events: none;
 }
@@ -200,7 +333,7 @@ body {
 }
 
 .cyan-text {
-  background: linear-gradient(135deg, #00f3ff, #00ffcc, #ff007f);
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-yellow));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -1078,6 +1211,122 @@ canvas,
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+/* ==========================================================================
+   Interactive Theme Switcher Menu System
+   ========================================================================== */
+.theme-dropdown-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.nav-theme-btn {
+  border-color: var(--neon-blue) !important;
+  color: var(--neon-blue) !important;
+  box-shadow: 0 0 10px inset rgba(0, 245, 155, 0.15) !important;
+}
+
+.nav-theme-btn:hover {
+  background: var(--neon-blue) !important;
+  color: #07090e !important;
+  box-shadow: 0 0 18px var(--neon-blue) !important;
+}
+
+.theme-selector-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--dark-surface);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 25px var(--bg-radial-1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 250px;
+  animation: themePopIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes themePopIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.theme-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.theme-option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.theme-option-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--glass-border);
+  transform: translateX(3px);
+}
+
+.theme-option-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 14px inset var(--bg-radial-1);
+}
+
+.theme-item-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-item-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.76rem;
+  letter-spacing: 0.5px;
+}
+
+.theme-color-chips {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.theme-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 /* ==========================================================================

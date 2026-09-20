@@ -92,6 +92,37 @@ const socket = io();
 // Games that strictly require online room matchmaking go through Lobby
 const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
 
+const THEMES = [
+  {
+    id: 'midnight-stealth',
+    name: 'Midnight Stealth',
+    tag: 'PRO-ESPORTS',
+    icon: '🌑',
+    dots: ['#00f59b', '#00d2ff', '#0e131f']
+  },
+  {
+    id: 'cyber-neon',
+    name: 'Cyber Neon',
+    tag: 'SYNTHWAVE',
+    icon: '⚡',
+    dots: ['#00f3ff', '#ff007f', '#0e0e1b']
+  },
+  {
+    id: 'cosmic-nebula',
+    name: 'Cosmic Nebula',
+    tag: 'GALAXY',
+    icon: '🌌',
+    dots: ['#a855f7', '#ec4899', '#0f1026']
+  },
+  {
+    id: 'obsidian-crimson',
+    name: 'Obsidian Crimson',
+    tag: 'ROG GAMER',
+    icon: '🔥',
+    dots: ['#ff1e46', '#ff6b00', '#131318']
+  }
+];
+
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [inGame, setInGame] = useState(false);
@@ -100,6 +131,28 @@ function App() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [isMuted, setIsMuted] = useState(() => soundEffects.isMuted());
   const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
+
+  // Theme Management (Midnight Stealth by default)
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('nr_arcade_theme') || 'midnight-stealth';
+  });
+  const [showThemeMenu, setShowThemeMenu] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('nr_arcade_theme', theme);
+  }, [theme]);
+
+  // Click outside to close theme popover
+  useEffect(() => {
+    const handleDocClick = (e) => {
+      if (showThemeMenu && !e.target.closest('.theme-dropdown-wrap')) {
+        setShowThemeMenu(false);
+      }
+    };
+    document.addEventListener('click', handleDocClick);
+    return () => document.removeEventListener('click', handleDocClick);
+  }, [showThemeMenu]);
 
   // Modals
   const [showLeaderboard, setShowLeaderboard] = useState(false);
@@ -395,6 +448,54 @@ function App() {
           >
             {isFullscreen ? '✕' : '⛶'}
           </button>
+
+          {/* 1-Click Theme Switcher Popover */}
+          <div className="theme-dropdown-wrap nav-desktop-only">
+            <button
+              className="nav-icon-btn nav-theme-btn"
+              onClick={() => {
+                soundEffects.playClick();
+                setShowThemeMenu(prev => !prev);
+              }}
+              title={`Switch Arcade Theme (Current: ${THEMES.find(t => t.id === theme)?.name || 'Theme'})`}
+              aria-label="Arcade Theme Selector"
+            >
+              🎨
+            </button>
+            {showThemeMenu && (
+              <div className="theme-selector-popover">
+                <div className="theme-popover-header">
+                  <span>ARCADE THEMES</span>
+                  <span style={{ fontSize: '0.65rem', opacity: 0.7 }}>1-CLICK SWITCH</span>
+                </div>
+                {THEMES.map(t => (
+                  <div
+                    key={t.id}
+                    className={`theme-option-item ${theme === t.id ? 'active' : ''}`}
+                    onClick={() => {
+                      soundEffects.playClick();
+                      setTheme(t.id);
+                      setShowThemeMenu(false);
+                    }}
+                  >
+                    <div className="theme-item-left">
+                      <span>{t.icon}</span>
+                      <span className="theme-item-name">{t.name}</span>
+                    </div>
+                    <div className="theme-color-chips">
+                      {t.dots.map((color, idx) => (
+                        <span
+                          key={idx}
+                          className="theme-dot"
+                          style={{ background: color }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
 
           <button
             className="btn-tertiary nav-pill-btn nav-btn-ranks nav-desktop-only"
