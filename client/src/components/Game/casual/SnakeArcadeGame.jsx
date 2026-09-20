@@ -333,45 +333,6 @@ const SnakeArcadeGame = ({ user, onLeave }) => {
         <div className="hud-key-pill"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>▲</kbd><kbd>◀</kbd><kbd>▼</kbd><kbd>▶</kbd> <span>Control Snake Movement</span></div>
       </div>
 
-      {/* Mobile Touch Cyber D-Pad */}
-      <div className="snake-mobile-dpad">
-        <button
-          className="snake-dpad-btn dpad-up"
-          onClick={() => handleDirection('UP')}
-          onTouchStart={(e) => { e.preventDefault(); handleDirection('UP'); }}
-          aria-label="Up"
-        >
-          ▲
-        </button>
-        <div className="snake-dpad-middle-row">
-          <button
-            className="snake-dpad-btn dpad-left"
-            onClick={() => handleDirection('LEFT')}
-            onTouchStart={(e) => { e.preventDefault(); handleDirection('LEFT'); }}
-            aria-label="Left"
-          >
-            ◀
-          </button>
-          <div className="snake-dpad-center">⚡</div>
-          <button
-            className="snake-dpad-btn dpad-right"
-            onClick={() => handleDirection('RIGHT')}
-            onTouchStart={(e) => { e.preventDefault(); handleDirection('RIGHT'); }}
-            aria-label="Right"
-          >
-            ▶
-          </button>
-        </div>
-        <button
-          className="snake-dpad-btn dpad-down"
-          onClick={() => handleDirection('DOWN')}
-          onTouchStart={(e) => { e.preventDefault(); handleDirection('DOWN'); }}
-          aria-label="Down"
-        >
-          ▼
-        </button>
-      </div>
-
       <p className="snake-hint">💡 Eat apples to grow • Watch out for red <strong>✕</strong> cyber laser hazards at higher levels!</p>
 
       {gameOver && (

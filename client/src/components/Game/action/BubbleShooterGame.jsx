@@ -527,13 +527,6 @@ const BubbleShooterGame = ({ user, onLeave }) => {
 
       <canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} className="bs-canvas" />
 
-      {/* Mobile Controls Bar */}
-      <div className="bs-mobile-controls">
-        <button type="button" className="bs-ctrl-btn" onClick={handleAimLeft}>◀ AIM LEFT</button>
-        <button type="button" className="bs-ctrl-btn bs-fire-btn" onClick={shootBubble}>⚡ SHOOT</button>
-        <button type="button" className="bs-ctrl-btn" onClick={handleAimRight}>AIM RIGHT ▶</button>
-      </div>
-
       {(gameOver || gameWon) && (
         <div className="finish-overlay">
           <h2 className="neon-text" style={{ color: gameWon ? '#00ff66' : '#ff3366' }}>

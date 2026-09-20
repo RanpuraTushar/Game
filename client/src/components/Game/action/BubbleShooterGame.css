@@ -83,50 +83,7 @@
   touch-action: none;
 }
 
-/* Mobile Controls */
-.bs-mobile-controls {
-  display: none;
-}
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .bs-mobile-controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 12px;
-    touch-action: manipulation;
-  }
-
-  .bs-ctrl-btn {
-    flex: 1;
-    max-width: 130px;
-    padding: 12px 10px;
-    background: rgba(0, 243, 255, 0.12);
-    border: 1px solid rgba(0, 243, 255, 0.4);
-    color: #00f3ff;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 10px;
-    cursor: pointer;
-    touch-action: manipulation;
-    transition: transform 0.1s ease;
-  }
-
-  .bs-ctrl-btn:active {
-    transform: scale(0.95);
-  }
-
-  .bs-fire-btn {
-    background: rgba(0, 230, 118, 0.18);
-    border-color: #00e676;
-    color: #00e676;
-    font-size: 0.88rem;
-    box-shadow: 0 0 12px rgba(0, 230, 118, 0.3);
-  }
-}
 
 @media (max-width: 480px) {
   .bubble-shooter-container {

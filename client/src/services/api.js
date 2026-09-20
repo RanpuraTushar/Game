@@ -1,7 +1,7 @@
 // client/src/services/api.js
 import { recordGameScore } from '../utils/gameActivity';
 
-const API_BASE = `http://${window.location.hostname}:3001/api`;
+const API_BASE = '/api';
 
 export const api = {
   // Fetch all games with optional category

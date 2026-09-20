@@ -567,38 +567,6 @@ const SpaceInvadersGame = ({ user, onLeave }) => {
         <div className="hud-key-pill"><kbd>SPACE</kbd> <span>Fire Laser Cannon</span></div>
       </div>
 
-      {/* Mobile Touch Action Controls */}
-      <div className="invaders-mobile-controls">
-        <button
-          className="inv-ctrl-btn inv-btn-dir"
-          onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchSteer = 'LEFT'; }}
-          onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchSteer = null; }}
-          onMouseDown={() => { stateRef.current.touchSteer = 'LEFT'; }}
-          onMouseUp={() => { stateRef.current.touchSteer = null; }}
-          aria-label="Move Left"
-        >
-          ◀
-        </button>
-        <button
-          className="inv-ctrl-btn inv-btn-fire"
-          onTouchStart={(e) => { e.preventDefault(); shootPlayerBullet(); }}
-          onClick={shootPlayerBullet}
-          aria-label="Fire Laser"
-        >
-          ⚡ FIRE
-        </button>
-        <button
-          className="inv-ctrl-btn inv-btn-dir"
-          onTouchStart={(e) => { e.preventDefault(); stateRef.current.touchSteer = 'RIGHT'; }}
-          onTouchEnd={(e) => { e.preventDefault(); stateRef.current.touchSteer = null; }}
-          onMouseDown={() => { stateRef.current.touchSteer = 'RIGHT'; }}
-          onMouseUp={() => { stateRef.current.touchSteer = null; }}
-          aria-label="Move Right"
-        >
-          ▶
-        </button>
-      </div>
-
       <p className="invaders-footer-hint">
         Use <strong>A / D or Left / Right Arrows</strong> to steer cannon. Press <strong>SPACEBAR</strong> or Tap Screen to shoot!
       </p>

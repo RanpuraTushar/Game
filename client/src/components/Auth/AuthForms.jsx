@@ -37,7 +37,7 @@ const AuthForms = ({ onLoginSuccess }) => {
       : { username: username.trim(), email: email.trim(), password };
 
     try {
-      const response = await fetch(`http://${window.location.hostname}:3001${endpoint}`, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1081,223 +1081,11 @@ canvas,
 }
 
 /* ==========================================================================
-   Mobile Navigation & Cyber Drawer Styling
-   ========================================================================== */
-.nav-mobile-menu-btn {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  background: rgba(0, 243, 255, 0.12);
-  border: 1.5px solid rgba(0, 243, 255, 0.4);
-  border-radius: 10px;
-  color: #00f3ff;
-  font-size: 1.25rem;
-  font-weight: 900;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 0 12px rgba(0, 243, 255, 0.25);
-  flex-shrink: 0;
-}
-
-.nav-mobile-menu-btn:active {
-  transform: scale(0.92);
-  background: rgba(0, 243, 255, 0.3);
-}
-
-/* Slide-out Cyber Drawer */
-.mobile-drawer-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(3, 4, 10, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 99999;
-  display: flex;
-  justify-content: flex-end;
-  animation: drawerFadeIn 0.25s ease-out;
-}
-
-.mobile-drawer-sheet {
-  width: 86vw;
-  max-width: 340px;
-  height: 100%;
-  background: radial-gradient(circle at 80% 20%, #12162e 0%, #080914 100%);
-  border-left: 2px solid rgba(0, 243, 255, 0.4);
-  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 243, 255, 0.2);
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  animation: drawerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes drawerFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes drawerSlideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
-}
-
-.drawer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 16px;
-}
-
-.drawer-user-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  flex: 1;
-}
-
-.drawer-user-info .user-icon-avatar {
-  width: 42px;
-  height: 42px;
-  font-size: 1.4rem;
-}
-
-.drawer-username {
-  font-family: 'Orbitron', sans-serif;
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: #fff;
-  letter-spacing: 0.5px;
-}
-
-.drawer-user-sub {
-  font-size: 0.76rem;
-  color: #00f3ff;
-  font-weight: 700;
-}
-
-.drawer-close-btn {
-  width: 36px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: #e2e8f0;
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.drawer-close-btn:active {
-  transform: scale(0.92);
-}
-
-.drawer-nav-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex: 1;
-}
-
-.drawer-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(20, 25, 45, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #e2e8f0;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-height: 48px;
-}
-
-.drawer-nav-item:active {
-  background: rgba(0, 243, 255, 0.18);
-  border-color: #00f3ff;
-  transform: translateX(4px);
-}
-
-.drawer-hub-btn {
-  background: rgba(0, 243, 255, 0.15) !important;
-  border-color: rgba(0, 243, 255, 0.4) !important;
-}
-
-.drawer-hub-btn strong {
-  color: #00f3ff !important;
-}
-
-.drawer-item-icon {
-  font-size: 1.35rem;
-  flex-shrink: 0;
-}
-
-.drawer-item-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.drawer-item-text strong {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-}
-
-.drawer-item-text small {
-  font-size: 0.7rem;
-  color: #94a3b8;
-}
-
-.drawer-media-controls {
-  padding: 6px 0;
-  margin-top: 4px;
-}
-
-.drawer-media-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  color: #fff;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.drawer-logout-item {
-  margin-top: auto;
-  border-color: rgba(255, 0, 85, 0.3) !important;
-  background: rgba(255, 0, 85, 0.08) !important;
-}
-
-/* ==========================================================================
-   Mobile Viewport Breakpoint Overrides (< 768px)
+   Responsive Viewport Optimization (< 768px)
    ========================================================================== */
 @media (max-width: 768px) {
-  /* Complete hiding of cluttered desktop-only actions on mobile */
-  .nav-desktop-only {
-    display: none !important;
-  }
-
   .app-navbar {
-    height: 54px !important;
+    height: 56px !important;
     padding: 0 12px !important;
     gap: 8px !important;
     background: rgba(8, 10, 22, 0.96) !important;
@@ -1311,7 +1099,7 @@ canvas,
   }
 
   .App {
-    padding-top: 66px !important;
+    padding-top: 68px !important;
   }
 
   .nav-left-section {
@@ -1352,12 +1140,31 @@ canvas,
   .nav-right-section {
     display: flex !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 6px !important;
     margin-left: auto !important;
     flex-shrink: 0 !important;
   }
 
-  /* Coins Pill: Perfectly centered capsule */
+  /* Compact icon pill buttons */
+  .nav-btn-text,
+  .nav-user-details-col,
+  .nav-edit-hint {
+    display: none !important;
+  }
+
+  .nav-btn-quests,
+  .nav-btn-shop,
+  .nav-btn-spin,
+  .nav-btn-ranks,
+  .nav-btn-achieve,
+  .nav-btn-logout {
+    padding: 6px 10px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    justify-content: center !important;
+  }
+
+  /* Coins Pill: Sleek capsule */
   .nav-economy-pill {
     height: 32px !important;
     padding: 0 10px !important;
@@ -1389,7 +1196,7 @@ canvas,
     letter-spacing: 0.4px !important;
   }
 
-  /* Profile Avatar: Sleek circular button without outer bulky capsule */
+  /* Profile Avatar */
   .nav-user-profile-badge {
     background: transparent !important;
     border: none !important;
@@ -1443,39 +1250,9 @@ canvas,
     line-height: 1 !important;
     box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
   }
-
-  .nav-user-details-col,
-  .nav-edit-hint {
-    display: none !important;
-  }
-
-  /* Mobile Hamburger Button: Perfectly matching height & cyber glow */
-  .nav-mobile-menu-btn {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 10px !important;
-    background: rgba(0, 243, 255, 0.12) !important;
-    border: 1.5px solid rgba(0, 243, 255, 0.45) !important;
-    color: #00f3ff !important;
-    padding: 0 !important;
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2) !important;
-    box-sizing: border-box !important;
-  }
-
-  .mobile-menu-icon {
-    font-size: 1.15rem !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
 }
 
-/* Extra Small Mobile Devices (e.g. Galaxy S8+ 360px viewport) */
-@media (max-width: 380px) {
+@media (max-width: 480px) {
   .app-navbar {
     padding: 0 8px !important;
     height: 52px !important;
@@ -1496,7 +1273,7 @@ canvas,
   }
 
   .nav-right-section {
-    gap: 5px !important;
+    gap: 4px !important;
   }
 
   .nav-economy-pill {
@@ -1514,13 +1291,8 @@ canvas,
   }
 
   .nav-user-profile-badge,
-  .nav-profile-avatar-wrap,
-  .nav-mobile-menu-btn {
+  .nav-profile-avatar-wrap {
     width: 32px !important;
     height: 32px !important;
-  }
-
-  .mobile-menu-icon {
-    font-size: 1.05rem !important;
   }
 }

@@ -86,8 +86,8 @@ import DoodleGuessGame from './components/Game/casual/DoodleGuessGame';
 import JigsawPuzzleGame from './components/Game/puzzle/JigsawPuzzleGame';
 import CrosswordGame from './components/Game/puzzle/CrosswordGame';
 
-// Connect to backend socket
-const socket = io(`http://${window.location.hostname}:3001`);
+// Connect to backend socket via Nginx reverse proxy
+const socket = io();
 
 // Games that strictly require online room matchmaking go through Lobby
 const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
@@ -108,7 +108,6 @@ function App() {
   const [showShop, setShowShop] = useState(false);
   const [showQuests, setShowQuests] = useState(false);
   const [showLuckySpin, setShowLuckySpin] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
 
   // Global Gamepad controller listener & HUD toast
@@ -459,174 +458,8 @@ function App() {
             <span className="nav-btn-text">LOGOUT</span>
             <span className="nav-btn-icon">🚪</span>
           </button>
-
-          {/* Mobile Cyber Hamburger Button */}
-          <button
-            className="nav-mobile-menu-btn"
-            onClick={() => {
-              soundEffects.playClick();
-              setMobileMenuOpen(!mobileMenuOpen);
-            }}
-            title="Arcade Menu"
-            aria-label="Toggle Mobile Menu"
-          >
-            <span className="mobile-menu-icon">{mobileMenuOpen ? '✕' : '☰'}</span>
-          </button>
         </div>
       </nav>
-
-      {/* Mobile Cyber Slide-out Drawer */}
-      {mobileMenuOpen && (
-        <div className="mobile-drawer-backdrop" onClick={() => setMobileMenuOpen(false)}>
-          <div className="mobile-drawer-sheet glass-panel" onClick={(e) => e.stopPropagation()}>
-            <div className="drawer-header">
-              <div
-                className="drawer-user-info"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowProfile(true);
-                }}
-              >
-                <span className={`user-icon-avatar ${activeFrameObj?.cssClass || ''}`}>
-                  {user.avatar || '👤'}
-                </span>
-                <div>
-                  <div className="drawer-username">{user.username}</div>
-                  <div className="drawer-user-sub">LVL {economy.level} &bull; 🪙 {economy.coins.toLocaleString()}</div>
-                </div>
-              </div>
-              <button className="drawer-close-btn" onClick={() => setMobileMenuOpen(false)}>✕</button>
-            </div>
-
-            <div className="drawer-nav-list">
-              {selectedGame && (
-                <button
-                  className="drawer-nav-item drawer-hub-btn"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    handleLeaveGame();
-                  }}
-                >
-                  <span className="drawer-item-icon">🏠</span>
-                  <div className="drawer-item-text">
-                    <strong>BACK TO GAME HUB</strong>
-                    <small>Exit current game session</small>
-                  </div>
-                </button>
-              )}
-
-              <button
-                className="drawer-nav-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowQuests(true);
-                }}
-              >
-                <span className="drawer-item-icon">🎯</span>
-                <div className="drawer-item-text">
-                  <strong>DAILY QUESTS & BOUNTIES</strong>
-                  <small>Earn XP and bonus coins</small>
-                </div>
-              </button>
-
-              <button
-                className="drawer-nav-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowShop(true);
-                }}
-              >
-                <span className="drawer-item-icon">🛍️</span>
-                <div className="drawer-item-text">
-                  <strong>CYBER VAULT & STORE</strong>
-                  <small>Unlock avatars, frames & titles</small>
-                </div>
-              </button>
-
-              <button
-                className={`drawer-nav-item ${isLuckySpinReady(user?.id) ? 'spin-ready-pulse' : ''}`}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowLuckySpin(true);
-                }}
-              >
-                <span className="drawer-item-icon">🎡</span>
-                <div className="drawer-item-text">
-                  <strong>LUCKY SPIN WHEEL</strong>
-                  <small>{isLuckySpinReady(user?.id) ? '⚡ Daily spin ready!' : 'Claim daily rewards'}</small>
-                </div>
-              </button>
-
-              <button
-                className="drawer-nav-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowLeaderboard(true);
-                }}
-              >
-                <span className="drawer-item-icon">🏆</span>
-                <div className="drawer-item-text">
-                  <strong>HALL OF FAME & RANKS</strong>
-                  <small>Global top pilot leaderboard</small>
-                </div>
-              </button>
-
-              <button
-                className="drawer-nav-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowAchievements(true);
-                }}
-              >
-                <span className="drawer-item-icon">✨</span>
-                <div className="drawer-item-text">
-                  <strong>BADGES & ACHIEVEMENTS</strong>
-                  <small>Track your gaming milestones</small>
-                </div>
-              </button>
-
-              <button
-                className="drawer-nav-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setShowProfile(true);
-                }}
-              >
-                <span className="drawer-item-icon">👤</span>
-                <div className="drawer-item-text">
-                  <strong>PILOT PROFILE</strong>
-                  <small>Edit username & active cosmetics</small>
-                </div>
-              </button>
-
-              {/* Mobile Audio Controls */}
-              <div className="drawer-media-controls">
-                <button
-                  className="drawer-media-btn"
-                  onClick={() => handleToggleSound()}
-                >
-                  <span>{isMuted ? '🔇' : '🔊'}</span>
-                  <span>{isMuted ? 'UNMUTE SOUND' : 'MUTE SOUND'}</span>
-                </button>
-              </div>
-
-              <button
-                className="drawer-nav-item drawer-logout-item"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  handleLogout();
-                }}
-              >
-                <span className="drawer-item-icon">🚪</span>
-                <div className="drawer-item-text">
-                  <strong style={{ color: '#ff0055' }}>LOGOUT</strong>
-                  <small>Sign out of arcade</small>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Leaderboard Modal */}
       {showLeaderboard && (
