@@ -2,9 +2,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap');
 
 :root,
+[data-theme="clean-dark"] {
+  /* ==========================================================================
+     Theme: Normal Clean Dark (Default)
+     Sleek, eye-friendly modern dark gaming UI (Steam / Epic Games style)
+     Comfortable slate tones, gentle azure/indigo accents, no eye-straining halos
+     ========================================================================== */
+  --neon-blue: #38bdf8;        /* Soft Sky Blue / Azure */
+  --neon-cyan: #60a5fa;        /* Soft Blue */
+  --neon-pink: #818cf8;        /* Soft Indigo */
+  --neon-purple: #a78bfa;      /* Soft Lavender */
+  --neon-green: #34d399;       /* Muted Emerald */
+  --neon-yellow: #fbbf24;      /* Soft Amber */
+  --neon-orange: #fb923c;      /* Soft Sunset */
+  --neon-red: #f87171;         /* Soft Coral */
+
+  /* Surfaces & Refined Slate Glassmorphism */
+  --dark-bg: #0b0f17;
+  --dark-surface: #131926;
+  --dark-card: rgba(19, 25, 38, 0.9);
+  --dark-card-hover: rgba(28, 36, 54, 0.95);
+  --glass-bg: rgba(17, 23, 35, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  /* Typography */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Subtle Clean Shadows (No eye-strain halos) */
+  --glow-blue: 0 4px 14px rgba(56, 189, 248, 0.16);
+  --glow-pink: 0 4px 14px rgba(129, 140, 248, 0.16);
+  --glow-green: 0 4px 14px rgba(52, 211, 153, 0.16);
+  --glow-yellow: 0 4px 14px rgba(251, 191, 36, 0.16);
+
+  /* Gradients */
+  --bg-radial-1: rgba(56, 189, 248, 0.03);
+  --bg-radial-2: rgba(129, 140, 248, 0.02);
+  --bg-radial-3: rgba(15, 23, 42, 0.02);
+  --bg-linear-1: #0b0f17;
+  --bg-linear-2: #0f1420;
+  --bg-linear-3: #0b0f17;
+  --scanline-grad: transparent;
+}
+
 [data-theme="midnight-stealth"] {
   /* ==========================================================================
-     Theme: Midnight Stealth / Pro-Esports (Default)
+     Theme: Midnight Stealth / Pro-Esports
      Clean, deep slate titanium with electric emerald & ice cyan accents
      ========================================================================== */
   --neon-blue: #00f59b;        /* Electric Mint / Emerald */
@@ -31,14 +76,14 @@
   --text-muted: #64748b;
 
   /* Glow Filters & Shadows */
-  --glow-blue: 0 0 20px rgba(0, 245, 155, 0.35);
-  --glow-pink: 0 0 20px rgba(0, 210, 255, 0.35);
-  --glow-green: 0 0 20px rgba(0, 245, 155, 0.35);
-  --glow-yellow: 0 0 20px rgba(251, 191, 36, 0.35);
+  --glow-blue: 0 4px 16px rgba(0, 245, 155, 0.25);
+  --glow-pink: 0 4px 16px rgba(0, 210, 255, 0.25);
+  --glow-green: 0 4px 16px rgba(0, 245, 155, 0.25);
+  --glow-yellow: 0 4px 16px rgba(251, 191, 36, 0.25);
 
   /* Gradients */
-  --bg-radial-1: rgba(0, 245, 155, 0.06);
-  --bg-radial-2: rgba(0, 210, 255, 0.06);
+  --bg-radial-1: rgba(0, 245, 155, 0.05);
+  --bg-radial-2: rgba(0, 210, 255, 0.05);
   --bg-radial-3: rgba(139, 92, 246, 0.03);
   --bg-linear-1: #07090e;
   --bg-linear-2: #0b101b;

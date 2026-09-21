@@ -94,6 +94,13 @@ const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
 
 const THEMES = [
   {
+    id: 'clean-dark',
+    name: 'Normal Clean Dark',
+    tag: 'DEFAULT • PRO GAMING',
+    icon: '🎮',
+    dots: ['#38bdf8', '#818cf8', '#0b0f17']
+  },
+  {
     id: 'midnight-stealth',
     name: 'Midnight Stealth',
     tag: 'PRO-ESPORTS',
@@ -132,9 +139,14 @@ function App() {
   const [isMuted, setIsMuted] = useState(() => soundEffects.isMuted());
   const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
 
-  // Theme Management (Midnight Stealth by default)
+  // Theme Management (Normal Clean Dark by default)
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('nr_arcade_theme') || 'midnight-stealth';
+    const saved = localStorage.getItem('nr_arcade_theme');
+    // If not set or previously on midnight-stealth, default to clean-dark
+    if (!saved || saved === 'midnight-stealth') {
+      return 'clean-dark';
+    }
+    return saved;
   });
   const [showThemeMenu, setShowThemeMenu] = useState(false);
 

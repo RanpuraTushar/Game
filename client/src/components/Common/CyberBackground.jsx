@@ -45,12 +45,12 @@ const CyberBackground = () => {
 
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Cyber particle nodes
+    // Soft ambient starry particles
     const particleColors = [
-      'rgba(0, 243, 255, ',   // Neon Cyan
-      'rgba(255, 0, 127, ',   // Neon Pink
-      'rgba(157, 78, 221, ',  // Neon Purple
-      'rgba(0, 255, 102, '    // Neon Green
+      'rgba(56, 189, 248, ',   // Soft Sky Blue
+      'rgba(129, 140, 248, ',  // Soft Indigo
+      'rgba(148, 163, 184, ',  // Cool Slate
+      'rgba(99, 102, 241, '    // Deep Iris
     ];
 
     let particles = [];
@@ -109,29 +109,26 @@ const CyberBackground = () => {
           }
         }
 
-        const currentAlpha = p.baseAlpha + Math.sin(p.pulseAngle) * 0.15;
+        const currentAlpha = p.baseAlpha * 0.7 + Math.sin(p.pulseAngle) * 0.08;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${p.colorBase}${Math.max(0.1, currentAlpha)})`;
-        ctx.shadowColor = `${p.colorBase}0.8)`;
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = `${p.colorBase}${Math.max(0.08, currentAlpha)})`;
         ctx.fill();
-        ctx.shadowBlur = 0; // reset
 
-        // Draw connections to nearby nodes
+        // Draw subtle connections to nearby nodes
         for (let j = i + 1; j < len; j++) {
           const p2 = particles[j];
           const cdx = p.x - p2.x;
           const cdy = p.y - p2.y;
           const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
 
-          if (cdist < 105) {
-            const lineAlpha = (1 - cdist / 105) * 0.18;
+          if (cdist < 95) {
+            const lineAlpha = (1 - cdist / 95) * 0.08;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 243, 255, ${lineAlpha})`;
-            ctx.lineWidth = 0.75;
+            ctx.strokeStyle = `rgba(148, 163, 184, ${lineAlpha})`;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
@@ -177,7 +174,7 @@ const CyberBackground = () => {
         height: '100vh',
         pointerEvents: 'none',
         zIndex: 0,
-        opacity: 0.85
+        opacity: 0.35
       }}
       aria-hidden="true"
     />
