@@ -1330,6 +1330,58 @@ canvas,
 }
 
 /* ==========================================================================
+   Quick Gesture / Trackpad Swipe Back Toast HUD
+   ========================================================================== */
+.gesture-back-toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--dark-surface, #0e131f);
+  border: 1.5px solid var(--neon-blue, #00f3ff);
+  color: var(--text-primary, #ffffff);
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 20px var(--bg-radial-1, rgba(0, 243, 255, 0.25));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 9999;
+  animation: gestureToastIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+}
+
+.gesture-back-icon {
+  color: var(--neon-blue, #00f3ff);
+  font-size: 1.1rem;
+  animation: bounceLeft 0.8s infinite;
+}
+
+@keyframes gestureToastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -15px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+@keyframes bounceLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-5px); }
+}
+
+
+
+/* ==========================================================================
    Responsive Viewport Optimization (< 768px)
    ========================================================================== */
 @media (max-width: 768px) {

@@ -84,9 +84,14 @@ const GameTheater = ({
     <div className={`game-theater-container ${lightsOff ? 'theater-mode-dimmed' : ''}`}>
       {/* Top Header / Breadcrumb Navigation */}
       <div className="theater-top-bar">
-        <button className="theater-back-btn" onClick={onBack}>
+        <button 
+          className="theater-back-btn" 
+          onClick={onBack}
+          title="Return to Portal (Trackpad 2-finger swipe right or press Esc)"
+        >
           <span className="back-arrow">←</span>
           <span>ALL GAMES</span>
+          <span className="theater-shortcut-hint">ESC / SWIPE</span>
         </button>
 
         <div className="theater-breadcrumbs">

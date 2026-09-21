@@ -162,6 +162,7 @@ function App() {
   const [showQuests, setShowQuests] = useState(false);
   const [showLuckySpin, setShowLuckySpin] = useState(false);
   const [installPrompt, setInstallPrompt] = useState(null);
+  const [swipeBackToast, setSwipeBackToast] = useState(false);
 
   // Global Gamepad controller listener & HUD toast
   const { controllerName, toastMessage: gamepadToast } = useGamepad();
@@ -276,7 +277,7 @@ function App() {
     localStorage.removeItem('games_token');
   };
 
-  const handleSelectGame = (gameId) => {
+  const handleSelectGame = (gameId, replaceHistory = false) => {
     soundEffects.playLaunch();
     const uid = user?.id || 'guest';
     recordGamePlay(gameId, uid);
@@ -295,14 +296,167 @@ function App() {
     if (!ONLINE_ROOM_GAMES.includes(gameId)) {
       setInGame(true);
     }
+
+    // Sync with browser history for Trackpad swipe-to-back, Browser Back button & shortcuts
+    const targetHash = `#game-${gameId.toLowerCase()}`;
+    if (window.location.hash !== targetHash) {
+      if (replaceHistory) {
+        window.history.replaceState({ inGame: true, gameId }, '', targetHash);
+      } else {
+        window.history.pushState({ inGame: true, gameId }, '', targetHash);
+      }
+    }
   };
 
-  const handleLeaveGame = () => {
+  const handleLeaveGame = (fromHistory = false) => {
     soundEffects.playClick();
     setSelectedGame(null);
     setInGame(false);
     setActiveRoom(null);
+
+    // Keep browser history stack synchronized when leaving via UI button or gesture
+    if (!fromHistory && window.location.hash.startsWith('#game-')) {
+      if (window.history.state?.inGame) {
+        window.history.back();
+      } else {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    }
   };
+
+  // Browser History & Popstate navigation (Trackpad swipe back, browser back button, Alt+Left)
+  useEffect(() => {
+    const handlePopState = () => {
+      // Close open modals first on back step
+      if (showThemeMenu) { setShowThemeMenu(false); return; }
+      if (showLeaderboard) { setShowLeaderboard(false); return; }
+      if (showAchievements) { setShowAchievements(false); return; }
+      if (showProfile) { setShowProfile(false); return; }
+      if (showShop) { setShowShop(false); return; }
+      if (showQuests) { setShowQuests(false); return; }
+      if (showLuckySpin) { setShowLuckySpin(false); return; }
+
+      const hash = window.location.hash;
+      if (hash.startsWith('#game-')) {
+        const gameIdFromHash = hash.replace('#game-', '').toUpperCase();
+        const found = GAMES_LIST.find(g => g.id.toLowerCase() === gameIdFromHash.toLowerCase());
+        if (found && selectedGame !== found.id) {
+          handleSelectGame(found.id, true);
+        }
+      } else {
+        if (selectedGame) {
+          setSwipeBackToast(true);
+          setTimeout(() => setSwipeBackToast(false), 1800);
+          handleLeaveGame(true);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [selectedGame, showThemeMenu, showLeaderboard, showAchievements, showProfile, showShop, showQuests, showLuckySpin]);
+
+  // Handle direct hash navigation on reload / link sharing
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#game-') && user && !selectedGame) {
+      const gameIdFromHash = hash.replace('#game-', '').toUpperCase();
+      const found = GAMES_LIST.find(g => g.id.toLowerCase() === gameIdFromHash.toLowerCase());
+      if (found) {
+        handleSelectGame(found.id, true);
+      }
+    }
+  }, [user]);
+
+  // Trackpad 2-finger horizontal swipe & Touch edge-swipe navigation
+  useEffect(() => {
+    if (!selectedGame) return;
+
+    let accumulatedDeltaX = 0;
+    let resetTimer = null;
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    const handleWheel = (e) => {
+      // Detect 2-finger horizontal swipe on laptop trackpad (swiping left-to-right to go back)
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY) * 1.4) {
+        accumulatedDeltaX += e.deltaX;
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(() => {
+          accumulatedDeltaX = 0;
+        }, 260);
+
+        // Negative deltaX is standard left-to-right swipe (Swipe Back)
+        if (accumulatedDeltaX < -85) {
+          accumulatedDeltaX = 0;
+          setSwipeBackToast(true);
+          setTimeout(() => setSwipeBackToast(false), 1800);
+          handleLeaveGame();
+        }
+      }
+    };
+
+    const handleTouchStart = (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    };
+
+    const handleTouchMove = (e) => {
+      if (touchStartX > 0 && touchStartX < 50 && e.touches.length === 1) {
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const diffX = currentX - touchStartX;
+        const diffY = Math.abs(currentY - touchStartY);
+
+        if (diffX > 75 && diffY < 50) {
+          touchStartX = 0;
+          setSwipeBackToast(true);
+          setTimeout(() => setSwipeBackToast(false), 1800);
+          handleLeaveGame();
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      clearTimeout(resetTimer);
+    };
+  }, [selectedGame]);
+
+  // Global Escape (Esc) key listener to step back out of game or modals
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return;
+
+      if (e.key === 'Escape') {
+        if (showThemeMenu) { setShowThemeMenu(false); return; }
+        if (showLeaderboard) { setShowLeaderboard(false); return; }
+        if (showAchievements) { setShowAchievements(false); return; }
+        if (showProfile) { setShowProfile(false); return; }
+        if (showShop) { setShowShop(false); return; }
+        if (showQuests) { setShowQuests(false); return; }
+        if (showLuckySpin) { setShowLuckySpin(false); return; }
+
+        if (selectedGame) {
+          e.preventDefault();
+          setSwipeBackToast(true);
+          setTimeout(() => setSwipeBackToast(false), 1800);
+          handleLeaveGame();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedGame, showThemeMenu, showLeaderboard, showAchievements, showProfile, showShop, showQuests, showLuckySpin]);
 
   if (!user) {
     return (
@@ -621,6 +775,14 @@ function App() {
         <div className="gamepad-hud-toast">
           <span className="gamepad-toast-icon">🎮</span>
           <span className="gamepad-toast-text">{gamepadToast}</span>
+        </div>
+      )}
+
+      {/* Trackpad Swipe Back / Esc Gesture HUD Toast */}
+      {swipeBackToast && (
+        <div className="gesture-back-toast">
+          <span className="gesture-back-icon">←</span>
+          <span>Returning to Arcade Portal...</span>
         </div>
       )}
 
