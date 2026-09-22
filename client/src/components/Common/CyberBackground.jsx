@@ -45,12 +45,13 @@ const CyberBackground = () => {
 
     window.addEventListener('resize', handleResize, { passive: true });
 
-    // Soft ambient starry particles
+    // Luxurious warm gold & champagne starry ambient particles
     const particleColors = [
-      'rgba(56, 189, 248, ',   // Soft Sky Blue
-      'rgba(129, 140, 248, ',  // Soft Indigo
-      'rgba(148, 163, 184, ',  // Cool Slate
-      'rgba(99, 102, 241, '    // Deep Iris
+      'rgba(251, 191, 36, ',   // Champagne Gold
+      'rgba(245, 158, 11, ',   // Warm Sunset Amber
+      'rgba(217, 119, 6, ',    // Imperial Bronze
+      'rgba(254, 240, 138, ',  // Starlight Light Gold
+      'rgba(255, 255, 255, '   // Diamond Sparkle
     ];
 
     let particles = [];
@@ -127,8 +128,8 @@ const CyberBackground = () => {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(148, 163, 184, ${lineAlpha})`;
-            ctx.lineWidth = 0.6;
+            ctx.strokeStyle = `rgba(251, 191, 36, ${lineAlpha * 0.9})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }

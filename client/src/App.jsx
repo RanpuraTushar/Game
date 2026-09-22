@@ -94,9 +94,16 @@ const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
 
 const THEMES = [
   {
+    id: 'royal-gold',
+    name: 'Royal Gold & Onyx',
+    tag: 'DEFAULT • LUXURY VIP',
+    icon: '👑',
+    dots: ['#fbbf24', '#f59e0b', '#070709']
+  },
+  {
     id: 'clean-dark',
     name: 'Normal Clean Dark',
-    tag: 'DEFAULT • PRO GAMING',
+    tag: 'PRO GAMING',
     icon: '🎮',
     dots: ['#38bdf8', '#818cf8', '#0b0f17']
   },
@@ -139,12 +146,12 @@ function App() {
   const [isMuted, setIsMuted] = useState(() => soundEffects.isMuted());
   const [isFullscreen, setIsFullscreen] = useState(Boolean(document.fullscreenElement));
 
-  // Theme Management (Normal Clean Dark by default)
+  // Theme Management (Royal Luxury Gold & Onyx by default)
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('nr_arcade_theme');
-    // If not set or previously on midnight-stealth, default to clean-dark
-    if (!saved || saved === 'midnight-stealth') {
-      return 'clean-dark';
+    // If not set or previously on legacy defaults, default to royal-gold
+    if (!saved || saved === 'midnight-stealth' || saved === 'clean-dark') {
+      return 'royal-gold';
     }
     return saved;
   });
@@ -493,8 +500,8 @@ function App() {
       <nav className="app-navbar glass-panel">
         <div className="nav-left-section">
           <div className="nav-brand" onClick={handleLeaveGame} style={{ cursor: 'pointer' }}>
-            <span className="brand-logo-icon">⚡</span>
-            <span className="brand-text">NEON<span className="cyan-text">ARCADE</span></span>
+            <span className="brand-logo-icon">{theme === 'royal-gold' ? '👑' : '⚡'}</span>
+            <span className="brand-text">ROYAL<span className="cyan-text">NEXUS</span></span>
             <span className="nav-live-indicator nav-desktop-only">
               <span className="live-dot-green" /> 1.4K ONLINE
             </span>

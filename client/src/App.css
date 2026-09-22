@@ -1,12 +1,56 @@
-/* App.css - Master Esports Arcade Nexus Styling */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap');
+/* App.css - Royal Luxury Gold & Onyx Gaming Platform */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
 
 :root,
+[data-theme="royal-gold"] {
+  /* ==========================================================================
+     Theme: Royal Luxury Gold & Onyx (Default)
+     Ultra-premium pitch-black onyx foundation with shimmering champagne gold,
+     imperial gold, and warm amber VIP accents
+     ========================================================================== */
+  --neon-blue: #fbbf24;        /* Champagne Gold / Imperial Gold */
+  --neon-cyan: #f59e0b;        /* Sunset Gold / Amber */
+  --neon-pink: #d97706;        /* Warm Bronze / Rich Ochre */
+  --neon-purple: #c084fc;      /* Royal Amethyst Accent */
+  --neon-green: #10b981;       /* Emerald Gem */
+  --neon-yellow: #fde047;      /* Shimmering Starlight Gold */
+  --neon-orange: #f97316;      /* Amber Sunset */
+  --neon-red: #f43f5e;         /* Imperial Ruby */
+
+  /* Surfaces & Luxury Onyx Glassmorphism */
+  --dark-bg: #070709;
+  --dark-surface: #0f0f14;
+  --dark-card: rgba(17, 17, 23, 0.94);
+  --dark-card-hover: rgba(26, 25, 34, 0.96);
+  --glass-bg: rgba(16, 16, 22, 0.88);
+  --glass-border: rgba(251, 191, 36, 0.22);
+  --border-subtle: rgba(251, 191, 36, 0.09);
+
+  /* Typography */
+  --text-primary: #ffffff;
+  --text-secondary: #d4ceca;
+  --text-muted: #888078;
+
+  /* Luxurious Warm Golden Aura & Shadows */
+  --glow-blue: 0 4px 22px rgba(251, 191, 36, 0.28);
+  --glow-pink: 0 4px 22px rgba(245, 158, 11, 0.28);
+  --glow-green: 0 4px 22px rgba(16, 185, 129, 0.25);
+  --glow-yellow: 0 4px 22px rgba(253, 224, 71, 0.35);
+
+  /* Ambient Gold Gradient Lights */
+  --bg-radial-1: rgba(251, 191, 36, 0.06);
+  --bg-radial-2: rgba(217, 119, 6, 0.05);
+  --bg-radial-3: rgba(245, 158, 11, 0.03);
+  --bg-linear-1: #070709;
+  --bg-linear-2: #0f0f14;
+  --bg-linear-3: #070709;
+  --scanline-grad: linear-gradient(90deg, transparent, #fbbf24, #f59e0b, #eab308, transparent);
+}
+
 [data-theme="clean-dark"] {
   /* ==========================================================================
-     Theme: Normal Clean Dark (Default)
+     Theme: Normal Clean Dark
      Sleek, eye-friendly modern dark gaming UI (Steam / Epic Games style)
-     Comfortable slate tones, gentle azure/indigo accents, no eye-straining halos
      ========================================================================== */
   --neon-blue: #38bdf8;        /* Soft Sky Blue / Azure */
   --neon-cyan: #60a5fa;        /* Soft Blue */
@@ -31,7 +75,7 @@
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
-  /* Subtle Clean Shadows (No eye-strain halos) */
+  /* Subtle Clean Shadows */
   --glow-blue: 0 4px 14px rgba(56, 189, 248, 0.16);
   --glow-pink: 0 4px 14px rgba(129, 140, 248, 0.16);
   --glow-green: 0 4px 14px rgba(52, 211, 153, 0.16);
@@ -225,25 +269,47 @@ html {
 body {
   background-color: var(--dark-bg);
   color: var(--text-primary);
-  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   background:
-    radial-gradient(circle at 15% 15%, var(--bg-radial-1) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, var(--bg-radial-2) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, var(--bg-radial-3) 0%, transparent 60%),
+    radial-gradient(circle at 20% 15%, var(--bg-radial-1) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, var(--bg-radial-2) 0%, transparent 45%),
     linear-gradient(180deg, var(--bg-linear-1) 0%, var(--bg-linear-2) 50%, var(--bg-linear-3) 100%);
   background-attachment: fixed;
-  transition: background-color 0.4s ease;
+  transition: background-color 0.3s ease;
 }
 
-/* Custom Sleek Neon Scrollbars */
+/* Master Modern Heading & Component Font Overrides */
+h1, h2, h3, h4, h5, h6,
+.brand-text,
+.hero-main-title,
+.spotlight-title,
+.theater-game-title,
+.spotlight-tagline-badge,
+.btn-spotlight-play,
+.category-tab-btn,
+.game-card-title,
+.theater-back-btn,
+.theme-item-name,
+.theme-popover-header,
+.hub-search-container,
+.sort-label,
+.hub-sort-select,
+.nav-pill-btn,
+.btn-primary,
+.btn-secondary,
+.btn-tertiary {
+  font-family: 'Outfit', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Custom Sleek Modern Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -251,9 +317,8 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--neon-blue), var(--neon-cyan));
+  background: rgba(251, 191, 36, 0.25);
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -377,7 +442,8 @@ body {
   white-space: nowrap;
 }
 
-.cyan-text {
+.cyan-text,
+.gold-text {
   background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-yellow));
   -webkit-background-clip: text;
   background-clip: text;
@@ -393,20 +459,20 @@ body {
 }
 
 .crumb-sep {
-  color: rgba(0, 243, 255, 0.4);
-  font-family: 'Orbitron', sans-serif;
+  color: var(--text-muted);
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 1.1rem;
 }
 
 .crumb-active-game {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--neon-blue);
-  background: rgba(0, 243, 255, 0.1);
+  background: var(--dark-card);
   padding: 5px 12px;
   border-radius: 6px;
-  border: 1px solid rgba(0, 243, 255, 0.3);
+  border: 1px solid var(--glass-border);
   letter-spacing: 0.8px;
   white-space: nowrap;
 }
@@ -482,8 +548,8 @@ body {
 .nav-icon-btn:hover {
   color: var(--neon-blue);
   border-color: var(--neon-blue);
-  background: rgba(0, 243, 255, 0.12);
-  box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--glow-blue);
   transform: translateY(-2px) scale(1.05);
 }
 
@@ -492,7 +558,7 @@ body {
 }
 
 .nav-hub-return-btn {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -501,16 +567,16 @@ body {
 }
 
 @keyframes returnPulse {
-  0% { box-shadow: 0 0 8px rgba(255, 0, 127, 0.2); }
-  100% { box-shadow: 0 0 18px rgba(255, 0, 127, 0.5); }
+  0% { box-shadow: 0 0 8px rgba(245, 158, 11, 0.2); }
+  100% { box-shadow: 0 0 18px rgba(251, 191, 36, 0.45); }
 }
 
 .nav-user-profile-badge {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, rgba(16, 22, 45, 0.85) 0%, rgba(10, 13, 28, 0.95) 100%);
-  border: 1.5px solid rgba(0, 243, 255, 0.35);
+  background: var(--dark-card);
+  border: 1px solid var(--glass-border);
   padding: 4px 14px 4px 6px;
   border-radius: 28px;
   font-size: 0.85rem;
@@ -518,14 +584,14 @@ body {
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   user-select: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   position: relative;
 }
 
 .nav-user-profile-badge:hover {
   border-color: var(--neon-blue);
-  background: linear-gradient(135deg, rgba(0, 243, 255, 0.15) 0%, rgba(16, 24, 52, 0.95) 100%);
-  box-shadow: 0 0 20px rgba(0, 243, 255, 0.4), 0 6px 18px rgba(0, 0, 0, 0.5);
+  background: var(--dark-card-hover);
+  box-shadow: var(--glow-blue), 0 6px 18px rgba(0, 0, 0, 0.5);
   transform: translateY(-2px);
 }
 
@@ -537,9 +603,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, rgba(12, 16, 32, 0.95) 100%);
-  border: 1.5px solid #00f3ff;
-  box-shadow: 0 0 10px rgba(0, 243, 255, 0.35);
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, rgba(17, 17, 23, 0.95) 100%);
+  border: 1.5px solid var(--neon-blue);
+  box-shadow: var(--glow-blue);
   flex-shrink: 0;
 }
 
@@ -581,12 +647,12 @@ body {
 }
 
 .nav-edit-hint {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 0.56rem;
   font-weight: 800;
-  color: #00f3ff;
-  background: rgba(0, 243, 255, 0.12);
-  border: 1px solid rgba(0, 243, 255, 0.35);
+  color: var(--neon-blue);
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid var(--glass-border);
   padding: 2px 6px;
   border-radius: 4px;
   letter-spacing: 0.5px;
@@ -689,11 +755,11 @@ body {
 }
 
 .nav-edit-hint {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Outfit', 'Plus Jakarta Sans', monospace;
   font-size: 0.62rem;
   font-weight: 800;
-  background: rgba(0, 243, 255, 0.15);
-  border: 1px solid rgba(0, 243, 255, 0.35);
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid var(--glass-border);
   color: var(--neon-blue);
   padding: 2px 7px;
   border-radius: 8px;
@@ -704,8 +770,8 @@ body {
 
 .nav-user-profile-badge:hover .nav-edit-hint {
   background: var(--neon-blue);
-  color: #07070e;
-  box-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+  color: #070709;
+  box-shadow: var(--glow-blue);
 }
 
 /* ==========================================================================
@@ -730,12 +796,12 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 24px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 243, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), var(--glow-blue);
 }
 
 /* Neon Text Utility */
 .neon-text {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
@@ -746,7 +812,7 @@ body {
 .btn-primary {
   background: transparent;
   color: var(--neon-blue);
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -755,7 +821,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 0 10px inset rgba(0, 243, 255, 0.15);
+  box-shadow: 0 0 10px inset var(--bg-radial-1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -765,7 +831,7 @@ body {
 
 .btn-primary:hover:not(:disabled) {
   background: var(--neon-blue);
-  color: #07070e;
+  color: #070709;
   box-shadow: 0 0 20px var(--neon-blue);
   transform: translateY(-2px);
 }
@@ -777,7 +843,7 @@ body {
 .btn-secondary {
   background: transparent;
   color: var(--neon-pink);
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 1px;
@@ -786,7 +852,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 0 10px inset rgba(255, 0, 127, 0.15);
+  box-shadow: 0 0 10px inset var(--bg-radial-2);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1568,9 +1634,9 @@ canvas,
     align-items: center !important;
     justify-content: center !important;
     box-sizing: border-box !important;
-    background: radial-gradient(circle, rgba(0, 243, 255, 0.25) 0%, rgba(12, 16, 32, 0.95) 100%) !important;
-    border: 1.5px solid #00f3ff !important;
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.35) !important;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(17, 17, 23, 0.95) 100%) !important;
+    border: 1.5px solid var(--neon-blue) !important;
+    box-shadow: var(--glow-blue) !important;
   }
 
   .nav-profile-avatar-wrap .user-icon-avatar {

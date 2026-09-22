@@ -129,7 +129,7 @@
   left: -20%;
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, rgba(0, 243, 255, 0.18), transparent 70%);
+  background: radial-gradient(circle, var(--bg-radial-1), transparent 70%);
   pointer-events: none;
 }
 
@@ -143,8 +143,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(0, 243, 255, 0.1);
-  border: 1px solid rgba(0, 243, 255, 0.35);
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid var(--glass-border);
   padding: 5px 14px;
   border-radius: 20px;
   font-size: 0.78rem;
@@ -159,10 +159,10 @@
 }
 
 .hero-main-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 2.8rem;
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   color: #ffffff;
   line-height: 1.15;
   margin: 0 0 10px 0;
@@ -170,14 +170,14 @@
 }
 
 .neon-cyan-text {
-  background: linear-gradient(135deg, var(--neon-blue, #38bdf8), var(--neon-cyan, #60a5fa));
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-cyan), var(--neon-yellow));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero-description {
-  color: #a4acc4;
+  color: var(--text-secondary);
   font-size: 1.05rem;
   max-width: 600px;
   line-height: 1.55;
@@ -190,7 +190,7 @@
   align-items: center;
   gap: 14px;
   background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(0, 243, 255, 0.2);
+  border: 1px solid var(--glass-border);
   padding: 8px 18px;
   border-radius: 12px;
   width: fit-content;
@@ -204,11 +204,11 @@
 }
 
 .hub-stat-number {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--neon-blue);
-  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+  text-shadow: var(--glow-blue);
 }
 
 .hub-stat-label {
@@ -250,15 +250,16 @@
 }
 
 .btn-user-profile-quick:hover {
-  border-color: var(--neon-blue, #38bdf8);
-  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--neon-blue);
+  background: var(--bg-radial-1);
   transform: translateY(-2px);
+  box-shadow: var(--glow-blue);
 }
 
 .hero-avatar-icon {
   font-size: 1.6rem;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--border-subtle);
   padding: 3px 8px;
   border-radius: 10px;
   display: flex;
@@ -275,7 +276,7 @@
 }
 
 .hero-user-name {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
   color: #ffffff;
@@ -283,9 +284,9 @@
 }
 
 .hero-user-edit-tag {
-  font-family: 'Orbitron', monospace;
+  font-family: 'Outfit', 'Plus Jakarta Sans', monospace;
   font-size: 0.68rem;
-  color: #00f3ff;
+  color: var(--neon-blue);
   letter-spacing: 1px;
   font-weight: 700;
 }
@@ -455,14 +456,14 @@
 .category-tab-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  border-color: rgba(0, 243, 255, 0.4);
+  border-color: var(--neon-blue);
 }
 
 .category-tab-btn.active {
-  background: rgba(56, 189, 248, 0.12);
+  background: rgba(251, 191, 36, 0.12);
   border-color: var(--neon-blue);
   color: var(--neon-blue);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--glow-blue);
 }
 
 .tab-highlight-star.active {
@@ -493,8 +494,8 @@
 }
 
 .game-catalog-card {
-  background: linear-gradient(145deg, rgba(16, 16, 32, 0.9), rgba(24, 18, 42, 0.85));
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(16, 16, 22, 0.94), rgba(24, 22, 30, 0.9));
+  border: 1.5px solid var(--glass-border);
   border-radius: 18px;
   padding: 24px;
   display: flex;
@@ -528,8 +529,8 @@
 }
 
 .game-catalog-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+  border-color: var(--neon-blue);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), var(--glow-blue);
 }
 
 .game-catalog-card:hover::before {
@@ -557,11 +558,11 @@
   height: 54px;
   border-radius: 14px;
   background: rgba(0, 0, 0, 0.5);
-  border: 1.5px solid var(--halo-color, #00f3ff);
+  border: 1.5px solid var(--halo-color, var(--neon-blue));
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 15px var(--halo-color, #00f3ff);
+  box-shadow: 0 0 15px var(--halo-color, var(--neon-blue));
   transition: transform 0.25s ease;
 }
 
