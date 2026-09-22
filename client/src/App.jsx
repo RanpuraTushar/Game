@@ -523,10 +523,11 @@ function App() {
         <div className="nav-right-section">
           {selectedGame && (
             <button
-              className="btn-secondary nav-hub-return-btn nav-desktop-only"
+              className="btn-secondary nav-hub-return-btn"
               onClick={handleLeaveGame}
+              title="Return to Game Hub"
             >
-              ← PORTAL
+              ← EXIT
             </button>
           )}
 
@@ -607,7 +608,7 @@ function App() {
 
           {/* Sound Mute/Unmute Toggle */}
           <button
-            className="nav-icon-btn nav-audio-btn nav-desktop-only"
+            className="nav-icon-btn nav-audio-btn"
             onClick={handleToggleSound}
             title={isMuted ? 'Unmute Arcade Sound' : 'Mute Arcade Sound'}
             aria-label="Toggle Sound"
@@ -991,6 +992,84 @@ function App() {
             <BeatRhythmGame user={user} onLeave={handleLeaveGame} />
           )}
         </GameTheater>
+      )}
+
+      {/* Mobile Sticky Bottom Navigation Bar (Thumb Friendly) */}
+      {!selectedGame && (
+        <nav className="mobile-bottom-nav">
+          <button 
+            type="button"
+            className="mobile-nav-item active" 
+            onClick={() => {
+              soundEffects.playClick();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <span className="mobile-nav-icon">🎮</span>
+            <span className="mobile-nav-label">GAMES</span>
+          </button>
+
+          <button 
+            type="button"
+            className="mobile-nav-item" 
+            onClick={() => {
+              soundEffects.playClick();
+              setShowQuests(true);
+            }}
+          >
+            <span className="mobile-nav-icon">🎯</span>
+            <span className="mobile-nav-label">QUESTS</span>
+          </button>
+
+          <button 
+            type="button"
+            className="mobile-nav-item mobile-nav-highlight" 
+            onClick={() => {
+              soundEffects.playClick();
+              setShowLuckySpin(true);
+            }}
+          >
+            <span className="mobile-nav-icon">🎡</span>
+            <span className="mobile-nav-label">SPIN</span>
+            {isLuckySpinReady(user?.id) && <span className="mobile-spin-badge" />}
+          </button>
+
+          <button 
+            type="button"
+            className="mobile-nav-item" 
+            onClick={() => {
+              soundEffects.playClick();
+              setShowShop(true);
+            }}
+          >
+            <span className="mobile-nav-icon">🛍️</span>
+            <span className="mobile-nav-label">STORE</span>
+          </button>
+
+          <button 
+            type="button"
+            className="mobile-nav-item" 
+            onClick={() => {
+              soundEffects.playTrophy();
+              setShowLeaderboard(true);
+            }}
+          >
+            <span className="mobile-nav-icon">🏆</span>
+            <span className="mobile-nav-label">RANKS</span>
+          </button>
+
+          <button 
+            type="button"
+            className="mobile-nav-item" 
+            onClick={() => {
+              soundEffects.playClick();
+              setShowProfile(true);
+            }}
+          >
+            <span className="mobile-nav-icon">👤</span>
+            <span className="mobile-nav-label">ME</span>
+          </button>
+        </nav>
       )}
     </div>
   );

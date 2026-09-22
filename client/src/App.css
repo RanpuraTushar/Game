@@ -1493,60 +1493,65 @@ canvas,
 
 
 /* ==========================================================================
-   Responsive Viewport Optimization (< 768px)
+   Mobile Bottom Navigation Bar System & Responsive Overhaul
    ========================================================================== */
+.mobile-bottom-nav {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  /* Hide non-essential desktop clutter from top bar */
+  .nav-desktop-only,
+  .nav-breadcrumbs,
+  .nav-live-indicator,
+  .nav-user-details-col,
+  .nav-edit-hint {
+    display: none !important;
+  }
+
+  /* Viewport & Safe Area Paddings */
+  .App {
+    padding-top: 62px !important;
+    padding-bottom: 74px !important;
+  }
+
+  .App.in-game-active {
+    padding-top: 56px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Sleek Compact Mobile Top Navbar */
   .app-navbar {
     height: 56px !important;
     padding: 0 12px !important;
     gap: 8px !important;
-    background: rgba(8, 10, 22, 0.96) !important;
+    background: rgba(7, 7, 9, 0.96) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    box-sizing: border-box !important;
-    border-bottom: 1px solid rgba(0, 243, 255, 0.3) !important;
-  }
-
-  .App {
-    padding-top: 68px !important;
+    border-bottom: 1px solid rgba(251, 191, 36, 0.28) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
   }
 
   .nav-left-section {
     display: flex !important;
     align-items: center !important;
+    gap: 8px !important;
     flex-shrink: 0 !important;
-    min-width: max-content !important;
   }
 
   .nav-brand {
-    display: flex !important;
-    align-items: center !important;
     gap: 6px !important;
+  }
+
+  .brand-logo-icon {
+    font-size: 1.3rem !important;
     line-height: 1 !important;
   }
 
-  .nav-brand .brand-logo-icon {
-    font-size: 1.25rem !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-
-  .nav-brand .brand-text {
+  .brand-text {
     font-size: 1.05rem !important;
     font-weight: 900 !important;
-    letter-spacing: 0.6px !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-
-  .nav-breadcrumbs,
-  .nav-live-indicator {
-    display: none !important;
+    letter-spacing: 0.8px !important;
   }
 
   .nav-right-section {
@@ -1554,113 +1559,189 @@ canvas,
     align-items: center !important;
     gap: 6px !important;
     margin-left: auto !important;
-    flex-shrink: 0 !important;
   }
 
-  /* Compact icon pill buttons */
-  .nav-btn-text,
-  .nav-user-details-col,
-  .nav-edit-hint {
-    display: none !important;
+  /* Exit Game Button on Mobile */
+  .nav-hub-return-btn {
+    padding: 6px 14px !important;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.25), rgba(217, 119, 6, 0.2)) !important;
+    border: 1px solid #fbbf24 !important;
+    color: #fbbf24 !important;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.3) !important;
   }
 
-  .nav-btn-quests,
-  .nav-btn-shop,
-  .nav-btn-spin,
-  .nav-btn-ranks,
-  .nav-btn-achieve,
-  .nav-btn-logout {
-    padding: 6px 10px !important;
-    min-width: 34px !important;
-    height: 34px !important;
-    justify-content: center !important;
-  }
-
-  /* Coins Pill: Sleek capsule */
-  .nav-economy-pill {
+  /* Sound Toggle Button on Mobile */
+  .nav-audio-btn {
+    width: 32px !important;
     height: 32px !important;
-    padding: 0 10px !important;
-    border-radius: 16px !important;
-    background: rgba(255, 215, 0, 0.12) !important;
-    border: 1px solid rgba(255, 215, 0, 0.4) !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 5px !important;
-    box-sizing: border-box !important;
-    line-height: 1 !important;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.15) !important;
+    min-width: 32px !important;
+    font-size: 0.95rem !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(251, 191, 36, 0.3) !important;
+    background: rgba(18, 18, 24, 0.8) !important;
+    color: #fbbf24 !important;
+  }
+
+  /* Economy Coin Pill on Mobile */
+  .nav-economy-pill {
+    height: 30px !important;
+    padding: 0 8px !important;
+    border-radius: 15px !important;
+    background: rgba(251, 191, 36, 0.12) !important;
+    border: 1px solid rgba(251, 191, 36, 0.45) !important;
+    gap: 4px !important;
   }
 
   .nav-coin-icon {
-    font-size: 0.95rem !important;
-    line-height: 1 !important;
-    display: flex !important;
-    align-items: center !important;
+    font-size: 0.9rem !important;
   }
 
   .nav-coin-val {
-    font-family: 'Orbitron', sans-serif !important;
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
     font-size: 0.76rem !important;
     font-weight: 800 !important;
-    color: #ffd700 !important;
-    line-height: 1 !important;
-    letter-spacing: 0.4px !important;
+    color: #fbbf24 !important;
   }
 
-  /* Profile Avatar */
+  /* User Profile Badge (Compact Avatar Circle on Mobile) */
   .nav-user-profile-badge {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
-    height: 34px !important;
-    width: 34px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 50% !important;
-    cursor: pointer !important;
-    box-sizing: border-box !important;
+    width: 32px !important;
+    height: 32px !important;
   }
 
   .nav-profile-avatar-wrap {
-    width: 34px !important;
-    height: 34px !important;
+    width: 32px !important;
+    height: 32px !important;
     border-radius: 50% !important;
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, rgba(17, 17, 23, 0.95) 100%) !important;
-    border: 1.5px solid var(--neon-blue) !important;
-    box-shadow: var(--glow-blue) !important;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, rgba(14, 14, 20, 0.95) 100%) !important;
+    border: 1.5px solid #fbbf24 !important;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.35) !important;
   }
 
   .nav-profile-avatar-wrap .user-icon-avatar {
-    width: 100% !important;
-    height: 100% !important;
-    font-size: 1.15rem !important;
-    line-height: 1 !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
+    font-size: 1.05rem !important;
   }
 
   .nav-profile-level-badge {
-    position: absolute !important;
-    bottom: -2px !important;
-    right: -3px !important;
-    font-size: 0.52rem !important;
-    font-weight: 900 !important;
+    font-size: 0.5rem !important;
     padding: 1px 3px !important;
-    border-radius: 6px !important;
+    bottom: -2px !important;
+    right: -2px !important;
+  }
+
+  /* ==========================================================================
+     Fixed Mobile Bottom Navigation Bar (Poki / App Store Experience)
+     ========================================================================== */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 60px !important;
+    background: rgba(9, 9, 13, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(251, 191, 36, 0.28) !important;
+    box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.75) !important;
+    z-index: 1000 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 4px calc(env(safe-area-inset-bottom, 0px) + 2px) 4px !important;
+    user-select: none !important;
+  }
+
+  .mobile-nav-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    background: transparent !important;
+    border: none !important;
+    color: #94a3b8 !important;
+    padding: 6px 8px !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    flex: 1 !important;
+    max-width: 65px !important;
+    transition: all 0.2s ease !important;
+    position: relative !important;
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  .mobile-nav-item:active {
+    transform: scale(0.92) !important;
+  }
+
+  .mobile-nav-item.active {
+    color: #fbbf24 !important;
+  }
+
+  .mobile-nav-item.active .mobile-nav-icon {
+    transform: scale(1.15) !important;
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6)) !important;
+  }
+
+  .mobile-nav-icon {
+    font-size: 1.15rem !important;
     line-height: 1 !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.8) !important;
+    transition: transform 0.2s ease !important;
+  }
+
+  .mobile-nav-label {
+    font-size: 0.62rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.4px !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-nav-highlight {
+    color: #fbbf24 !important;
+  }
+
+  .mobile-spin-badge {
+    position: absolute !important;
+    top: 4px !important;
+    right: 12px !important;
+    width: 7px !important;
+    height: 7px !important;
+    background: #ef4444 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 8px #ef4444 !important;
+    animation: pulseSpin 1s infinite alternate !important;
+  }
+
+  /* Modals on Mobile: Fullscreen sheet or centered card */
+  .modal-overlay {
+    padding: 8px !important;
+    align-items: center !important;
+  }
+
+  .modal-card,
+  .modal-dialog,
+  .leaderboard-modal,
+  .profile-modal-content,
+  .shop-modal-container {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    max-height: 88vh !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 }
 
@@ -1668,43 +1749,19 @@ canvas,
   .app-navbar {
     padding: 0 8px !important;
     height: 52px !important;
-    gap: 4px !important;
   }
 
-  .App {
-    padding-top: 64px !important;
-  }
-
-  .nav-brand .brand-logo-icon {
-    font-size: 1.15rem !important;
-  }
-
-  .nav-brand .brand-text {
+  .brand-text {
     font-size: 0.95rem !important;
-    letter-spacing: 0.2px !important;
-  }
-
-  .nav-right-section {
-    gap: 4px !important;
+    letter-spacing: 0.3px !important;
   }
 
   .nav-economy-pill {
-    padding: 0 7px !important;
-    height: 30px !important;
-    gap: 3px !important;
-  }
-
-  .nav-coin-icon {
-    font-size: 0.88rem !important;
+    padding: 0 6px !important;
+    height: 28px !important;
   }
 
   .nav-coin-val {
-    font-size: 0.72rem !important;
-  }
-
-  .nav-user-profile-badge,
-  .nav-profile-avatar-wrap {
-    width: 32px !important;
-    height: 32px !important;
+    font-size: 0.7rem !important;
   }
 }

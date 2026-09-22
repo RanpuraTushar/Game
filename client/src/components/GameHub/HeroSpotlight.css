@@ -462,21 +462,24 @@
     margin-bottom: 12px;
   }
 
-  .spotlight-action-row {
-    flex-wrap: wrap;
-    gap: 8px;
+  .spotlight-actions-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
   }
 
   .btn-spotlight-play {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-    flex: 1;
-    justify-content: center;
+    padding: 10px 18px !important;
+    font-size: 0.85rem !important;
+    flex: 1 !important;
+    justify-content: center !important;
   }
 
   .btn-spotlight-fav {
-    padding: 10px 14px;
-    font-size: 0.82rem;
+    padding: 10px 14px !important;
+    font-size: 0.82rem !important;
+    white-space: nowrap !important;
   }
 }
 

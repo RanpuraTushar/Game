@@ -141,23 +141,74 @@
   color: #cbd5e0;
 }
 
+/* Virtual D-Pad for Mobile Players */
+.snake-mobile-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 12px auto 4px auto;
+  user-select: none;
+}
 
+.dpad-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-@media (max-width: 480px) {
+.dpad-center {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.dpad-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(217, 119, 6, 0.15));
+  border: 1.5px solid rgba(251, 191, 36, 0.5);
+  color: #fbbf24;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dpad-btn:active {
+  transform: scale(0.9);
+  background: #fbbf24;
+  color: #070709;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+}
+
+@media (min-width: 769px) {
+  .snake-mobile-dpad {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .snake-desktop-controls-hud {
+    display: none !important;
+  }
+
   .snake-arcade-container {
     padding: 10px 8px;
     margin: 5px auto;
     border-radius: 14px;
   }
+
   .snake-stats-bar {
     gap: 8px;
     padding: 4px 8px;
     font-size: 0.82rem;
-  }
-  .snake-dpad-btn {
-    width: 52px;
-    height: 44px;
-    font-size: 1.15rem;
   }
 }
 

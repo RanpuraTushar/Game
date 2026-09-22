@@ -1043,7 +1043,9 @@
     font-size: 0.95rem;
     min-height: 50px;
     border-radius: 11px;
-    box-shadow: 0 4px 20px rgba(0, 243, 255, 0.45);
+    background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%) !important;
+    color: #070709 !important;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.45) !important;
   }
 
   .cyber-submit-btn:active:not(:disabled) {
