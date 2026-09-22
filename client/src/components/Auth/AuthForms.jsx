@@ -85,13 +85,13 @@ const AuthForms = ({ onLoginSuccess }) => {
         <div className="auth-hero-panel">
           <div className="hero-top-badge">
             <span className="hero-status-dot"></span>
-            <span>CYBER ARCADE • 45+ GAMES READY</span>
+            <span>ROYAL NEXUS • 45+ GAMES READY</span>
           </div>
 
           <div className="hero-brand-section">
-            <div className="hero-logo-icon">🎮</div>
+            <div className="hero-logo-icon">👑</div>
             <h1 className="hero-title">
-              CYBER <span className="hero-title-highlight">ARCADE</span>
+              ROYAL <span className="hero-title-highlight">NEXUS</span>
             </h1>
             <p className="hero-subtitle">
               Your ultimate desktop arcade station. Play 45+ retro and multiplayer hit games, challenge friends in real-time, and reach the top ranks!
@@ -149,7 +149,7 @@ const AuthForms = ({ onLoginSuccess }) => {
               <span className="dot dot-yellow"></span>
               <span className="dot dot-green"></span>
             </div>
-            <div className="terminal-tag">CYBER ARCADE • AUTHENTICATION</div>
+            <div className="terminal-tag">ROYAL NEXUS • AUTHENTICATION</div>
           </div>
 
           {/* Quick Resume Card for returning users */}
@@ -176,7 +176,7 @@ const AuthForms = ({ onLoginSuccess }) => {
               >
                 <span className="btn-glow-layer"></span>
                 <span className="btn-text">
-                  <span>⚡ CONTINUE AS {savedUser.username.toUpperCase()}</span>
+                  <span>👑 CONTINUE AS {savedUser.username.toUpperCase()}</span>
                   <span className="btn-arrow">➔</span>
                 </span>
               </button>
