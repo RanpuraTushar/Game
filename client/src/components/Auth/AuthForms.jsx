@@ -31,7 +31,8 @@ const AuthForms = ({ onLoginSuccess }) => {
     setError('');
     setLoading(true);
 
-    const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+    const endpoint = `${backendUrl}${isLogin ? '/api/auth/login' : '/api/auth/register'}`;
     const payload = isLogin 
       ? { username: username.trim(), password } 
       : { username: username.trim(), email: email.trim(), password };

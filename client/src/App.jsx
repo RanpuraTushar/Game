@@ -86,8 +86,11 @@ import DoodleGuessGame from './components/Game/casual/DoodleGuessGame';
 import JigsawPuzzleGame from './components/Game/puzzle/JigsawPuzzleGame';
 import CrosswordGame from './components/Game/puzzle/CrosswordGame';
 
-// Connect to backend socket via Nginx reverse proxy
-const socket = io();
+// Connect to backend socket (supports local, AWS, or external Render URL via VITE_BACKEND_URL)
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const socket = io(BACKEND_URL || undefined, {
+  transports: ['websocket', 'polling']
+});
 
 // Games that strictly require online room matchmaking go through Lobby
 const ONLINE_ROOM_GAMES = ['LUDO', 'SNAKE', 'TIC_TAC_TOE', 'CONNECT_4'];
