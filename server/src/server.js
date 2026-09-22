@@ -33,6 +33,17 @@ app.use('/api/games', gamesRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/achievements', achievementRoutes);
 
+// Root Welcome / Status
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    service: 'Royal Nexus Backend API & Socket Station',
+    version: '1.0.0',
+    frontend: 'https://royal-nexus-delta.vercel.app',
+    health: '/api/health'
+  });
+});
+
 // Health Check API
 app.get('/api/health', (req, res) => {
   res.json({
