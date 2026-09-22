@@ -31,7 +31,7 @@ const AuthForms = ({ onLoginSuccess }) => {
     setError('');
     setLoading(true);
 
-    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://royal-nexus-backend.onrender.com';
     const endpoint = `${backendUrl}${isLogin ? '/api/auth/login' : '/api/auth/register'}`;
     const payload = isLogin 
       ? { username: username.trim(), password } 

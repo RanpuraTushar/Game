@@ -87,8 +87,8 @@ import JigsawPuzzleGame from './components/Game/puzzle/JigsawPuzzleGame';
 import CrosswordGame from './components/Game/puzzle/CrosswordGame';
 
 // Connect to backend socket (supports local, AWS, or external Render URL via VITE_BACKEND_URL)
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
-const socket = io(BACKEND_URL || undefined, {
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://royal-nexus-backend.onrender.com';
+const socket = io(BACKEND_URL, {
   transports: ['websocket', 'polling']
 });
 

@@ -1,7 +1,8 @@
 // client/src/services/api.js
 import { recordGameScore } from '../utils/gameActivity';
 
-const API_BASE = '/api';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://royal-nexus-backend.onrender.com';
+const API_BASE = `${BACKEND_URL}/api`;
 
 export const api = {
   // Fetch all games with optional category
