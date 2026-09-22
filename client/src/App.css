@@ -1344,6 +1344,13 @@ canvas,
   box-shadow: 0 0 18px var(--neon-blue) !important;
 }
 
+.theme-popover-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2999;
+  background: rgba(0, 0, 0, 0.45);
+}
+
 .theme-selector-popover {
   position: absolute;
   top: calc(100% + 10px);
@@ -1585,6 +1592,38 @@ canvas,
     border: 1px solid rgba(251, 191, 36, 0.3) !important;
     background: rgba(18, 18, 24, 0.8) !important;
     color: #fbbf24 !important;
+  }
+
+  /* Theme Switcher Button on Mobile */
+  .theme-dropdown-wrap {
+    position: relative !important;
+    display: inline-flex !important;
+  }
+
+  .nav-theme-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    font-size: 0.95rem !important;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(251, 191, 36, 0.35) !important;
+    background: rgba(18, 18, 24, 0.8) !important;
+    color: #fbbf24 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .theme-selector-popover {
+    position: fixed !important;
+    top: 56px !important;
+    right: 8px !important;
+    left: auto !important;
+    width: 260px !important;
+    max-width: calc(100vw - 16px) !important;
+    z-index: 3000 !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 25px rgba(251, 191, 36, 0.25) !important;
   }
 
   /* Economy Coin Pill on Mobile */

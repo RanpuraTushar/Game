@@ -626,8 +626,8 @@ function App() {
             {isFullscreen ? '✕' : '⛶'}
           </button>
 
-          {/* 1-Click Theme Switcher Popover */}
-          <div className="theme-dropdown-wrap nav-desktop-only">
+          {/* 1-Click Theme Switcher Popover (Accessible on Desktop & Mobile) */}
+          <div className="theme-dropdown-wrap">
             <button
               className="nav-icon-btn nav-theme-btn"
               onClick={() => {
@@ -640,37 +640,40 @@ function App() {
               🎨
             </button>
             {showThemeMenu && (
-              <div className="theme-selector-popover">
-                <div className="theme-popover-header">
-                  <span>ARCADE THEMES</span>
-                  <span style={{ fontSize: '0.65rem', opacity: 0.7 }}>1-CLICK SWITCH</span>
-                </div>
-                {THEMES.map(t => (
-                  <div
-                    key={t.id}
-                    className={`theme-option-item ${theme === t.id ? 'active' : ''}`}
-                    onClick={() => {
-                      soundEffects.playClick();
-                      setTheme(t.id);
-                      setShowThemeMenu(false);
-                    }}
-                  >
-                    <div className="theme-item-left">
-                      <span>{t.icon}</span>
-                      <span className="theme-item-name">{t.name}</span>
-                    </div>
-                    <div className="theme-color-chips">
-                      {t.dots.map((color, idx) => (
-                        <span
-                          key={idx}
-                          className="theme-dot"
-                          style={{ background: color }}
-                        />
-                      ))}
-                    </div>
+              <>
+                <div className="theme-popover-backdrop" onClick={() => setShowThemeMenu(false)} />
+                <div className="theme-selector-popover">
+                  <div className="theme-popover-header">
+                    <span>ARCADE THEMES</span>
+                    <span style={{ fontSize: '0.65rem', opacity: 0.7 }}>1-CLICK SWITCH</span>
                   </div>
-                ))}
-              </div>
+                  {THEMES.map(t => (
+                    <div
+                      key={t.id}
+                      className={`theme-option-item ${theme === t.id ? 'active' : ''}`}
+                      onClick={() => {
+                        soundEffects.playClick();
+                        setTheme(t.id);
+                        setShowThemeMenu(false);
+                      }}
+                    >
+                      <div className="theme-item-left">
+                        <span>{t.icon}</span>
+                        <span className="theme-item-name">{t.name}</span>
+                      </div>
+                      <div className="theme-color-chips">
+                        {t.dots.map((color, idx) => (
+                          <span
+                            key={idx}
+                            className="theme-dot"
+                            style={{ background: color }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
 
